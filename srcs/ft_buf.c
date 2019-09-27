@@ -33,32 +33,31 @@ void		buf_store(t_buf *buf, char *to_add)
 {
 	char	*tmp;
 	
-	if (till_full(buf) <= ft_strlen(to_add))
+	if (till_full(buf) <= (int)ft_strlen(to_add))
 	{
 		buf_output_clear(buf);
-		if (ft_strlen(to_add) <= BUFF_SIZE)
+		if (ft_strlen(to_add) < BUFF_SIZE)
 			buf_store(buf, to_add);
-		else
+		else	
 		{
 			buf->buf = ft_strncpy(buf->buf, to_add, BUFF_SIZE);
 			buf->len = BUFF_SIZE;
 			tmp = ft_strdup(to_add + BUFF_SIZE);
-			free(to_add);
+//			free(to_add);
 			buf_store(buf, tmp);
 		}
 	}
 	else
 	{
-		buf->buf = ft_strcpy(buf->buf, to_add);
+		buf->buf = ft_strjoin(buf->buf, to_add);
 		buf->len += ft_strlen(to_add);
-		buf->buf[buf->len] = '\0';
-		free(to_add);
+//		free(to_add);
 	}
 }
 
 void	buf_output_clear(t_buf *buf)
 {
-	ft_putstr(buf->buf);
+	write(1, buf->buf, buf->len);
 	ft_bzero(buf->buf, (size_t)BUFF_SIZE);
 	buf->len = 0;
 }

@@ -15,7 +15,7 @@
 int	ft_printf(const char *format, ...)
 {
 	int		i;
-	char	*s;
+	char	*s;	// the processed string to output
 	t_buf	*b;
 	
 
@@ -25,8 +25,7 @@ int	ft_printf(const char *format, ...)
 	{
 		if (format[i] != '%') // not yet found %
 		{
-			buf_store(b, (char*)format + i);
-			
+			s = ft_strsub(format, i, 1);
 			
 			
 			
@@ -42,25 +41,12 @@ int	ft_printf(const char *format, ...)
 
 			// process argument, depending on spec param			
 			
-			
 		}
-		buf_store(b, s); // store in buf (output and clear when full)
+		buf_store(b, s); // store in buf (output and clear when full)			
+		i++;
 		free(s);
 	}
 	buf_output_clear(b);
-	buf_del(b);
+//	buf_del(b);
 	return (0); //?
-}
-
-
-
-
-////////////
-# include <stdio.h>
-
-int	main()
-{
-	ft_printf("abcdlafjaklfsjlfjlsfjksfsdklf");
-	
-	
 }
