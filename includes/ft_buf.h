@@ -12,16 +12,18 @@
 
 # include <unistd.h>
 # include "libft.h"
-# define BUFF_SIZE 1
+# define BUFF_SIZE 1024
 
 typedef struct	s_buf
 {
-	char	*buf;
+	char	buf[BUFF_SIZE + 1];
 	int		len;
+	int		total;
 }				t_buf;
 
 t_buf	*buf_init(void);
 int		till_full(t_buf *buf);
-void	buf_store(t_buf *buf, char *to_add);
+void	buf_store_str(t_buf *buf, char *to_add);
+void	buf_store_chr(t_buf *buf, char to_add);
 void	buf_output_clear(t_buf *buf);
-void	buf_del(t_buf *buf);
+int		buf_del(t_buf *buf);

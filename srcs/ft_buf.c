@@ -14,13 +14,16 @@
 
 t_buf	*buf_init(void)
 {
-	t_buf *to_ret;
+	t_buf	*to_ret;
+	int		i;
 	
 	if (!(to_ret = (t_buf*)ft_memalloc(sizeof(t_buf))))
-		return NULL;
-	if (!(to_ret->buf = (char*)ft_strnew(BUFF_SIZE)))
-		return NULL;
+		return (NULL);
+	i = 0;
+	while (i <= BUFF_SIZE)
+		(to_ret->buf)[i++] = 0;
 	to_ret->len = 0;
+	to_ret->total = 0;
 	return (to_ret);
 }
 
@@ -29,42 +32,63 @@ int		till_full(t_buf *buf)
 	return (BUFF_SIZE - buf->len);
 }
 
-void		buf_store(t_buf *buf, char *to_add)
+void		buf_store_str(t_buf *buf, char *to_add)
 {
-	char	*tmp;
+	int		i;
+	int		s_len;
 	
-	if (till_full(buf) <= (int)ft_strlen(to_add))
+	s_len = (int)ft_strlen(to_add);
+	if (till_full(buf) <= s_len)
 	{
 		buf_output_clear(buf);
-		if (ft_strlen(to_add) < BUFF_SIZE)
-			buf_store(buf, to_add);
+		if (s_len < BUFF_SIZE)
+			buf_store_str(buf, to_add);
 		else	
 		{
-			buf->buf = ft_strncpy(buf->buf, to_add, BUFF_SIZE);
+			i = 0;
+			while (i <= BUFF_SIZE)
+				(buf->buf)[i++] = *(to_add++);
 			buf->len = BUFF_SIZE;
-			tmp = ft_strdup(to_add + BUFF_SIZE);
-//			free(to_add);
-			buf_store(buf, tmp);
+			buf->total += BUFF_SIZE;
+			buf_store_str(buf, to_add);
 		}
 	}
 	else
 	{
-		buf->buf = ft_strjoin(buf->buf, to_add);
-		buf->len += ft_strlen(to_add);
-//		free(to_add);
+		i = buf->len;
+		while (to_add)
+			(buf->buf)[i++] = *(to_add++);
+		buf->len += s_len;
+		buf->total += s_len;
+		free(to_add);
 	}
+}
+
+void	buf_store_chr(t_buf *buf, char to_add)
+{
+	if (buf->len == BUFF_SIZE)
+		buf_output_clear(buf);
+	(buf->buf)[buf->len] = to_add;
+	buf->len++;
+	buf->total++;
 }
 
 void	buf_output_clear(t_buf *buf)
 {
+	int i;
+
 	write(1, buf->buf, buf->len);
-	ft_bzero(buf->buf, (size_t)BUFF_SIZE);
+	i = 0;
+	while (i <= BUFF_SIZE)
+		(buf->buf)[i++] = 0;
 	buf->len = 0;
 }
 
-void	buf_del(t_buf *buf)
+int		buf_del(t_buf *buf)
 {
-	free(buf->buf);
-	buf->buf = NULL;
+	int		to_ret;
+	
+	to_ret = buf->total;
 	free(buf);
+	return (to_ret);
 }

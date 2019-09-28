@@ -7,7 +7,7 @@ FLAGS = -Wall -Werror -Wextra
 
 INC = $(addprefix -I, $(INC_PATH))
 
-SRC_NAME = ft_buf.c ft_printf.c
+SRC_NAME = ft_buf.c ft_printf.c parse_param.c
 OBJ_NAME = $(SRC_NAME:.c=.o)
 SRC = $(addprefix $(SRC_PATH), $(SRC_NAME))
 OBJ = $(addprefix $(OBJ_PATH), $(OBJ_NAME))
@@ -92,7 +92,7 @@ $(NAME):
 	@echo "libft files compiled"
 	@make $(OBJ)
 	@echo "ft_printf files compiled"	
-	@ar rc $(NAME) $(OBJ)
+	@ar rc $(NAME) $(OBJ) $(LFT_OBJ)
 	@ranlib $(NAME)
 	@echo "library established"
 
