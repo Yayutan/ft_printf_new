@@ -3,11 +3,20 @@ SRC_PATH = ./srcs/
 OBJ_PATH = ./objs/
 LFT_PATH = ./libft/
 INC_PATH = ./includes/
-FLAGS = -Wall -Werror -Wextra
+FLAGS = -Wall -Werror -Wextra -g
 
 INC = $(addprefix -I, $(INC_PATH))
 
-SRC_NAME = ft_buf.c ft_printf.c parse_param.c
+SRC_NAME = ft_buf.c\
+		ft_printf.c\
+		parse_param.c\
+		dis_proc_fin.c\
+		printcs.c\
+		printdiouxb.c\
+		printfeg.c\
+		printk.c\
+		printp.c\
+		printr.c
 OBJ_NAME = $(SRC_NAME:.c=.o)
 SRC = $(addprefix $(SRC_PATH), $(SRC_NAME))
 OBJ = $(addprefix $(OBJ_PATH), $(OBJ_NAME))
@@ -74,7 +83,9 @@ LFT_SRC_NAME = ft_atoi.c\
 		ft_lstinsert.c\
 		ft_lstdelat.c\
 		ft_lstlen.c\
-		ft_lstat.c
+		ft_lstat.c\
+		ft_ulltoa_base.c\
+		ft_lltoa_base.c
 LFT_OBJ_NAME = $(LFT_SRC_NAME:.c=.o)
 LFT_SRC = $(addprefix $(LFT_PATH), $(LFT_SRC_NAME))
 LFT_OBJ = $(addprefix $(LFT_PATH), $(LFT_OBJ_NAME))

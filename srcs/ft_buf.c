@@ -56,11 +56,10 @@ void		buf_store_str(t_buf *buf, char *to_add)
 	else
 	{
 		i = buf->len;
-		while (to_add)
+		while (*to_add)
 			(buf->buf)[i++] = *(to_add++);
 		buf->len += s_len;
 		buf->total += s_len;
-		free(to_add);
 	}
 }
 

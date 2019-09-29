@@ -44,13 +44,13 @@ int		parse_format(char *ft, t_spec *sp, int i, va_list orig)
 }
 
 //////////
-# include <stdio.h>
+//# include <stdio.h>
 /////////
 
 int		ft_printf(const char *format, ...)
 {
 	int		i;
-//	char	*s;	// the processed string to output and tmp for finding spec
+	char	*s;	// the processed string to output and tmp for finding spec
 	t_buf	*b; // the buffer
 	t_spec	*spec; // the parameters set up
 	va_list	ap_orig; // will always remain the same
@@ -63,7 +63,6 @@ int		ft_printf(const char *format, ...)
 	va_copy(ap_orig, spec->param_lst);
 	while (format[i])
 	{
-		
 		if (format[i] != '%')
 		{
 			buf_store_chr(b, format[i]);
@@ -71,15 +70,18 @@ int		ft_printf(const char *format, ...)
 		}
 		else
 		{
-			printf("Spec being set up for %s:..\n", format + i);
-			i++;
-			i = parse_format((char*)format, spec, i, ap_orig);
-			printf("Param: %d\nFlags: %d%d%d%d%d%d\nWidth: %d\nPrecision: %d\nLength: %c%c\nSpecifier: %c\nValid: %d\n", spec->param, spec->flags[0], spec->flags[1], spec->flags[2], spec->flags[3], spec->flags[4], spec->flags[5], spec->width, spec->precision, spec->length[0], spec->length[1], spec->specifier, spec->valid);
+//			printf("Spec being set up for %s:..\n", format + i);
+//			printf("Param: %d\nFlags: %d%d%d%d%d%d\nWidth: %d\nPrecision: %d\nLength: %c%c\nSpecifier: %c\nValid: %d\n", spec->param, spec->flags[0], spec->flags[1], spec->flags[2], spec->flags[3], spec->flags[4], spec->flags[5], spec->width, spec->precision, spec->length[0], spec->length[1], spec->specifier, spec->valid);
+			i = parse_format((char*)format, spec, i + 1, ap_orig);
+
 			if (spec->valid > 0)
 			{
-				// process argument(as a list), depending on spec param			
-//				buf_store_str(b, s); // store in buf (output and clear when full)			
-//				free(s);	
+				
+				// maybe deal with c here?
+				// need to clear buff, write unsigned char, then proceed
+				s = d_p_f(spec, ap_orig);// distribute, process, finalize
+				buf_store_str(b, s); // store in buf (output and clear when full)
+				free(s);	
 			}
 			else
 			{
@@ -88,12 +90,10 @@ int		ft_printf(const char *format, ...)
 		}
 	
 	}
-//	printf("Spec being set up for %s:..\n", format);
-//	printf("Param: %d\nFlags: %d%d%d%d%d%d\nWidth: %d\nPrecision: %d\nLength: %c%c\nSpecifier: %c\nValid: %d\n", spec->param, spec->flags[0], spec->flags[1], spec->flags[2], spec->flags[3], spec->flags[4], spec->flags[5], spec->width, spec->precision, spec->length[0], spec->length[1], spec->specifier, spec->valid);
-//	free(spec);
+	va_end(spec->param_lst);
+	free(spec);
 	buf_output_clear(b);
-//	va_end(ap_actual);
-//	va_end(ap_orig);
+	va_end(ap_orig);
 //	return(b_del(b));
 	return (0);
 }

@@ -15,6 +15,7 @@
 # include <string.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <limits.h>
 
 typedef struct		s_list
 {
@@ -92,4 +93,6 @@ void				ft_lstadd_bk(t_list **lst, t_list *n);
 void				ft_lstinsert(t_list **lst, t_list *item, int pos);
 t_list				*ft_lstat(t_list *lst, int pos);
 void				ft_lstdelat(t_list **lst, int pos);
+char				*ft_ulltoa_base(unsigned long long n, int b);
+char				*ft_lltoa_base(long long n, int b);
 #endif

@@ -1,32 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   printfeg.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mchuang <mchuang@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/18 21:14:16 by mchuang           #+#    #+#             */
-/*   Updated: 2019/09/18 21:14:18 by mchuang          ###   ########.fr       */
+/*   Created: 2019/09/28 11:52:14 by mchuang           #+#    #+#             */
+/*   Updated: 2019/09/28 11:52:16 by mchuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 
-char	*ft_strdup(const char *s1)
-{
-	char	*toret;
-	size_t	cur;
-	size_t	max;
 
-	max = ft_strlen(s1);
-	toret = ft_strnew(max);
-	if (!toret)
-		return (NULL);
-	cur = 0;
-	while (cur < max)
-	{
-		toret[cur] = s1[cur];
-		cur++;
-	}
-	return (toret);
-}
+
+
+// https://en.wikipedia.org/wiki/Single-precision_floating-point_format
+// https://en.wikipedia.org/wiki/Double-precision_floating-point_format
+// long double?
+
+// http://cstl-csm.semo.edu/xzhang/Class%20Folder/CS280/Workbook_HTML/FLOATING_tut.htm
