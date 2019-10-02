@@ -1,4 +1,4 @@
 *.pdf
 main.c
-a.out*
-includes/*.h.gch
+test.c
+a.out

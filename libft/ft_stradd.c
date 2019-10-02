@@ -1,32 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_buf.h                                           :+:      :+:    :+:   */
+/*   ft_stradd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mchuang <mchuang@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/25 13:48:20 by mchuang           #+#    #+#             */
-/*   Updated: 2019/09/25 13:48:31 by mchuang          ###   ########.fr       */
+/*   Created: 2019/10/02 12:55:11 by mchuang           #+#    #+#             */
+/*   Updated: 2019/10/02 12:55:43 by mchuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_BUF_H
-# define FT_BUF_H
-# include <unistd.h>
-# include "libft.h"
-# define BUFF_SIZE 1024
+#include "libft.h"
 
-typedef struct	s_buf
+char	*ft_stradd(char *s, char t, int m, int n)
 {
-	char		buf[BUFF_SIZE + 1];
-	int			len;
-	int			total;
-}				t_buf;
+	int		c;
+	char	*tmp;
 
-t_buf			*buf_init(void);
-int				till_full(t_buf *buf);
-void			buf_store_str(t_buf *buf, char *to_add);
-void			buf_store_chr(t_buf *buf, char to_add);
-void			buf_output_clear(t_buf *buf);
-int				buf_del(t_buf *buf);
-#endif
+	tmp = ft_strnew(ft_strlen(s) + n);
+	if (m == -1)
+	{
+		ft_strncpy(tmp + n, s, ft_strlen(s));
+		c = 0;
+		while (c < n)
+		{
+			tmp[c] = t;
+			c++;
+		}
+	}
+	else if (m == 1)
+	{
+		ft_strncpy(tmp, s, ft_strlen(s));
+		c = 0;
+		while (c < n)
+		{
+			tmp[c + ft_strlen(s)] = t;
+			c++;
+		}
+	}
+	return (tmp);
+}

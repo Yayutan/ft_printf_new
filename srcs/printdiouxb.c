@@ -27,7 +27,7 @@ char	*add_apos(char *s)
 	{
 		if (j % 3 == 0 && j != 0)
 		{
-			to_ret[i--] = (char)(localeconv()->thousands_sep);
+			to_ret[i--] = ','; // ? localconv?
 			to_ret[i] = s[ft_strlen(s) - 1 - j];
 		}
 		else
@@ -57,7 +57,7 @@ char	*do_di(t_spec *sp, long long int arg)
 		((arg >> (8 * sp->len - 1)) & 1))
 		tmp = (sp->flags[1]) ? ft_strjoin("+", str) : ft_strjoin(" ", str);
 	if (sp->flags[5])
-		tmp = add_apos(str); // add '
+		tmp = add_apos(str);
 	if (tmp)
 	{
 		free(str);
@@ -100,17 +100,21 @@ char	*split_n_fix(t_spec *sp, long long int arg)
 		str = do_di(sp, arg);
 	else // (ft_strchr("ouxXb", sp->specifier))
 		str = do_ouxXb(sp, arg);
-	if ((sp->specifier == 'o' || sp->specifier == 'b') && arg != 0 && sp->flags[3])
-	{
-		tmp = (sp->specifier == 'o') ? ft_strjoin("0", str) : ft_strjoin("b", str);
-		sp->precision++;
-	}
+    if (sp->precision > (int)ft_strlen(str))
+    {
+        tmp = ft_stradd(str, '0', -1, sp->precision - (int)ft_strlen(str));
+        free(str);
+	   str = tmp;
+    }
+	if (sp->specifier == 'b' && arg != 0 && sp->flags[3])
+		tmp = ft_strjoin("b", str);
+    else if (sp->specifier == 'o' && arg != 0 && sp->flags[3] && str[0] != '0')
+		tmp = ft_strjoin("0", str);
 	else if (ft_strchr("xX", sp->specifier) && arg != 0 && sp->flags[3])
-	{
-		tmp = ft_strjoin("0x", str);
-		sp->precision++;
-	}
-	else
+        tmp = ft_strjoin("0x", str);
+	else if (sp->precision > (int)ft_strlen(str))
+        tmp = ft_stradd(str, '0', -1, sp->precision - (int)ft_strlen(str));
+    else
 		return (str);
 	free(str);
 	str = tmp;
@@ -130,15 +134,15 @@ char	*initial_diouxb(t_spec *sp, va_list orig)
 	{
 		va_copy(cp, orig);
 		i = 1;
-		while (i < sp->param)
-		{
+		while (i++ < sp->param)
 			va_arg(cp, long long int);
-			i++;
-		}
 		arg = va_arg(cp, long long int);
 		va_end(sp->param_lst);
 		va_copy(sp->param_lst, cp);
 		va_end(cp);
 	}
-	return (split_n_fix(sp, arg));
+    if (sp->precision == 0 && arg == 0)
+        return (ft_strnew(0));
+    else
+	   return (split_n_fix(sp, arg));
 }

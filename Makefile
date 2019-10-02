@@ -86,7 +86,8 @@ LFT_SRC_NAME = ft_atoi.c\
 		ft_lstat.c\
 		ft_ulltoa_base.c\
 		ft_lltoa_base.c\
-		ft_strup.c
+		ft_strup.c\
+        ft_stradd.c
 LFT_OBJ_NAME = $(LFT_SRC_NAME:.c=.o)
 LFT_SRC = $(addprefix $(LFT_PATH), $(LFT_SRC_NAME))
 LFT_OBJ = $(addprefix $(LFT_PATH), $(LFT_OBJ_NAME))

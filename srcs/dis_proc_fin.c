@@ -14,18 +14,16 @@
 
 char	*finalize(t_spec *sp, char *str) // process width, precision, etc.
 {
-	char	*res;
+	char	*res = str;
 //	char	*tmp;
-	
-	res = ft_strdup(str);
-	sp->valid = -1; // remove later
+    sp->valid = -1;
 	return res;
 }
 
 char	*d_p_f(t_spec *sp, va_list orig) // distribute, process, finalize
 {
 	char	*to_ret;
-	char	*tmp;
+//	char	*tmp;
 	
 	if (sp->specifier == 'c')  // need to fix!!!!
 		to_ret = initial_s(sp, orig);
@@ -46,8 +44,8 @@ char	*d_p_f(t_spec *sp, va_list orig) // distribute, process, finalize
 		to_ret = ft_strdup("%");
 	else
 		return (NULL);
-	tmp = finalize(sp, to_ret);
-	free(to_ret);
-	to_ret = tmp;
+//	tmp = finalize(sp, to_ret);
+//	free(to_ret);
+//	to_ret = tmp;
 	return (to_ret);
 }
