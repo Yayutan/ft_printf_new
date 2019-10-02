@@ -96,25 +96,25 @@ char	*split_n_fix(t_spec *sp, long long int arg)
 	char	*str;
 	char	*tmp;
 
-	str = NULL;
 	if (ft_strchr("di", sp->specifier))
 		str = do_di(sp, arg);
-	else if (ft_strchr("ouxXb", sp->specifier))
+	else // (ft_strchr("ouxXb", sp->specifier))
 		str = do_ouxXb(sp, arg);
-	tmp = NULL;
-	if (sp->specifier == 'o' && arg != 0 && sp->flags[3])
-		tmp = ft_strjoin("0", str);
-	else if (sp->specifier == 'b' && arg != 0 && sp->flags[3])
-		tmp = ft_strjoin("b", str);
-	else if (ft_strchr("xX", sp->specifier) && arg != 0 && sp->flags[3])
-		tmp = ft_strjoin("0x", str);
-	if (tmp)
+	if ((sp->specifier == 'o' || sp->specifier == 'b') && arg != 0 && sp->flags[3])
 	{
-		free(str);
-		str = tmp;
+		tmp = (sp->specifier == 'o') ? ft_strjoin("0", str) : ft_strjoin("b", str);
+		sp->precision++;
 	}
-	if (sp->specifier == 'X')
-		str = ft_strup(str);
+	else if (ft_strchr("xX", sp->specifier) && arg != 0 && sp->flags[3])
+	{
+		tmp = ft_strjoin("0x", str);
+		sp->precision++;
+	}
+	else
+		return (str);
+	free(str);
+	str = tmp;
+	str = (sp->specifier == 'X') ? ft_strup(str) : str;
 	return (str);
 }
 

@@ -12,7 +12,7 @@
 
 # include "../includes/ft_printf.h"
 
-char		*n_th_s(va_list orig, int i)
+char		*n_th_s(t_spec *sp, va_list orig, int i)
 {
 	va_list		cp;
 	int			j;
@@ -26,11 +26,13 @@ char		*n_th_s(va_list orig, int i)
 		j++;
 	}
 	to_ret = va_arg(cp, char*);
+	va_end(sp->param_lst);
+	va_copy(sp->param_lst, cp);
 	va_end(cp);
 	return (to_ret);
 }
 
-char		n_th_c(va_list orig, int i)
+char		n_th_c(t_spec *sp, va_list orig, int i)
 {
 	va_list		cp;
 	int			j;
@@ -44,6 +46,8 @@ char		n_th_c(va_list orig, int i)
 		j++;
 	}
 	to_ret = (char)va_arg(cp, int);
+	va_end(sp->param_lst);
+	va_copy(sp->param_lst, cp);
 	va_end(cp);
 	return (to_ret);
 }
@@ -56,14 +60,14 @@ char	*initial_s(t_spec *sp, va_list orig)
 	
 	if (sp->specifier == 'c')
 	{
-		n_c = (sp->param != 0) ? n_th_c(orig, sp->param): (unsigned char)va_arg(sp->param_lst, int);
-		str = (char*)ft_memalloc(2 * sizeof(unsigned char));
+		n_c = (sp->param != 0) ? n_th_c(sp, orig, sp->param): (char)va_arg(sp->param_lst, int);
+		str = (char*)ft_memalloc(2 * sizeof(char));
 		str[0] = n_c;
 		return (str);
 	}
 	else if (sp->specifier == 's')
 	{
-		n_s = (sp->param != 0) ? n_th_s(orig, sp->param): va_arg(sp->param_lst, char*);
+		n_s = (sp->param != 0) ? n_th_s(sp, orig, sp->param): va_arg(sp->param_lst, char*);
 		str = ft_strdup(n_s);
 		return (str);		
 	}

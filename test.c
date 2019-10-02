@@ -103,6 +103,9 @@ int main(int argc, char** argv)
 
 	//setlocale(LC_ALL, "");
 	//wchar_t * str  = L"😀😃";
+	printf("|%f|\n", 3000.56);
+	printf("|%e|\n", 3000.56);
+//	ft_printf("|%3$.*2$s|%s|\n", 5,4,"3","2","1");
 //	test_binary();
 //	test_apostrophe();
 //	test_money();

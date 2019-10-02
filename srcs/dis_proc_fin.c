@@ -15,6 +15,7 @@
 char	*finalize(t_spec *sp, char *str) // process width, precision, etc.
 {
 	char	*res;
+//	char	*tmp;
 	
 	res = ft_strdup(str);
 	sp->valid = -1; // remove later
