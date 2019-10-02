@@ -12,12 +12,22 @@
 
 # include "../includes/ft_printf.h"
 
-char	*finalize(t_spec *sp, char *str) // process width, precision, etc.
+char	*finalize(t_spec *sp, char *str) // process width, etc.
 {
-	char	*res = str;
-//	char	*tmp;
-    sp->valid = -1;
-	return res;
+	char	*tmp;
+	
+	if (sp->width > (int)ft_strlen(str))
+	{
+		if ((!ft_strchr("diouxXb", sp->specifier) || sp->precision == -1) && sp->flags[4] && !sp->flags[0])
+			tmp = ft_stradd(str, '0', -1, sp->width - (int)ft_strlen(str));
+		else if (sp->flags[0])
+			tmp = ft_stradd(str, ' ', 1, sp->width - (int)ft_strlen(str));
+		else
+			tmp = ft_stradd(str, ' ', -1, sp->width - (int)ft_strlen(str));
+		free(str);
+		str = tmp;
+	}
+	return str;
 }
 
 char	*d_p_f(t_spec *sp, va_list orig) // distribute, process, finalize
@@ -25,11 +35,8 @@ char	*d_p_f(t_spec *sp, va_list orig) // distribute, process, finalize
 	char	*to_ret;
 //	char	*tmp;
 	
-	if (sp->specifier == 'c')  // need to fix!!!!
-		to_ret = initial_s(sp, orig);
-		//return (c_special_unsigned(sp, orig));
-	else if (sp->specifier == 's')
-		to_ret = initial_s(sp, orig);
+	if (ft_strchr("cs", sp->specifier))
+		to_ret = initial_cs(sp, orig);
 	else if (ft_strchr("diouxXb", sp->specifier))
 		to_ret = initial_diouxb(sp, orig);
 //	else if (ft_strchr("feg", sp->specifier))
@@ -44,7 +51,7 @@ char	*d_p_f(t_spec *sp, va_list orig) // distribute, process, finalize
 		to_ret = ft_strdup("%");
 	else
 		return (NULL);
-//	tmp = finalize(sp, to_ret);
+	to_ret = finalize(sp, to_ret);
 //	free(to_ret);
 //	to_ret = tmp;
 	return (to_ret);

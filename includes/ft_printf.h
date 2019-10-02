@@ -40,7 +40,7 @@ int				star_param(t_spec *sp, char *ft, int i, va_list orig);
 int				parse_format(char *ft, t_spec *sp, int i, va_list orig);
 int				n_th_int(va_list orig, int i);
 char			*d_p_f(t_spec *sp, va_list orig);
-char			*initial_s(t_spec *sp, va_list orig);
+char			*initial_cs(t_spec *sp, va_list orig);
 char			*initial_diouxb(t_spec *sp, va_list orig);
 char			*initial_p(t_spec *sp, va_list orig);
 #endif

@@ -107,7 +107,6 @@ int main(int argc, char** argv)
 //	printf("|%f|\n", 3000.56);
 //	printf("|%e|\n", 3000.56);
 //	printf("|%g|\n", 3000.56);
-    
 //	test_binary();
 //	test_apostrophe();
 //	test_money();

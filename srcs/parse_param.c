@@ -12,7 +12,6 @@
 
 # include "../includes/ft_printf.h"
 
-//int		n_th_int(t_spec *sp, va_list orig, int i)
 int		n_th_int(va_list orig, int i)
 {
 	va_list		cp;
@@ -27,8 +26,6 @@ int		n_th_int(va_list orig, int i)
 		j++;
 	}
 	to_ret = va_arg(cp, int);
-//	va_end(sp->param_lst);
-//	va_arg(sp->param_lst, cp);
 	va_end(cp);
 	return (to_ret);
 }
@@ -140,7 +137,7 @@ void	clear_param(t_spec *sp)
 	while(i < 6)
 		sp->flags[i++] = 0;
 	sp->width = 0;
-	sp->precision = 1;
+	sp->precision = -1;
 	sp->len = 4;
 	sp->specifier = '\0';
 	sp->valid = 0;

@@ -52,7 +52,7 @@ char		n_th_c(t_spec *sp, va_list orig, int i)
 	return (to_ret);
 }
 
-char	*initial_s(t_spec *sp, va_list orig)
+char	*initial_cs(t_spec *sp, va_list orig)
 {
 	char	*str;
 	char	n_c;

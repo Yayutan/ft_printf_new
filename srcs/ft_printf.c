@@ -72,9 +72,9 @@ int		ft_printf(const char *format, ...)
 		else
 		{
 //			printf("Spec being set up for %s:..\n", format + i);
-//			printf("Param: %d\nFlags: %d%d%d%d%d%d\nWidth: %d\nPrecision: %d\nLength: %c%c\nSpecifier: %c\nValid: %d\n", spec->param, spec->flags[0], spec->flags[1], spec->flags[2], spec->flags[3], spec->flags[4], spec->flags[5], spec->width, spec->precision, spec->length[0], spec->length[1], spec->specifier, spec->valid);
+//			printf("Param: %d\nFlags: %d%d%d%d%d%d\nWidth: %d\nPrecision: %d\nLength: %d\nSpecifier: %c\nValid: %d\n", spec->param, spec->flags[0], spec->flags[1], spec->flags[2], spec->flags[3], spec->flags[4], spec->flags[5], spec->width, spec->precision, spec->len, spec->specifier, spec->valid);
 			i = parse_format((char*)format, spec, i + 1, ap_orig);
-
+//printf("Param: %d\nFlags: %d%d%d%d%d%d\nWidth: %d\nPrecision: %d\nLength: %d\nSpecifier: %c\nValid: %d\n", spec->param, spec->flags[0], spec->flags[1], spec->flags[2], spec->flags[3], spec->flags[4], spec->flags[5], spec->width, spec->precision, spec->len, spec->specifier, spec->valid);
 			if (spec->valid > 0)
 			{
 				
