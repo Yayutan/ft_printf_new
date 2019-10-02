@@ -32,10 +32,11 @@ int		parse_format(char *ft, t_spec *sp, int i, va_list orig)
 		else
 			i = not_num_param(sp, ft, i);
 	}
-	if (ft_strchr("dDioOuUxXbBfegcsprk%", ft[i]))
+	if (ft_strchr("dDioOuUxXbBfegcsprk%", ft[i])) // length h:2 hh:1 l:8 ll:8 L:16 \0:4
 	{
 		sp->valid = 1;
-		sp->specifier = ft[i]; // set type
+		sp->specifier = (ft_strchr("DOUB", ft[i])) ? ft[i] + 32 : ft[i]; // set type
+		sp->len = (ft_strchr("DOUB", ft[i])) ? 8 : sp->len;
 		i++;
 	}
 	else

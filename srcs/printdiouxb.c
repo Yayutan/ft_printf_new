@@ -12,48 +12,66 @@
 
 # include "../includes/ft_printf.h"
 
-char	*do_dDi(t_spec *sp, long long int arg)
+char	*add_apos(char *s)
 {
-	char			*str;
+	char	*to_ret;
+	int		i;
+	int		j;
 
-	if (sp->specifier == 'D')
-		str = ft_lltoa_base((long int)arg, 10);
-	else if (sp->length[0] == '\0') // only di
-		str = ft_lltoa_base((int)arg, 10);
-	else if (sp->length[0] == 'h' && sp->length[0] == 'h')
-		str = ft_lltoa_base((char)arg, 10);
-	else if (sp->length[0] == 'h')
-		str = ft_lltoa_base((short)arg, 10);
-	else if (sp->length[0] == 'l' && sp->length[0] == 'l')
-		str = ft_lltoa_base(arg, 10);
-	else if (sp->length[0] == 'l')
-		str = ft_lltoa_base((long)arg, 10);
-	else
-		str = NULL;
-	return (str);
+	i = (ft_strchr(" -+", s[0])) ? 1 : 0 ;
+	to_ret = ft_strnew(ft_strlen(s) + (ft_strlen(s) - 1 - i) / 3);
+    i = ft_strlen(s) + (ft_strlen(s) - 1 - i) / 3 - 1;
+	j = 0;
+	to_ret[0] = s[0];
+	while (i > 0)
+	{
+		if (j % 3 == 0 && j != 0)
+		{
+			to_ret[i--] = (char)(localeconv()->thousands_sep);
+			to_ret[i] = s[ft_strlen(s) - 1 - j];
+		}
+		else
+			to_ret[i] = s[ft_strlen(s) - 1 - j];
+		j++;
+		i--;		
+	}
+	return (to_ret);
 }
 
-char	*do_OUB(t_spec *sp, long long int arg)
+char	*do_di(t_spec *sp, long long int arg)
 {
 	char	*str;
+	char	*tmp;
 
-	if (sp->specifier == 'O')
-		str = ft_ulltoa_base((unsigned long int)arg, 8);
-	else if (sp->specifier == 'U')
-		str = ft_ulltoa_base((unsigned long int)arg, 10);
-	else if (sp->specifier == 'B')
-		str = ft_ulltoa_base((unsigned long int)arg, 2);
-	else
-		str = NULL;
+	str = NULL;
+	if (sp->len == 4)
+		str = ft_lltoa_base((int)arg, 10);
+	else if (sp->len == 1)
+		str = ft_lltoa_base((char)arg, 10);
+	else if (sp->len == 2)
+		str = ft_lltoa_base((short)arg, 10);
+	else if (sp->len == 8)
+		str = ft_lltoa_base(arg, 10);
+	tmp = NULL;
+	if ((sp->flags[1] || sp->flags[2]) &&
+		((arg >> (8 * sp->len - 1)) & 1))
+		tmp = (sp->flags[1]) ? ft_strjoin("+", str) : ft_strjoin(" ", str);
+	if (sp->flags[5])
+		tmp = add_apos(str); // add '
+	if (tmp)
+	{
+		free(str);
+		str = tmp;	
+	}
 	return (str);
 }
 
-
-char	*do_ouxb(t_spec *sp, long long int arg)
+char	*do_ouxXb(t_spec *sp, long long int arg)
 {
 	char	*str;
 	int		base;
 
+	str = NULL;
 	if (sp->specifier == 'o')
 		base = 8;
 	else if (ft_strchr("xX", sp->specifier))
@@ -62,24 +80,46 @@ char	*do_ouxb(t_spec *sp, long long int arg)
 		base = 10;
 	else if (sp->specifier == 'b')
 		base = 2;
-	if (sp->length[0] == '\0')
+	if (sp->len == 4)
 		str = ft_ulltoa_base((unsigned int) arg, base);
-	else if (sp->length[0] == 'h' && sp->length[0] == 'h')
+	else if (sp->len == 1)
 		str = ft_ulltoa_base((unsigned char)arg, base);
-	else if (sp->length[0] == 'h')
+	else if (sp->len == 2)
 		str = ft_ulltoa_base((unsigned short)arg, base);
-	else if (sp->length[0] == 'l' && sp->length[0] == 'l')
+	else if (sp->len == 8)
 		str = ft_ulltoa_base((unsigned long long)arg, base);
-	else if (sp->length[0] == 'l')
-		str = ft_ulltoa_base((unsigned long)arg, base);
-	else
-		str = NULL;
+	return (str);
+}
+
+char	*split_n_fix(t_spec *sp, long long int arg)
+{
+	char	*str;
+	char	*tmp;
+
+	str = NULL;
+	if (ft_strchr("di", sp->specifier))
+		str = do_di(sp, arg);
+	else if (ft_strchr("ouxXb", sp->specifier))
+		str = do_ouxXb(sp, arg);
+	tmp = NULL;
+	if (sp->specifier == 'o' && arg != 0 && sp->flags[3])
+		tmp = ft_strjoin("0", str);
+	else if (sp->specifier == 'b' && arg != 0 && sp->flags[3])
+		tmp = ft_strjoin("b", str);
+	else if (ft_strchr("xX", sp->specifier) && arg != 0 && sp->flags[3])
+		tmp = ft_strjoin("0x", str);
+	if (tmp)
+	{
+		free(str);
+		str = tmp;
+	}
+	if (sp->specifier == 'X')
+		str = ft_strup(str);
 	return (str);
 }
 
 char	*initial_diouxb(t_spec *sp, va_list orig)
 {
-	char			*str;
 	va_list			cp;
 	int				i;
 	long long int	arg;
@@ -96,13 +136,9 @@ char	*initial_diouxb(t_spec *sp, va_list orig)
 			i++;
 		}
 		arg = va_arg(cp, long long int);
+		va_end(sp->param_lst);
+		va_copy(sp->param_lst, cp);
 		va_end(cp);
 	}
-	if (ft_strchr("dDi", sp->specifier))
-		str = do_dDi(sp, arg);
-	else if (ft_strchr("OUB", sp->specifier))
-		str = do_OUB(sp, arg);
-	else
-		str = do_ouxb(sp, arg);
-	return (str);
+	return (split_n_fix(sp, arg));
 }

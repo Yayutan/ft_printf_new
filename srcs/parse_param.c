@@ -12,6 +12,7 @@
 
 # include "../includes/ft_printf.h"
 
+//int		n_th_int(t_spec *sp, va_list orig, int i)
 int		n_th_int(va_list orig, int i)
 {
 	va_list		cp;
@@ -26,6 +27,8 @@ int		n_th_int(va_list orig, int i)
 		j++;
 	}
 	to_ret = va_arg(cp, int);
+//	va_end(sp->param_lst);
+//	va_arg(sp->param_lst, cp);
 	va_end(cp);
 	return (to_ret);
 }
@@ -94,20 +97,18 @@ int		not_num_param(t_spec *sp, char *ft, int i) // weird
 		sp->flags[4] = 1;
 	else if (ft[i] == '\'')
 		sp->flags[5] = 1;
-	else if (ft[i] == 'h')  // what if already have length???
+	else if (ft[i] == 'h')  // length h:2 hh:1 l:8 ll:8 L:16 \0:4
 	{
-		sp->length[0] = 'h';
-		sp->length[1] = (ft[i + 1] == 'h') ? 'h' : '\0';
+		sp->len = (ft[i + 1] == 'h') ? 1 : 2;
 		i += (ft[i + 1] == 'h') ? 1 : 0;
 	}
 	else if (ft[i] == 'l')
 	{
-		sp->length[0] = 'l';
-		sp->length[1] = (ft[i + 1] == 'l') ? 'l' : '\0';
+		sp->len = 8;
 		i += (ft[i + 1] == 'l') ? 1 : 0;
 	}
 	else if (ft[i] == 'L')
-		sp->length[0] = 'L';
+		sp->len = 16;
 	return (++i);
 }
 
@@ -140,8 +141,7 @@ void	clear_param(t_spec *sp)
 		sp->flags[i++] = 0;
 	sp->width = 0;
 	sp->precision = 1;
-	sp->length[0] = '\0';
-	sp->length[1] = '\0';
+	sp->len = 4;
 	sp->specifier = '\0';
 	sp->valid = 0;
 }

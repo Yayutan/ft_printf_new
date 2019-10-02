@@ -31,14 +31,14 @@ char	*d_p_f(t_spec *sp, va_list orig) // distribute, process, finalize
 		//return (c_special_unsigned(sp, orig));
 	else if (sp->specifier == 's')
 		to_ret = initial_s(sp, orig);
-	else if (ft_strchr("dDioOuUxXbB", sp->specifier))
+	else if (ft_strchr("diouxXb", sp->specifier))
 		to_ret = initial_diouxb(sp, orig);
 //	else if (ft_strchr("feg", sp->specifier))
 //		to_ret = ;
 //	else if (sp->specifier == 'k')
 //		to_ret = ;
-//	else if (sp->specifier == 'p')
-//		to_ret = ;
+	else if (sp->specifier == 'p')
+		to_ret = initial_p(sp, orig);
 //	else if (sp->specifier == 'r')
 //		to_ret = ;
 	else if (sp->specifier == '%')

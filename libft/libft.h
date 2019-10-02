@@ -95,4 +95,5 @@ t_list				*ft_lstat(t_list *lst, int pos);
 void				ft_lstdelat(t_list **lst, int pos);
 char				*ft_ulltoa_base(unsigned long long n, int b);
 char				*ft_lltoa_base(long long n, int b);
+char				*ft_strup(char *s);
 #endif

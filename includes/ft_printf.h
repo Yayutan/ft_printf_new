@@ -17,6 +17,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdarg.h>
+# include <locale.h>
 
 typedef struct	s_spec
 { 
@@ -24,7 +25,7 @@ typedef struct	s_spec
 	int			flags[6]; // flags - +   # 0 '    0 for off, 1 for on
 	int			width; // width * (number)
 	int			precision; // .precision .number .*
-	char		length[2]; // length h hh l ll L
+	int			len; // length h:2 hh:1 l:8 ll:8 L:16 \0:4
 	char		specifier; 
 	va_list		param_lst;
 	int			valid;
@@ -41,6 +42,8 @@ int		n_th_int(va_list orig, int i);
 char	*d_p_f(t_spec *sp, va_list orig);
 char	*initial_s(t_spec *sp, va_list orig);
 char	*initial_diouxb(t_spec *sp, va_list orig);
+char	*initial_p(t_spec *sp, va_list orig);
+
 # endif
 
 // Useful description of params
