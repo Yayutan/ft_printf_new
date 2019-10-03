@@ -104,7 +104,9 @@ int main(int argc, char** argv)
 	//setlocale(LC_ALL, "");
 	//wchar_t * str  = L"😀😃";
     
-//	printf("|%f|\n", 3000.56);
+	printf("%s\n",ft_dtoa(2.53455666000000, 10));
+	printf("%.10f\n", 2.53455666000000);
+//	ft_printf("|%lb|\n", 3000.56);
 //	printf("|%e|\n", 3000.56);
 //	printf("|%g|\n", 3000.56);
 //	test_binary();

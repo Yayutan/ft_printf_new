@@ -52,7 +52,6 @@ int		star_param(t_spec *sp, char *ft, int i, va_list orig)
 		sp->width = width;
 	i += (ft[i] != '$') ? 0: 1;
 	return (i);
-	
 }
 
 
