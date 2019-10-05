@@ -13,30 +13,69 @@
 #include "../includes/ft_printf.h"
 
 
+double		n_th_d(t_spec *sp, va_list orig, int i)
+{
+	va_list	cp;
+	int		j;
+	double	to_ret;
+	
+	va_copy(cp, orig);
+	j = 1;
+	while (j < i)
+	{
+		va_arg(cp, double);
+		j++;
+	}
+	to_ret = va_arg(cp, double);
+	va_end(sp->param_lst);
+	va_copy(sp->param_lst, cp);
+	va_end(cp);
+	return (to_ret);
+}
 
+long double		n_th_ld(t_spec *sp, va_list orig, int i)
+{
+	va_list		cp;
+	int			j;
+	long double	to_ret;
+	
+	va_copy(cp, orig);
+	j = 1;
+	while (j < i)
+	{
+		va_arg(cp, long double);
+		j++;
+	}
+	to_ret = va_arg(cp, long double);
+	va_end(sp->param_lst);
+	va_copy(sp->param_lst, cp);
+	va_end(cp);
+	return (to_ret);
+}
 
+char	*initial_feg(t_spec *sp, va_list orig)
+{
+	char	*to_ret;
 
-//char	*initial_feg(sp, orig)
-//{
-//	va_list			cp;
-//	int				i;
-//	long long int	arg;
-//	
-//	if (sp->param == 0)
-//		arg = va_arg(sp->param_lst, long long int);
-//	else
-//	{
-//		va_copy(cp, orig);
-//		i = 1;
-//		while (i++ < sp->param)
-//			va_arg(cp, long long int);
-//		arg = va_arg(cp, long long int);
-//		va_end(sp->param_lst);
-//		va_copy(sp->param_lst, cp);
-//		va_end(cp);
-//	}
-//   return (split_n_fix(sp, arg));
-//}
+	sp->precision = (sp->precision == -1) ? 6 : sp->precision;
+	if (sp->len == 16)
+	{
+		if (sp->param != 0)
+			to_ret = ft_ldtoa(n_th_ld(sp, orig, sp->param), sp->precision);
+		else
+			to_ret = ft_ldtoa(va_arg(sp->param_lst, long double), sp->precision);
+	}
+	else if (sp->specifier == 'f')
+	{
+		if (sp->param != 0)
+			to_ret = ft_dtoa(n_th_d(sp, orig, sp->param), sp->precision);
+		else
+			to_ret = ft_dtoa(va_arg(sp->param_lst, double), sp->precision);
+	}
+	else
+		to_ret = NULL;
+	return (to_ret);
+}
 
 // https://en.wikipedia.org/wiki/Single-precision_floating-point_format
 // https://en.wikipedia.org/wiki/Double-precision_floating-point_format

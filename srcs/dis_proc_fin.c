@@ -39,8 +39,8 @@ char	*d_p_f(t_spec *sp, va_list orig) // distribute, process, finalize
 		to_ret = initial_cs(sp, orig);
 	else if (ft_strchr("diouxXb", sp->specifier))
 		to_ret = initial_diouxb(sp, orig);
-//	else if (ft_strchr("feg", sp->specifier))
-//		to_ret = initial_feg(sp, orig);
+	else if (ft_strchr("feg", sp->specifier))
+		to_ret = initial_feg(sp, orig);
 //	else if (sp->specifier == 'k')
 //		to_ret = ;
 	else if (sp->specifier == 'p')
@@ -51,6 +51,6 @@ char	*d_p_f(t_spec *sp, va_list orig) // distribute, process, finalize
 		to_ret = ft_strdup("%");
 	else
 		return (NULL);
-	to_ret = finalize(sp, to_ret);
-	return (to_ret);
+//	to_ret = finalize(sp, to_ret);
+	return (finalize(sp, to_ret));
 }

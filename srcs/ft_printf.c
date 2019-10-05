@@ -82,7 +82,7 @@ int		ft_printf(const char *format, ...)
 				// need to clear buff, write unsigned char, then proceed
 				s = d_p_f(spec, ap_orig);// distribute, process, finalize
 				buf_store_str(b, s); // store in buf (output and clear when full)
-				free(s);	
+//				free(s); // cannot free???	
 			}
 			else
 			{

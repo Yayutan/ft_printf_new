@@ -43,5 +43,5 @@ char			*d_p_f(t_spec *sp, va_list orig);
 char			*initial_cs(t_spec *sp, va_list orig);
 char			*initial_diouxb(t_spec *sp, va_list orig);
 char			*initial_p(t_spec *sp, va_list orig);
-//char			*initial_feg(sp, orig);
+char			*initial_feg(t_spec *sp, va_list orig);
 #endif
