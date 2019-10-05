@@ -54,7 +54,7 @@ char	*do_di(t_spec *sp, long long int arg)
 		str = ft_lltoa_base(arg, 10);
 	tmp = NULL;
 	if ((sp->flags[1] || sp->flags[2]) &&
-		((arg >> (8 * sp->len - 1)) & 1))
+		!((arg >> (8 * sp->len - 1)) & 1))
 		tmp = (sp->flags[1]) ? ft_strjoin("+", str) : ft_strjoin(" ", str);
 	if (sp->flags[5])
 		tmp = add_apos(str);
@@ -100,25 +100,21 @@ char	*split_n_fix(t_spec *sp, long long int arg)
 		str = do_di(sp, arg);
 	else // (ft_strchr("ouxXb", sp->specifier))
 		str = do_ouxXb(sp, arg);
-    if (sp->precision > (int)ft_strlen(str))
-    {
-        tmp = ft_stradd(str, '0', -1, sp->precision - (int)ft_strlen(str));
-        free(str);
-	   str = tmp;
-    }
-	if (sp->specifier == 'b' && arg != 0 && sp->flags[3])
-		tmp = ft_strjoin("b", str);
-    else if (sp->specifier == 'o' && arg != 0 && sp->flags[3] && str[0] != '0')
-		tmp = ft_strjoin("0", str);
-	else if (ft_strchr("xX", sp->specifier) && arg != 0 && sp->flags[3])
-        tmp = ft_strjoin("0x", str);
-	else if (sp->precision > (int)ft_strlen(str))
-        tmp = ft_stradd(str, '0', -1, sp->precision - (int)ft_strlen(str));
-    else
-		return (str);
+	tmp = ft_stradd(str, '0', -1, sp->precision - (int)ft_strlen(str));
 	free(str);
-	str = tmp;
-	str = (sp->specifier == 'X') ? ft_strup(str) : str;
+	if (ft_strchr("bxX", sp->specifier) && arg != 0 && sp->flags[3])
+	{
+		str = (sp->specifier == 'b') ? ft_strjoin("b", tmp) : ft_strjoin("0x", tmp);
+		free(tmp);
+		sp->num_pref = 1;	
+	}
+    else if (sp->specifier == 'o' && arg != 0 && sp->flags[3] && str[0] != '0')
+	{
+		str = ft_strjoin("0", tmp);
+		free(tmp);
+	}
+	else
+		str = tmp;
 	return (str);
 }
 

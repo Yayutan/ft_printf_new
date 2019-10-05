@@ -19,14 +19,29 @@ char	*finalize(t_spec *sp, char *str) // process width, etc.
 	if (sp->width > (int)ft_strlen(str))
 	{
 		if ((!ft_strchr("diouxXb", sp->specifier) || sp->precision == -1) && sp->flags[4] && !sp->flags[0])
-			tmp = ft_stradd(str, '0', -1, sp->width - (int)ft_strlen(str));
-		else if (sp->flags[0])
-			tmp = ft_stradd(str, ' ', 1, sp->width - (int)ft_strlen(str));
+		{
+			if (sp->num_pref == 1)
+			{
+				if (sp->specifier == 'b')
+					str[0] = '0';
+				else
+					str[1] = '0';
+				tmp = ft_stradd(str, '0', -1, sp->width - (int)ft_strlen(str));
+				if (sp->specifier == 'b')
+					tmp[0] = 'b';
+				else
+					tmp[1] = 'x';
+			}
+			else
+				tmp = ft_stradd(str, '0', -1, sp->width - (int)ft_strlen(str));
+		}
 		else
-			tmp = ft_stradd(str, ' ', -1, sp->width - (int)ft_strlen(str));
+			tmp = (sp->flags[0]) ? ft_stradd(str, ' ', 1, sp->width - (int)ft_strlen(str)) :
+		ft_stradd(str, ' ', -1, sp->width - (int)ft_strlen(str));
 		free(str);
 		str = tmp;
 	}
+	str = (ft_strchr("XE", sp->specifier)) ? ft_strup(str) : str;
 	return str;
 }
 

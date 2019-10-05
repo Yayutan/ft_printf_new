@@ -17,16 +17,15 @@ char	*ft_stradd(char *s, char t, int m, int n)
 	int		c;
 	char	*tmp;
 
+	if (n <= 0)
+		return (ft_strdup(s));
 	tmp = ft_strnew(ft_strlen(s) + n);
 	if (m == -1)
 	{
 		ft_strncpy(tmp + n, s, ft_strlen(s));
 		c = 0;
 		while (c < n)
-		{
-			tmp[c] = t;
-			c++;
-		}
+			tmp[c++] = t;
 	}
 	else if (m == 1)
 	{

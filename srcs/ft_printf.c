@@ -16,13 +16,8 @@
 int		parse_format(char *ft, t_spec *sp, int i, va_list orig)
 {
 	clear_param(sp);
-	while (ft[i] && ft_strchr("0123456789hlL*.'#-+ ", ft[i]))
+	while (ft[i] && ft_strchr(",;:_vaACSnjz0123456789hlL*.'#-+ ", ft[i]))
 	{
-//		//////////////////
-//		ft_putstr("Looking at : ");
-//		ft_putchar(ft[i]);
-//		ft_putchar('\n');
-//		//////////////////
 		if (ft[i] >= '1' && ft[i] <= '9')
 			i = num_param(sp, ft, i);
 		else if (ft[i] == '*')
@@ -32,7 +27,7 @@ int		parse_format(char *ft, t_spec *sp, int i, va_list orig)
 		else
 			i = not_num_param(sp, ft, i);
 	}
-	if (ft_strchr("dDioOuUxXbBfegcsprk%", ft[i])) // length h:2 hh:1 l:8 ll:8 L:16 \0:4
+	if (ft[i] && ft_strchr("dDioOuUxXbBfegcsprk%", ft[i])) // length h:2 hh:1 l:8 ll:8 L:16 \0:4
 	{
 		sp->valid = 1;
 		sp->specifier = (ft_strchr("DOUB", ft[i])) ? ft[i] + 32 : ft[i]; // set type
@@ -51,6 +46,7 @@ int		parse_format(char *ft, t_spec *sp, int i, va_list orig)
 int		ft_printf(const char *format, ...)
 {
 	int		i;
+	int 	j;
 	char	*s;	// the processed string to output and tmp for finding spec
 	t_buf	*b; // the buffer
 	t_spec	*spec; // the parameters set up
@@ -86,6 +82,11 @@ int		ft_printf(const char *format, ...)
 			}
 			else
 			{
+				j = i;
+				while (format[i] && format[i] != '%')
+					i++;
+				s = ft_strsub(format, j, i - j);
+				buf_store_str(b, finalize(spec, s)); // free(s) ? 
 				// invalid, keep reading till next % or EOF, then format
 			}
 		}
@@ -95,6 +96,6 @@ int		ft_printf(const char *format, ...)
 	free(spec);
 	buf_output_clear(b);
 	va_end(ap_orig);
-//	return(b_del(b));
-	return (0);
+	return(buf_del(b));
+//	return (0);
 }

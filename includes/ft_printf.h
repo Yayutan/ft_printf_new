@@ -29,6 +29,8 @@ typedef struct	s_spec
 	char		specifier;
 	va_list		param_lst;
 	int			valid;
+	char		sign[2];
+	char		pref[3];
 }				t_spec;
 
 int				ft_printf(const char *format, ...);
@@ -44,4 +46,5 @@ char			*initial_cs(t_spec *sp, va_list orig);
 char			*initial_diouxb(t_spec *sp, va_list orig);
 char			*initial_p(t_spec *sp, va_list orig);
 char			*initial_feg(t_spec *sp, va_list orig);
+char			*finalize(t_spec *sp, char *str);
 #endif

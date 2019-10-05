@@ -140,5 +140,10 @@ void	clear_param(t_spec *sp)
 	sp->len = 4;
 	sp->specifier = '\0';
 	sp->valid = 0;
+	sp->sign[0] = '\0';
+	sp->sign[1] = '\0';
+	sp->pref[0] = '\0';
+	sp->pref[1] = '\0';
+	sp->pref[2] = '\0';
 }
 

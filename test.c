@@ -103,15 +103,13 @@ int main(int argc, char** argv)
 
 	//setlocale(LC_ALL, "");
 	//wchar_t * str  = L"😀😃";
-    printf("%f\n", 1.234);
-    ft_printf("%f\n", 1.234);
-	printf("%.6f\n", 0.1234);
-    ft_printf("%.6f\n", 0.1234);
-	printf("%.*f\n", 4, 12.34);
-    ft_printf("%.*f\n", 4, 12.34);
-	printf("%f\n", -123.4);
-    ft_printf("%f\n", -123.4);
-//	test_binary();
+//	printf("X: %X\n", 42);
+//	ft_printf("X: %X\n", 42);
+	char c = NULL;
+//	printf("#8x: %#8x\n", 42);
+//	ft_printf("#8x: %#8x\n", 42);
+	
+	//	test_binary();
 //	test_apostrophe();
 //	test_money();
 	//test_color();
