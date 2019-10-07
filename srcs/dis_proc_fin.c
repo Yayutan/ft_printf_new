@@ -15,10 +15,12 @@
 char	*finalize(t_spec *sp, char *str) // process width, etc.
 {
 	char	*tmp; // sign pref precision str // sign pref width(0) str // width( ) sign pref precision str
+	int	to_pad;
 	
+	to_pad = sp->width - (int)ft_strlen(str) - (int)ft_strlen(sp->pref) - (int)ft_strlen(sp->sign);
 	if ((!ft_strchr("diouxXb", sp->specifier) || sp->precision == -1) && sp->flags[4] && !sp->flags[0])
 	{
-		tmp = ft_stradd(str, '0', -1, sp->width - (int)ft_strlen(str));
+		tmp = ft_stradd(str, '0', -1, to_pad);
 		free(str);
 		str = tmp;		
 	}
@@ -27,9 +29,9 @@ char	*finalize(t_spec *sp, char *str) // process width, etc.
 	str = ft_strjoin(sp->sign, tmp);
 	free(tmp);
 	if (sp->flags[0])
-		tmp = ft_stradd(str, ' ', 1, sp->width - (int)ft_strlen(str));
+		tmp = ft_stradd(str, ' ', 1, to_pad);
 	else
-		tmp = ft_stradd(str, ' ', -1, sp->width - (int)ft_strlen(str));	
+		tmp = ft_stradd(str, ' ', -1, to_pad);
 	free(str);
 	str = tmp;
 	str = (ft_strchr("XE", sp->specifier)) ? ft_strup(str) : str;

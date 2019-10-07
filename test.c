@@ -103,20 +103,39 @@ int main(int argc, char** argv)
 
 	//setlocale(LC_ALL, "");
 	//wchar_t * str  = L"😀😃";
-//	printf("X: %X\n", 42);
+	printf("X: %X\n", 42);
+	printf("#X: %#X\n", 42);
+	printf("#05X: %#05X\n", 42);
+	printf("o: %o\n", 42);
+	printf("#o: %#o\n", 42);
+	printf("#05o: %#05o\n", 42);
+	printf("d: %d\n", 42);
+	printf("#d: %#d\n", 42);
+	printf("#05d: %#05d\n", 42);
+	printf("d: %d\n", -42);
+	printf("#d: %#d\n", -42);
+	printf("#05d: %#05d\n", -42);
+	printf("\n");
+	
+	ft_printf("X: %X\n", 42);
+	ft_printf("#X: %#X\n", 42);
+	ft_printf("#05X: %#05X\n", 42);
+	ft_printf("o: %o\n", 42);
+	ft_printf("#o: %#o\n", 42);
+	ft_printf("#05o: %#05o\n", 42);
+	ft_printf("d: %d\n", 42);
+	ft_printf("#d: %#d\n", 42);
+	ft_printf("#05d: %#05d\n", 42);
+	ft_printf("d: %d\n", -42);
+	ft_printf("#d: %#d\n", -42);
+	ft_printf("#05d: %#05d\n", -42);
 //	ft_printf("X: %X\n", 42);
 //	printf("#08.5x: %#08.5x\n", 42);
 //	ft_printf("#08.5x: %#08.5x\n", 42);
 //	printf("#8x: %#8x\n", 42);
 //	ft_printf("#8x: %#8x\n", 42);
 	
-	int a = -42;
-	int b = 42;
-//	printf("%d\n", (int)(a & ~(1 << (8 * 4 - 1))));
-	printf("%d\n", (a > 0) ? a:b);
-//	printf("%d\n", (int)(~b + 1));
-	
-	//	test_binary();
+//	test_binary();
 //	test_apostrophe();
 //	test_money();
 	//test_color();
