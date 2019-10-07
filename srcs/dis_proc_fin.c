@@ -29,9 +29,9 @@ char	*finalize(t_spec *sp, char *str) // process width, etc.
 	str = ft_strjoin(sp->sign, tmp);
 	free(tmp);
 	if (sp->flags[0])
-		tmp = ft_stradd(str, ' ', 1, to_pad);
+		tmp = ft_stradd(str, ' ', 1, sp->width - (int)ft_strlen(str));
 	else
-		tmp = ft_stradd(str, ' ', -1, to_pad);
+		tmp = ft_stradd(str, ' ', -1, sp->width - (int)ft_strlen(str));
 	free(str);
 	str = tmp;
 	str = (ft_strchr("XE", sp->specifier)) ? ft_strup(str) : str;

@@ -86,8 +86,8 @@ int		ft_printf(const char *format, ...)
 				while (format[i] && format[i] != '%')
 					i++;
 				s = ft_strsub(format, j, i - j);
-				buf_store_str(b, finalize(spec, s)); // free(s) ? 
-				// invalid, keep reading till next % or EOF, then format
+				buf_store_str(b, finalize(spec, s));
+				free(s);
 			}
 		}
 	
