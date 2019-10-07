@@ -45,13 +45,13 @@ char	*do_di(t_spec *sp, long long int arg)
 
 	str = NULL;
 	if (sp->len == 4)
-		str = ft_lltoa_base((int)(arg & ~(1 << (8 * sp->len - 1))), 10);
+		str = ft_lltoa_base(((int)arg > 0) ? (int)arg : (int)(~arg + 1), 10);
 	else if (sp->len == 1)
-		str = ft_lltoa_base((char)(arg & ~(1 << (8 * sp->len - 1))), 10);
+		str = ft_lltoa_base(((char)arg > 0) ? (char)arg : (char)(~arg + 1), 10);
 	else if (sp->len == 2)
-		str = ft_lltoa_base((short)(arg & ~(1 << (8 * sp->len - 1))), 10);
+		str = ft_lltoa_base(((short)arg > 0) ? (short)arg : (short)(~arg + 1), 10);
 	else if (sp->len == 8)
-		str = ft_lltoa_base((arg & ~(1 << (8 * sp->len - 1))), 10);
+		str = ft_lltoa_base((arg > 0) ? arg : (~arg + 1), 10);
 	if ((arg >> (8 * sp->len - 1)) & 1)
 		sp->sign[0] = '-';
 	else if (sp->flags[1] || sp->flags[2])
