@@ -5,3 +5,11 @@
 // More examples
 // https://www.lix.polytechnique.fr/~liberti/public/computing/prog/c/C/FUNCTIONS/format.html
 
+
+
+   101010100
+ & 011111111
+-------------
+
+
+ clear neg: arg & (~(1 << (8 * sizeof(??) - 1)))

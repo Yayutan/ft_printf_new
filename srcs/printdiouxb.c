@@ -45,21 +45,20 @@ char	*do_di(t_spec *sp, long long int arg)
 
 	str = NULL;
 	if (sp->len == 4)
-		str = ft_lltoa_base((int)arg, 10);
+		str = ft_lltoa_base((int)(arg & ~(1 << (8 * sp->len - 1))), 10);
 	else if (sp->len == 1)
-		str = ft_lltoa_base((char)arg, 10);
+		str = ft_lltoa_base((char)(arg & ~(1 << (8 * sp->len - 1))), 10);
 	else if (sp->len == 2)
-		str = ft_lltoa_base((short)arg, 10);
+		str = ft_lltoa_base((short)(arg & ~(1 << (8 * sp->len - 1))), 10);
 	else if (sp->len == 8)
-		str = ft_lltoa_base(arg, 10);
-	tmp = NULL;
-	if ((sp->flags[1] || sp->flags[2]) &&
-		!((arg >> (8 * sp->len - 1)) & 1))
-		tmp = (sp->flags[1]) ? ft_strjoin("+", str) : ft_strjoin(" ", str);
+		str = ft_lltoa_base((arg & ~(1 << (8 * sp->len - 1))), 10);
+	if ((arg >> (8 * sp->len - 1)) & 1)
+		sp->sign[0] = '-';
+	else if (sp->flags[1] || sp->flags[2])
+		sp->sign[0] = (sp->flags[1]) ? '+' : ' ';
 	if (sp->flags[5])
-		tmp = add_apos(str);
-	if (tmp)
 	{
+		tmp = add_apos(str);
 		free(str);
 		str = tmp;	
 	}
@@ -98,23 +97,23 @@ char	*split_n_fix(t_spec *sp, long long int arg)
 
 	if (ft_strchr("di", sp->specifier))
 		str = do_di(sp, arg);
-	else // (ft_strchr("ouxXb", sp->specifier))
+	else
 		str = do_ouxXb(sp, arg);
 	tmp = ft_stradd(str, '0', -1, sp->precision - (int)ft_strlen(str));
 	free(str);
+	str = tmp;
 	if (ft_strchr("bxX", sp->specifier) && arg != 0 && sp->flags[3])
 	{
-		str = (sp->specifier == 'b') ? ft_strjoin("b", tmp) : ft_strjoin("0x", tmp);
-		free(tmp);
-		sp->num_pref = 1;	
+		if (sp->specifier == 'b')
+			sp->pref[0] = 'b';
+		else
+		{
+			sp->pref[0] = '0';
+			sp->pref[1] = 'x';
+		}
 	}
     else if (sp->specifier == 'o' && arg != 0 && sp->flags[3] && str[0] != '0')
-	{
-		str = ft_strjoin("0", tmp);
-		free(tmp);
-	}
-	else
-		str = tmp;
+		sp->pref[0] = '0';
 	return (str);
 }
 
