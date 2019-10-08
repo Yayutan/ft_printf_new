@@ -80,6 +80,9 @@ int		dot_param(t_spec *sp, char *ft, int i, va_list orig)
 
 int		not_num_param(t_spec *sp, char *ft, int i)
 {
+	int	len;
+	
+	len = sp->len;
 	if (ft[i] == '-')
 		sp->flags[0] = 1;
 	else if (ft[i] == '+')
@@ -94,20 +97,21 @@ int		not_num_param(t_spec *sp, char *ft, int i)
 		sp->flags[5] = 1;
 	else if (ft[i] == 'h')  // length h:2 hh:1 l:8 ll:8 L:16 \0:4
 	{
-		sp->len = (ft[i + 1] == 'h') ? 1 : 2;
+		len = (ft[i + 1] == 'h') ? 1 : 2;
 		i += (ft[i + 1] == 'h') ? 1 : 0;
 	}
 	else if (ft[i] == 'l')
 	{
-		sp->len = 8;
+		len = 8;
 		i += (ft[i + 1] == 'l') ? 1 : 0;
 	}
 	else if (ft[i] == 'L')
-		sp->len = 16;
+		len = 16;
 	else if (ft[i] == 'j')
-		sp->len = 8;
+		len = 8;
 	else if (ft[i] == 'z')
-		sp->len = 8;
+		len = 8;
+	sp->len = (sp->len > len) ? sp->len : len;
 	return (++i);
 }
 
@@ -140,7 +144,7 @@ void	clear_param(t_spec *sp)
 		sp->flags[i++] = 0;
 	sp->width = 0;
 	sp->precision = -1;
-	sp->len = 4;
+	sp->len = -1;
 	sp->specifier = '\0';
 	sp->valid = 0;
 	sp->sign[0] = '\0';
