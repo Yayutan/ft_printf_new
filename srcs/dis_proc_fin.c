@@ -41,8 +41,7 @@ char	*finalize(t_spec *sp, char *str) // process width, etc.
 char	*d_p_f(t_spec *sp, va_list orig) // distribute, process, finalize
 {
 	char	*to_ret;
-//	char	*tmp;
-	
+
 	if (ft_strchr("cs", sp->specifier))
 		to_ret = initial_cs(sp, orig);
 	else if (ft_strchr("diouxXb", sp->specifier))
@@ -59,6 +58,5 @@ char	*d_p_f(t_spec *sp, va_list orig) // distribute, process, finalize
 		to_ret = ft_strdup("%");
 	else
 		return (NULL);
-//	to_ret = finalize(sp, to_ret);
 	return (finalize(sp, to_ret));
 }

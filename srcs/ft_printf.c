@@ -27,10 +27,10 @@ int		parse_format(char *ft, t_spec *sp, int i, va_list orig)
 		else
 			i = not_num_param(sp, ft, i);
 	}
-	if (ft[i] && ft_strchr("dDioOuUxXbBfegcsprk%", ft[i])) // length h:2 hh:1 l:8 ll:8 L:16 \0:4
+	if (ft[i] && ft_strchr("dDioOuUxXbBfegcsprk%", ft[i]))
 	{
 		sp->valid = 1;
-		sp->specifier = (ft_strchr("DOUB", ft[i])) ? ft[i] + 32 : ft[i]; // set type
+		sp->specifier = (ft_strchr("DOUB", ft[i])) ? ft[i] + 32 : ft[i];
 		sp->len = (ft_strchr("DOUB", ft[i])) ? 8 : sp->len;
 		i++;
 	}
@@ -47,10 +47,10 @@ int		ft_printf(const char *format, ...)
 {
 	int		i;
 	int 	j;
-	char	*s;	// the processed string to output and tmp for finding spec
-	t_buf	*b; // the buffer
-	t_spec	*spec; // the parameters set up
-	va_list	ap_orig; // will always remain the same
+	char	*s;
+	t_buf	*b;
+	t_spec	*spec;
+	va_list	ap_orig;
 
 	i = 0;
 	b = buf_init();
@@ -68,16 +68,12 @@ int		ft_printf(const char *format, ...)
 		else
 		{
 //			printf("Spec being set up for %s:..\n", format + i);
-//			printf("Param: %d\nFlags: %d%d%d%d%d%d\nWidth: %d\nPrecision: %d\nLength: %d\nSpecifier: %c\nValid: %d\n", spec->param, spec->flags[0], spec->flags[1], spec->flags[2], spec->flags[3], spec->flags[4], spec->flags[5], spec->width, spec->precision, spec->len, spec->specifier, spec->valid);
 			i = parse_format((char*)format, spec, i + 1, ap_orig);
-//printf("Param: %d\nFlags: %d%d%d%d%d%d\nWidth: %d\nPrecision: %d\nLength: %d\nSpecifier: %c\nValid: %d\n", spec->param, spec->flags[0], spec->flags[1], spec->flags[2], spec->flags[3], spec->flags[4], spec->flags[5], spec->width, spec->precision, spec->len, spec->specifier, spec->valid);
+//			printf("Param: %d\nFlags: %d%d%d%d%d%d\nWidth: %d\nPrecision: %d\nLength: %d\nSpecifier: %c\nValid: %d\n", spec->param, spec->flags[0], spec->flags[1], spec->flags[2], spec->flags[3], spec->flags[4], spec->flags[5], spec->width, spec->precision, spec->len, spec->specifier, spec->valid);
 			if (spec->valid > 0)
 			{
-				
-				// maybe deal with c here?
-				// need to clear buff, write unsigned char, then proceed
-				s = d_p_f(spec, ap_orig);// distribute, process, finalize
-				buf_store_str(b, s); // store in buf (output and clear when full)
+				s = d_p_f(spec, ap_orig);
+				buf_store_str(b, s);
 //				free(s); // cannot free???	
 			}
 			else
@@ -87,7 +83,7 @@ int		ft_printf(const char *format, ...)
 					i++;
 				s = ft_strsub(format, j, i - j);
 				buf_store_str(b, finalize(spec, s));
-				free(s);
+//				free(s); // cannot free???	
 			}
 		}
 	
@@ -97,5 +93,4 @@ int		ft_printf(const char *format, ...)
 	buf_output_clear(b);
 	va_end(ap_orig);
 	return(buf_del(b));
-//	return (0);
 }

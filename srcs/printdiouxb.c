@@ -44,7 +44,9 @@ char	*do_di(t_spec *sp, long long int arg)
 	char	*tmp;
 
 	str = NULL;
-	if (sp->len == 4)
+	if (sp->precision == 0 && arg == 0)
+		return (ft_strnew(0));
+	else if (sp->len == 4)
 		str = ft_lltoa_base(((int)arg > 0) ? (int)arg : (int)(~arg + 1), 10);
 	else if (sp->len == 1)
 		str = ft_lltoa_base(((char)arg > 0) ? (char)arg : (char)(~arg + 1), 10);
@@ -56,6 +58,12 @@ char	*do_di(t_spec *sp, long long int arg)
 		sp->sign[0] = '-';
 	else if (sp->flags[1] || sp->flags[2])
 		sp->sign[0] = (sp->flags[1]) ? '+' : ' ';
+	if (str[0] == '-')
+	{
+		tmp = ft_strsub(str, 1, ft_strlen(str) - 1);
+		free(str);
+		str = tmp;
+	}
 	if (sp->flags[5])
 	{
 		tmp = add_apos(str);
@@ -71,7 +79,9 @@ char	*do_ouxXb(t_spec *sp, long long int arg)
 	int		base;
 
 	str = NULL;
-	if (sp->specifier == 'o')
+	if (sp->precision == 0 && arg == 0)
+		return (ft_strnew(0));
+	else if (sp->specifier == 'o')
 		base = 8;
 	else if (ft_strchr("xX", sp->specifier))
 		base = 16;
@@ -112,7 +122,7 @@ char	*split_n_fix(t_spec *sp, long long int arg)
 			sp->pref[1] = 'x';
 		}
 	}
-    else if (sp->specifier == 'o' && arg != 0 && sp->flags[3] && str[0] != '0')
+    else if (sp->specifier == 'o' && sp->flags[3] && str[0] != '0')
 		sp->pref[0] = '0';
 	return (str);
 }
@@ -136,8 +146,5 @@ char	*initial_diouxb(t_spec *sp, va_list orig)
 		va_copy(sp->param_lst, cp);
 		va_end(cp);
 	}
-    if (sp->precision == 0 && arg == 0)
-        return (ft_strnew(0));
-    else
-	   return (split_n_fix(sp, arg));
+	return (split_n_fix(sp, arg));
 }

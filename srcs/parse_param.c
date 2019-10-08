@@ -78,7 +78,7 @@ int		dot_param(t_spec *sp, char *ft, int i, va_list orig)
 }
 
 
-int		not_num_param(t_spec *sp, char *ft, int i) // weird
+int		not_num_param(t_spec *sp, char *ft, int i)
 {
 	// hlL '#-+ 
 	if (ft[i] == '-')
@@ -105,6 +105,10 @@ int		not_num_param(t_spec *sp, char *ft, int i) // weird
 	}
 	else if (ft[i] == 'L')
 		sp->len = 16;
+	else if (ft[i] == 'j')
+		sp->len = 8;
+	else if (ft[i] == 'z')
+		sp->len = 8;
 	return (++i);
 }
 

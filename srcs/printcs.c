@@ -68,8 +68,13 @@ char	*initial_cs(t_spec *sp, va_list orig)
 	else if (sp->specifier == 's')
 	{
 		n_s = (sp->param != 0) ? n_th_s(sp, orig, sp->param): va_arg(sp->param_lst, char*);
-		str = ft_strdup(n_s);
-		return (str);		
+		if (!n_s)
+			str = ft_strdup("(null)");
+		else if (sp->precision < 0)
+			str = ft_strdup(n_s);
+		else	
+			str = ft_strsub(n_s, 0, sp->precision);
+		return (str);
 	}
 	else
 		return (NULL);
