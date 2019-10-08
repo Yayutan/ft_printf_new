@@ -31,6 +31,7 @@ typedef struct	s_spec
 	int			valid;
 	char		sign[2];
 	char		pref[3];
+	t_buf		*buf;
 }				t_spec;
 
 int				ft_printf(const char *format, ...);

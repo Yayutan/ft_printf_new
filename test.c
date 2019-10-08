@@ -103,12 +103,17 @@ int main(int argc, char** argv)
 
 	//setlocale(LC_ALL, "");
 	//wchar_t * str  = L"😀😃";
-	char c = -128;
-	printf("Size for intmax_t: %lu\n", sizeof(intmax_t));
-	printf("Size for uintmax_t: %lu\n", sizeof(uintmax_t));
-	printf("Size for size_t: %lu\n", sizeof(size_t));
-	printf("Size for ssize_t: %lu\n", sizeof(ssize_t));
-//	printf("%hhd", -128);
+//	char c = -128;
+//	printf("Size for intmax_t: %lu\n", sizeof(intmax_t));
+//	printf("Size for uintmax_t: %lu\n", sizeof(uintmax_t));
+//	printf("Size for size_t: %lu\n", sizeof(size_t));
+//	printf("Size for ssize_t: %lu\n", sizeof(ssize_t));
+	printf("%llhhd\n", 1280);
+	printf("%hhlld\n", 1280);
+	printf("%hhd\n", 1280);
+	ft_printf("%llhhd\n", 1280);
+	ft_printf("%hhlld\n", 1280);
+	ft_printf("%hhd\n", 1280);
 //	ft_printf("%hhd", -128);
 //	ft_printf("X: %X\n", 42);
 //	printf("#08.5x: %#08.5x\n", 42);

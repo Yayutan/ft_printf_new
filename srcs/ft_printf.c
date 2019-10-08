@@ -48,21 +48,20 @@ int		ft_printf(const char *format, ...)
 	int		i;
 	int 	j;
 	char	*s;
-	t_buf	*b;
 	t_spec	*spec;
 	va_list	ap_orig;
 
 	i = 0;
-	b = buf_init();
 	if (!(spec = (t_spec*)ft_memalloc(sizeof(t_spec))))
 		return (-1);
+	spec->buf = buf_init();
 	va_start(spec->param_lst, format);
 	va_copy(ap_orig, spec->param_lst);
 	while (format[i])
 	{
 		if (format[i] != '%')
 		{
-			buf_store_chr(b, format[i]);
+			buf_store_chr(spec->buf, format[i]);
 			i++;
 		}
 		else
@@ -73,7 +72,7 @@ int		ft_printf(const char *format, ...)
 			if (spec->valid > 0)
 			{
 				s = d_p_f(spec, ap_orig);
-				buf_store_str(b, s);
+				buf_store_str(spec->buf, s);
 //				free(s); // cannot free???	
 			}
 			else
@@ -82,15 +81,16 @@ int		ft_printf(const char *format, ...)
 				while (format[i] && format[i] != '%')
 					i++;
 				s = ft_strsub(format, j, i - j);
-				buf_store_str(b, finalize(spec, s));
+				buf_store_str(spec->buf, finalize(spec, s));
 //				free(s); // cannot free???	
 			}
 		}
 	
 	}
+	buf_output_clear(spec->buf);
+	i = buf_del(spec->buf);
 	va_end(spec->param_lst);
 	free(spec);
-	buf_output_clear(b);
 	va_end(ap_orig);
-	return(buf_del(b));
+	return (i);
 }

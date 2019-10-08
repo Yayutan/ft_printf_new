@@ -42,7 +42,9 @@ char	*d_p_f(t_spec *sp, va_list orig) // distribute, process, finalize
 {
 	char	*to_ret;
 
-	if (ft_strchr("cs", sp->specifier))
+	if (sp->specifier == 'c')
+		return (initial_cs(sp, orig));
+	else if (sp->specifier == 's')
 		to_ret = initial_cs(sp, orig);
 	else if (ft_strchr("diouxXb", sp->specifier))
 		to_ret = initial_diouxb(sp, orig);

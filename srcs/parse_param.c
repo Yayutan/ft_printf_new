@@ -80,7 +80,6 @@ int		dot_param(t_spec *sp, char *ft, int i, va_list orig)
 
 int		not_num_param(t_spec *sp, char *ft, int i)
 {
-	// hlL '#-+ 
 	if (ft[i] == '-')
 		sp->flags[0] = 1;
 	else if (ft[i] == '+')

@@ -26,7 +26,7 @@ typedef struct	s_buf
 t_buf			*buf_init(void);
 int				till_full(t_buf *buf);
 void			buf_store_str(t_buf *buf, char *to_add);
-void			buf_store_chr(t_buf *buf, char to_add);
+void			buf_store_chr(t_buf *buf, unsigned char to_add);
 void			buf_output_clear(t_buf *buf);
 int				buf_del(t_buf *buf);
 #endif

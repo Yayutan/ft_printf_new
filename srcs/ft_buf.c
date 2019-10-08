@@ -63,7 +63,7 @@ void		buf_store_str(t_buf *buf, char *to_add)
 	}
 }
 
-void	buf_store_chr(t_buf *buf, char to_add)
+void	buf_store_chr(t_buf *buf, unsigned char to_add)
 {
 	if (buf->len == BUFF_SIZE)
 		buf_output_clear(buf);
