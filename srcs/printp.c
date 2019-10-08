@@ -34,7 +34,10 @@ char	*initial_p(t_spec *sp, va_list orig)
 		arg = va_arg(cp, long long int);
 		va_end(cp);
 	}
-	address = ft_ulltoa_base(arg, 16);
+	if (arg == 0 && sp->precision == 0)
+		address = ft_strnew(0);
+	else
+		address = ft_ulltoa_base(arg, 16);
 	str = ft_strjoin("0x", address);
 	free(address);
 	return (str);
