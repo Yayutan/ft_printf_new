@@ -88,55 +88,35 @@ void test_fail()
 {
 }
 
-//int main(int argc, char** argv)
-//{
-//	/**
-//	 *	New features include:
-//	 *	1) %b to print binary
-//	 *	2) ' to print apostrophe in duiop
-//	 *	3) $ for indexing arguments
-//	 *	4) Color
-//	 *	5) star
-//	 *	6) fd
-//
-//	 */
-//
-//	//setlocale(LC_ALL, "");
-//	//wchar_t * str  = L"😀😃";
-//	
-//	printf("%+.0i", 0);
-//	ft_printf("%+.0i", 0);
-//	
-//	
-//	
-//	
-//	
-////	test_binary();
-////	test_apostrophe();
-////	test_money();
-//	//test_color();
-////	test_star();
-//	//test_fail();
-//	return 0;
-//}
+int main(int argc, char** argv)
+{
+	/**
+	 *	New features include:
+	 *	1) %b to print binary
+	 *	2) ' to print apostrophe in duiop
+	 *	3) $ for indexing arguments
+	 *	4) Color
+	 *	5) star
+	 *	6) fd
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <limits.h>
-#include <float.h>
+	 */
 
-int main(int argc, char** argv) {
-
-    printf("Storage size for float : %d \n", sizeof(float));
-    printf("FLT_MAX     :   %g\n", (float) FLT_MAX);
-    printf("FLT_MIN     :   %g\n", (float) FLT_MIN);
-    printf("-FLT_MAX    :   %g\n", (float) -FLT_MAX);
-    printf("-FLT_MIN    :   %g\n", (float) -FLT_MIN);
-    printf("DBL_MAX     :   %g\n", (double) DBL_MAX);
-    printf("DBL_MIN     :   %g\n", (double) DBL_MIN);
-    printf("-DBL_MAX     :  %g\n", (double) -DBL_MAX);
-	printf("LDBL_MIN     :   %g\n", (long double) LDBL_MIN);
-    printf("LDBL_MAX     :  %g\n", (long double) LDBL_MAX);
-
-    return 0;
+	//setlocale(LC_ALL, "");
+	//wchar_t * str  = L"😀😃";
+	
+//	printf("{%f}\n", 1444565444646.6465424242242);
+//	ft_printf("{%f}\n", 1444565444646.6465424242242);
+	
+//	printf("{%f}\n", 0.14445654446466465424242242);
+	ft_printf("{%f}\n", 0.14445654446466465424242242);
+	
+	
+	
+//	test_binary();
+//	test_apostrophe();
+//	test_money();
+	//test_color();
+//	test_star();
+	//test_fail();
+	return 0;
 }

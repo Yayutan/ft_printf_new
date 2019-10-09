@@ -12,7 +12,7 @@
 
 #include "../includes/ft_printf.h"
 
-int	find_small_ex(int prev, float *f)
+int	find_small_ex(int prev, double *f)
 {
 	while (*f >= 10)
 	{
@@ -40,7 +40,7 @@ int	find_small_ex(int prev, float *f)
     return prev;
 }
 
-int	find_large_ex(int prev, float *f)
+int	find_large_ex(int prev, double *f)
 {
 	while (*f >= 1e16)
 	{
@@ -68,9 +68,9 @@ int	find_large_ex(int prev, float *f)
     return find_small_ex(prev, f);
 }
 
-int	find_small_neg_ex(int prev, float *f)
+int	find_small_neg_ex(int prev, double *f)
 {
-	while (*f <= 10)
+	while (*f <= 1e-1)
 	{
 		if (*f <= 1e-8)
 		{
@@ -96,7 +96,7 @@ int	find_small_neg_ex(int prev, float *f)
     return prev;
 }
 
-int	find_large_neg_ex(int prev, float *f)
+int	find_large_neg_ex(int prev, double *f)
 {
 	while (*f <= 1e-16)
 	{
@@ -124,3 +124,17 @@ int	find_large_neg_ex(int prev, float *f)
     return find_small_neg_ex(prev, f);
 }
 
+unsigned long long int pow_10(int n)
+{
+	int i;
+	unsigned long long int	res;
+
+	i = n;
+	res = 1;
+	while (i)
+	{
+		res *= 10;
+		i--;
+	}
+	return (res);
+}

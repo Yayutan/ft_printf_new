@@ -16,7 +16,9 @@ SRC_NAME = ft_buf.c\
 		printfeg.c\
 		printk.c\
 		printp.c\
-		printr.c
+		printr.c\
+		f_scientific.c\
+		float_helper.c
 OBJ_NAME = $(SRC_NAME:.c=.o)
 SRC = $(addprefix $(SRC_PATH), $(SRC_NAME))
 OBJ = $(addprefix $(OBJ_PATH), $(OBJ_NAME))

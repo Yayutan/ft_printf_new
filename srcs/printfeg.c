@@ -56,7 +56,8 @@ long double		n_th_ld(t_spec *sp, va_list orig, int i)
 char	*initial_feg(t_spec *sp, va_list orig)
 {
 	char	*to_ret;
-
+	double	next;
+	
 	sp->precision = (sp->precision == -1) ? 6 : sp->precision;
 	if (sp->len == 16)
 	{
@@ -68,9 +69,19 @@ char	*initial_feg(t_spec *sp, va_list orig)
 	else if (sp->specifier == 'f')
 	{
 		if (sp->param != 0)
-			to_ret = ft_dtoa(n_th_d(sp, orig, sp->param), sp->precision);
+			next = n_th_d(sp, orig, sp->param);
 		else
-			to_ret = ft_dtoa(va_arg(sp->param_lst, double), sp->precision);
+			next = va_arg(sp->param_lst, double);
+		if (next < 0)
+		{
+			sp->sign[0] = '-';
+			next *= -1;
+		} //  + and space?
+		to_ret = pos_dtoa(next, sp->precision);
+//		if (sp->param != 0)
+//			to_ret = ft_dtoa(n_th_d(sp, orig, sp->param), sp->precision);
+//		else
+//			to_ret = ft_dtoa(va_arg(sp->param_lst, double), sp->precision);
 	}
 	else
 		to_ret = NULL;
