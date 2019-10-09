@@ -45,7 +45,7 @@ char	*do_di(t_spec *sp, long long int arg)
 
 	str = NULL;
 	if (sp->precision == 0 && arg == 0)
-		return (ft_strnew(0));
+		str = ft_strnew(0);
 	else if (sp->len == 4)
 		str = ft_lltoa_base(((int)arg > 0) ? (int)arg : (int)(~arg + 1), 10);
 	else if (sp->len == 1)
