@@ -49,7 +49,7 @@ char	*ft_ldtoa(long double d, int pre)
 	if (d < 0)
 		to_ret = ft_strjoin("-", whole);
 	else
-		to_ret = whole;
+		to_ret = ft_strdup(whole);
 	free(dec);		
 	free(whole);
 	return (to_ret);

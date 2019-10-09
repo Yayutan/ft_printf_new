@@ -18,7 +18,7 @@ char	*finalize(t_spec *sp, char *str) // process width, etc.
 	int	to_pad;
 	
 	to_pad = sp->width - (int)ft_strlen(str) - (int)ft_strlen(sp->pref) - (int)ft_strlen(sp->sign);
-	if ((!ft_strchr("diouxXb", sp->specifier) || sp->precision == -1) && sp->flags[4] && !sp->flags[0])
+	if ((!ft_strchr("diouxXb", sp->specifier) || sp->precision < 0) && sp->flags[4] && !sp->flags[0])
 	{
 		tmp = ft_stradd(str, '0', -1, to_pad);
 		free(str);
@@ -43,9 +43,9 @@ char	*d_p_f(t_spec *sp, va_list orig) // distribute, process, finalize
 	char	*to_ret;
 
 	if (sp->specifier == 'c')
-		return (initial_cs(sp, orig));
+		return (initial_c(sp, orig));
 	else if (sp->specifier == 's')
-		to_ret = initial_cs(sp, orig);
+		to_ret = initial_s(sp, orig);
 	else if (ft_strchr("diouxXb", sp->specifier))
 		to_ret = initial_diouxb(sp, orig);
 	else if (ft_strchr("feg", sp->specifier))

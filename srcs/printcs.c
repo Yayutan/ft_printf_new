@@ -52,43 +52,50 @@ unsigned char		n_th_c(t_spec *sp, va_list orig, int i)
 	return (to_ret);
 }
 
-char	*initial_cs(t_spec *sp, va_list orig)
+char	*initial_c(t_spec *sp, va_list org)
 {
 	char	*str;
 	unsigned char	n_c;
-	char	*n_s;
-	
-	if (sp->specifier == 'c')
+
+	n_c = (sp->param != 0) ?
+		n_th_c(sp, org, sp->param) : (unsigned char)va_arg(sp->param_lst, int);
+	if (sp->flags[4] && !sp->flags[0])
+		str = ft_stradd("", '0', -1, sp->width - 1);
+	else
+		str = ft_stradd("", ' ', -1, sp->width - 1);
+	if (sp->flags[0])
 	{
-		n_c = (sp->param != 0) ? n_th_c(sp, orig, sp->param): (unsigned char)va_arg(sp->param_lst, int);
-		if (sp->flags[4] && !sp->flags[0])
-			str = ft_stradd("", '0', -1, sp->width - 1);
-		else
-			str = ft_stradd("", ' ', -1, sp->width - 1);
-		if (sp->flags[0])
-		{
-			buf_store_chr(sp->buf, n_c);
-			buf_store_str(sp->buf, str);
-		}
-		else
-		{
-			buf_store_str(sp->buf, str);
-			buf_store_chr(sp->buf, n_c);
-		}
-		free(str);
-		return (ft_strnew(0));
-	}
-	else if (sp->specifier == 's')
-	{
-		n_s = (sp->param != 0) ? n_th_s(sp, orig, sp->param): va_arg(sp->param_lst, char*);
-		if (!n_s)
-			str = ft_strdup("(null)");
-		else if (sp->precision < 0)
-			str = ft_strdup(n_s);
-		else	
-			str = ft_strsub(n_s, 0, sp->precision);
-		return (str);
+		buf_store_chr(sp->buf, n_c);
+		buf_store_str(sp->buf, str);
 	}
 	else
-		return (NULL);
+	{
+		buf_store_str(sp->buf, str);
+		buf_store_chr(sp->buf, n_c);
+	}
+	free(str);
+	return (ft_strnew(0));
+}
+
+char	*initial_s(t_spec *sp, va_list orig)
+{
+	char	*str;
+	char	*n_s;
+	int		nd_free;
+	
+	n_s = (sp->param != 0) ? n_th_s(sp, orig, sp->param): va_arg(sp->param_lst, char*);
+	if (!n_s)
+	{
+		nd_free = 1;
+		n_s = ft_strdup("(null)");
+	}
+	else
+		nd_free = 0;
+	if (sp->precision < 0)
+		str = ft_strdup(n_s);
+	else	
+		str = ft_strsub(n_s, 0, sp->precision);
+	if (nd_free)
+		free(n_s);
+	return (str);
 }

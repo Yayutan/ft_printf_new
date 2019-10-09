@@ -33,7 +33,7 @@ char	*ft_dtoa(double d, int pre)
 	char	*dec;
 	char	*to_ret;
 	double	de;
-	double	d2;;
+	double	d2;
 	
 	d2 = (d < 0) ? -1 * d : d;
 	whole = ft_ulltoa_base((unsigned long long int)d2, 10);
@@ -41,7 +41,10 @@ char	*ft_dtoa(double d, int pre)
 	if ((de -(unsigned long long int)de >= 0.5))
 		dec = ft_ulltoa_base((unsigned long long int)(de + 1), 10);
 	else
-		dec = ft_ulltoa_base((unsigned long long int)de, 10);		
+		dec = ft_ulltoa_base((unsigned long long int)de, 10);
+	to_ret = ft_stradd(dec, '0', -1, pre - ft_strlen(dec));
+	free(dec);
+	dec = to_ret;
 	to_ret = ft_strjoin(whole, ".");
 	free(whole);
 	whole = ft_strjoin(to_ret, dec);
@@ -49,7 +52,7 @@ char	*ft_dtoa(double d, int pre)
 	if (d < 0)
 		to_ret = ft_strjoin("-", whole);
 	else
-		to_ret = whole;
+		to_ret = ft_strdup(whole);
 	free(dec);		
 	free(whole);
 	return (to_ret);

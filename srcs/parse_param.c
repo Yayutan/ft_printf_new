@@ -36,13 +36,14 @@ int		star_param(t_spec *sp, char *ft, int i, va_list orig)
 	int		width;
 
 	i++; // *'' || *n || *n$
-	
 	if (ft[i] >= '0' && ft[i] <= '9')
 	{
 		num = ft_atoi(ft + i);
 		while (ft[i] >= '0' && ft[i] <= '9')
 			i++;
 		width = (ft[i] != '$') ? num : n_th_int(orig, num);
+		if (ft[i] != '$')
+			va_arg(sp->param_lst, int);
 	}	
 	else if (ft[i] != '$')
 		width = va_arg(sp->param_lst, int);
@@ -51,6 +52,11 @@ int		star_param(t_spec *sp, char *ft, int i, va_list orig)
 	else
 		sp->width = width;
 	i += (ft[i] != '$') ? 0: 1;
+	if (sp->width < 0)
+	{
+		sp->flags[0] = 1;
+		sp->width *= -1;
+	}
 	return (i);
 }
 

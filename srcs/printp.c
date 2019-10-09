@@ -38,7 +38,9 @@ char	*initial_p(t_spec *sp, va_list orig)
 		address = ft_strnew(0);
 	else
 		address = ft_ulltoa_base(arg, 16);
-	str = ft_strjoin("0x", address);
+	str = ft_stradd(address, '0', -1, sp->precision - ft_strlen(address));
 	free(address);
-	return (str);
+	address = ft_strjoin("0x", str);
+	free(str);
+	return (address);
 }

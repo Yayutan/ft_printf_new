@@ -48,6 +48,7 @@ int		ft_printf(const char *format, ...)
 	int		i;
 	int 	j;
 	char	*s;
+	char	*tmp;
 	t_spec	*spec;
 	va_list	ap_orig;
 
@@ -73,7 +74,7 @@ int		ft_printf(const char *format, ...)
 			{
 				s = d_p_f(spec, ap_orig);
 				buf_store_str(spec->buf, s);
-//				free(s); // cannot free???	
+				free(s); // cannot free???	
 			}
 			else
 			{
@@ -81,8 +82,9 @@ int		ft_printf(const char *format, ...)
 				while (format[i] && format[i] != '%')
 					i++;
 				s = ft_strsub(format, j, i - j);
-				buf_store_str(spec->buf, finalize(spec, s));
-//				free(s); // cannot free???	
+				tmp = finalize(spec, s);
+				buf_store_str(spec->buf, tmp);
+				free(tmp); // cannot free???	
 			}
 		}
 	
