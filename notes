@@ -1,17 +1,32 @@
 
-// Useful description of params
-// https://www.tutorialspoint.com/c_standard_library/c_function_printf.htm
+Useful description of params
+https://www.tutorialspoint.com/c_standard_library/c_function_printf.htm
 
-// More examples
-// https://www.lix.polytechnique.fr/~liberti/public/computing/prog/c/C/FUNCTIONS/format.html
+More examples
+https://www.lix.polytechnique.fr/~liberti/public/computing/prog/c/C/FUNCTIONS/format.html
 
 
+Floats
+https://www.rapidtables.com/convert/number/decimal-to-binary.html
+https://binary-system.base-conversion.ro/convert-real-numbers-from-decimal-system-to-64bit-double-precision-IEEE754-binary-floating-point.php
+wolframalpha.com
+https://en.wikipedia.org/wiki/Single-precision_floating-point_format (1,8,23)
+https://en.wikipedia.org/wiki/Double-precision_floating-point_format (1,11,52)
+https://en.wikipedia.org/wiki/Quadruple-precision_floating-point_format (1,15,112)
 
--128
-1000 0000
-1000 0000
+Bonus
+Colors
+http://web.theurbanpenguin.com/adding-color-to-your-output-from-c/
+https://www.quora.com/How-do-I-change-the-text-colour-in-the-output-of-a-C-program
+just check format, if valid, put color string in buffer
 
-2.304 * 10^-2 = 0.002304
-2.304 * 10^ 2 = 230.4
-9.999 * 10^ 2 -> 10.000 * 10^ 2 = 1.0000 * 10^ 3 = 1000.0
-9.999 * 10^-2 -> 10.000 * 10^-2 = 1.0000 * 10^ -1 = 0.1000
+
+Non printable char(r)
+https://www.oreilly.com/library/view/java-cookbook/0596001703/ch03s12.html
+recieve ascii code and just put char to buffer
+(how to test?)
+
+ISO dates
+https://en.wikipedia.org/wiki/ISO_8601
+
+
