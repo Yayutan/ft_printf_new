@@ -70,24 +70,24 @@ int	find_large_ex(int prev, double *f)
 
 int	find_small_neg_ex(int prev, double *f)
 {
-	while (*f <= 1e-1)
+	while (*f < 1)
 	{
-		if (*f <= 1e-8)
+		if (*f < 1e-7)
 		{
 			prev -= 8;
 			*f *= 100000000;
 		}
-		else if (*f <= 1e-4)
+		else if (*f < 1e-3)
 		{
 			prev -= 4;
 			*f *= 10000;
 		}
-		else if (*f <= 1e-2)
+		else if (*f < 1e-1)
 		{
 			prev -= 2;
 			*f *= 100;
 		}
-		else if (*f <= 1e-1)
+		else if (*f < 1)
 		{
 			prev -= 1;
 			*f *= 10;
@@ -98,24 +98,24 @@ int	find_small_neg_ex(int prev, double *f)
 
 int	find_large_neg_ex(int prev, double *f)
 {
-	while (*f <= 1e-16)
+	while (*f < 1e-15)
 	{
-		if (*f<= 1e-128)
+		if (*f < 1e-127)
 		{
 			prev -= 128;
 			*f *= 1e128;
 		}
-		else if (*f <= 1e-64)
+		else if (*f < 1e-63)
 		{
 			prev -= 64;
 			*f *= 1e64;
 		}
-		else if (*f <= 1e-32)
+		else if (*f < 1e-31)
 		{
 			prev -= 32;
 			*f *= 1e32;
 		}
-		else if (*f <= 1e-16)
+		else if (*f < 1e-15)
 		{
 			prev -= 16;
 			*f *= 1e16;

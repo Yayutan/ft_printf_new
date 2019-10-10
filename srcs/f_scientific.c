@@ -19,45 +19,48 @@ void	increment(char *res, int index)
 		increment(res, index - 1);
 }
 
-//void	form_whole_str(char *res, double d, int exp, int precision)
+//void	form_str_large(char *res, double d, int exp, int precision)
 //{
 //	int		i;
 //	int		j;
 //	char	*next;
+//	unsigned long long int n;
 //
 //	ft_bzero(res, 309 + 1 + precision);
-//	i = (exp >= 0) ? 1 : exp * -1;
+//	i = 1;
 //	while (i <= exp + precision)
 //	{
-//			///////////////// // can use in e
-////		if (exp + precision - i >= 18)
-////			d *= pow_10(17);
-////		else
-////			d *= pow_10(exp + precision - i + 1);
-////		next = ft_ulltoa_base((unsigned long long int)d, 10);
-////		d -= (unsigned long long int)d;
-////		j = 0;
-////		while (next[j])
-////			res[i++] = next[j++];
-////		free(next);
-//			/////////////
+//		if (d >= 10e17)
+//		{
+//			n = d / ;
+//			d = ;
+//		}			
+//		else
+//		{
+//			n = (unsigned long long int)d;
+//			d = (d - n >= 1) ?  d - n : (d - n) * pow_10(16);
+//		}
+//		next = ft_ulltoa_base(d, 10);
+//		j = 0;
+//		while (next[j] && i <= exp + precision)
+//			res[i++] = next[j++];
+//		free(next);
 //	}
 //	if (d >= 5)
 //		increment(res, i);
 //}
 
-void	form_dec_str(char *res, double d, int exp, int precision)
+void	form_str_small(char *res, double d, int exp, int precision)
 {
 	int		i;
 	int		j;
 	char	*next;
 
 	ft_bzero(res, 309 + 1 + precision);
-	i = (exp >= 0) ? 1 : exp * -1;
+	i = (exp >= 0) ? 1 : exp * -1 + 1;
 	exp = (exp >= 0) ? exp : 0;
 	while (i <= exp + precision)
 	{
-			/////////////// // can use in e
 		if (exp + precision - i >= 18)
 			d *= pow_10(17);
 		else
@@ -66,7 +69,7 @@ void	form_dec_str(char *res, double d, int exp, int precision)
 		d -= (unsigned long long int)d;
 		j = 0;
 		while (next[j])
-			res[i++] = next[j++];
+			res[i++] = next[j++] - '0';
 		free(next);
 	}
 	if (d >= 5)
@@ -85,8 +88,7 @@ void	fill_in(char *dest, char *src, int len)
 		if (dest[i_d] == '.')
 			i_d++;
 		else
-//			dest[i_d++] = src[i_s++] + '0';
-			dest[i_d++] = src[i_s++];
+			dest[i_d++] = src[i_s++] + '0';
 	}
 }
 
@@ -100,7 +102,11 @@ char	*pos_dtoa(double d, int precision) // d is already pos; 0 precision????
 	
 	cur = d;
 	exp = (cur > 1) ? find_large_ex(0, &cur) : find_large_neg_ex(0, &cur);
-	form_dec_str(num_str, cur, exp, precision);
+//	if (exp <= 5)
+//		form_str_small(num_str, cur, exp, precision);
+//	else
+//		form_str_large(num_str, d, exp, precision);
+		form_str_small(num_str, cur, exp, precision);
 	if (num_str[0])
 		exp++;
 	len = (exp >= 0) ? (exp + 2 + precision) : (2 + precision);
