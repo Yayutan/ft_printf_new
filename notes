@@ -14,6 +14,13 @@ https://en.wikipedia.org/wiki/Single-precision_floating-point_format (1,8,23) //
 https://en.wikipedia.org/wiki/Double-precision_floating-point_format (1,11,52) // double
 https://en.wikipedia.org/wiki/Quadruple-precision_floating-point_format (1,15,112) // long double
 
+Arbitrary Precision
+Div
+https://en.wikipedia.org/wiki/Division_algorithm
+
+Mult
+https://en.wikipedia.org/wiki/Toom%E2%80%93Cook_multiplication
+
 Bonus
 Colors
 http://web.theurbanpenguin.com/adding-color-to-your-output-from-c/
