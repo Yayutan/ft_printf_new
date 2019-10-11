@@ -35,7 +35,7 @@ int		star_param(t_spec *sp, char *ft, int i, va_list orig)
 	int		num;
 	int		width;
 
-	i++; // *'' || *n || *n$
+	i++;
 	if (ft[i] >= '0' && ft[i] <= '9')
 	{
 		num = ft_atoi(ft + i);
@@ -65,7 +65,7 @@ int		dot_param(t_spec *sp, char *ft, int i, va_list orig)
 {
 	int		num;
 
-	i++; // .''  || .* || .n
+	i++;
 	if (ft[i] >= '0' && ft[i] <= '9')
 	{
 		num = ft_atoi(ft + i);
@@ -101,7 +101,7 @@ int		not_num_param(t_spec *sp, char *ft, int i)
 		sp->flags[4] = 1;
 	else if (ft[i] == '\'')
 		sp->flags[5] = 1;
-	else if (ft[i] == 'h')  // length h:2 hh:1 l:8 ll:8 L:16 \0:4
+	else if (ft[i] == 'h')
 	{
 		len = (ft[i + 1] == 'h') ? 1 : 2;
 		i += (ft[i + 1] == 'h') ? 1 : 0;

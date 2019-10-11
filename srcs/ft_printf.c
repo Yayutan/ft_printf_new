@@ -39,6 +39,29 @@ int		parse_format(char *ft, t_spec *sp, int i, va_list orig)
 	return (i);
 }
 
+int		change_color(char *ft, int i, t_spec *sp)
+{
+	if (!ft_strncmp(ft + i, "{RED}", ft_strlen("{RED}")))
+		buf_store_str(sp->buf, RED);
+	else if (!ft_strncmp(ft + i, "{GREEN}", ft_strlen("{GREEN}")))
+		buf_store_str(sp->buf, GREEN);
+	else if (!ft_strncmp(ft + i, "{YELLOW}", ft_strlen("{YELLOW}")))
+		buf_store_str(sp->buf, YELLOW);
+	else if (!ft_strncmp(ft + i, "{BLUE}", ft_strlen("{BLUE}")))
+		buf_store_str(sp->buf, BLUE);
+	else if (!ft_strncmp(ft + i, "{MAG}", ft_strlen("{MAG}")))
+		buf_store_str(sp->buf, MAG);
+	else if (!ft_strncmp(ft + i, "{CYAN}", ft_strlen("{CYAN}")))
+		buf_store_str(sp->buf, CYAN);
+	else if (!ft_strncmp(ft + i, "{CLEAR}", ft_strlen("{CLEAR}")))
+		buf_store_str(sp->buf, CLEAR);
+	else
+		return (i);
+	while (ft[i] && ft[i - 1] != '}')
+		i++;
+	return (i);
+}
+
 //////////
 //# include <stdio.h>
 /////////
@@ -60,11 +83,10 @@ int		ft_printf(const char *format, ...)
 	va_copy(ap_orig, spec->param_lst);
 	while (format[i])
 	{
+		if (format[i] == '{')
+			i = change_color((char*)format, i, spec);
 		if (format[i] != '%')
-		{
-			buf_store_chr(spec->buf, format[i]);
-			i++;
-		}
+			buf_store_chr(spec->buf, format[i++]);
 		else
 		{
 //			printf("Spec being set up for %s:..\n", format + i);

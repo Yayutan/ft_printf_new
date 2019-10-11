@@ -10,9 +10,9 @@ Floats
 https://www.rapidtables.com/convert/number/decimal-to-binary.html
 https://binary-system.base-conversion.ro/convert-real-numbers-from-decimal-system-to-64bit-double-precision-IEEE754-binary-floating-point.php
 wolframalpha.com
-https://en.wikipedia.org/wiki/Single-precision_floating-point_format (1,8,23)
-https://en.wikipedia.org/wiki/Double-precision_floating-point_format (1,11,52)
-https://en.wikipedia.org/wiki/Quadruple-precision_floating-point_format (1,15,112)
+https://en.wikipedia.org/wiki/Single-precision_floating-point_format (1,8,23) // float
+https://en.wikipedia.org/wiki/Double-precision_floating-point_format (1,11,52) // double
+https://en.wikipedia.org/wiki/Quadruple-precision_floating-point_format (1,15,112) // long double
 
 Bonus
 Colors

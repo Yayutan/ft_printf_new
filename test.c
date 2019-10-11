@@ -201,7 +201,12 @@ static void print_value(double v)
 
 int	main()
 {
-	print_value(0.5);
+//	print_value(0.5);
+//	printf("Size of double: %lld\n", sizeof(double));
+//	printf("Size of long double: %lld\n", sizeof(long double));
 //	print_value(0.25654);
 //	print_value(-3.244456);
+	
+	printf("\033[0;31mHello world\n\033[0mYeah\n");
+	ft_printf("{RED}Hello world\n{CLEAR}Yeah\n");
 }
