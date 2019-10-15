@@ -32,16 +32,12 @@ void	sub(char *n1, char *n2)
 	}
 }
 
-int		cmp_size(char *n1, char *n2)
+void	clear_str(char *n, int length)
 {
 	int	i;
 	
 	i = 0;
-	while (n1[i])
-	{
-		if (n1[i] != n2[i])
-			return (n1[i] - n2[i]);
-		i++;
-	}
-	return (0);
+	while (i < length)
+		n[i++] = '0';
+	n[i] = '\0';
 }

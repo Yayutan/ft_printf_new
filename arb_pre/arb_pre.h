@@ -13,9 +13,11 @@ void	sub(char *n1, char *n2);
 void	basic_mult(char *n1, char *n2);
 void	mult(char *n1, char *n2);
 void	divi(char *n1, char *n2);
-int		cmp_size(char *n1, char *n2);
 void	clear_str(char *n, int length);
+int		basic_divi(char *n1, char *n2, int leng);
 
+
+int		cmp_size(char *n1, char *n2, int leng);
 
 
 
