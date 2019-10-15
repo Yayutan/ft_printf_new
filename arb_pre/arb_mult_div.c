@@ -17,14 +17,14 @@ int		cmp_size(char *n1, char *n2, int leng)
 	int		j;
 
 	i = 0;
-	while (n1[i] && n1[i] == '0' && i < leng - ft_strlen(n2))
+	while (n1[i] && n1[i] == '0' && i < leng - (int)ft_strlen(n2))
 		i++;
-	if (leng - i > ft_strlen(n2))
+	if (leng - i > (int)ft_strlen(n2))
 		return (1);
 	else
 	{
 		j = 0;
-		while (j < ft_strlen(n2))
+		while (j < (int)ft_strlen(n2))
 		{
 			if (n1[i] > n2[j])
 				return (1);
@@ -78,7 +78,7 @@ void	mult(char *n1, char *n2)
 		i--;
 	}
 	i = -1;
-	while (++i < ft_strlen(n1)) // len
+	while (++i < (int)ft_strlen(n1)) // len
 		n1[i] = to_ret[i];
 }
 
@@ -87,7 +87,6 @@ int		basic_divi(char *n1, char *n2, int leng)
 	int		to_ret;
 	int		i;
 	int		j;
-	int		p;
 
 	to_ret = 0;
 	while (cmp_size(n1 ,n2, leng) >= 0)
@@ -123,7 +122,7 @@ void	divi(char *n1, char *n2)
 	ft_strcpy(cp, n1);
 	clear_str(n1, ft_strlen(n1)); // len
 	leng = ft_strlen(n2_c);
-	while (leng <= ft_strlen(cp)) // len
+	while (leng <= (int)ft_strlen(cp)) // len
 	{
 		n1[leng - 1] = basic_divi(cp, n2, leng) + '0'; // ???
 		leng++;
