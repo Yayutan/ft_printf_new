@@ -1,5 +1,16 @@
 #include "arb_pre.h"
 
+//static const char* powof2[5] = {
+//	"1234567890123456789012345678901234567890"
+//	"12345678901234567890123456789012345678901234567890"
+//	,
+//	"134"
+//	"245"
+//	,
+//	"3457"
+//	"4568"
+//};
+
 int		cmp_size(char *n1, char *n2, int leng)
 {
 	int		i;
@@ -33,7 +44,7 @@ void	add_layer(char *n1, char* n2, int s)
 	
 	i = ft_strlen(n2) - 1; // len
 	p = 0;
-	while (i - s>= 0)
+	while (i - s >= 0)
 	{
 		n1[i - s] += p / 10;
 		p = n1[i - s] + n2[i] - '0' * 2;
@@ -66,12 +77,9 @@ void	mult(char *n1, char *n2)
 		add_layer(to_ret, res, ft_strlen(n2) - 1 - i); // len - i
 		i--;
 	}
-	i = 0;
-	while (i < ft_strlen(n1)) // len
-	{
+	i = -1;
+	while (++i < ft_strlen(n1)) // len
 		n1[i] = to_ret[i];
-		i++;
-	}
 }
 
 int		basic_divi(char *n1, char *n2, int leng)
