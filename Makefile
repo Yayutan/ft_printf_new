@@ -18,8 +18,9 @@ SRC_NAME = ft_buf.c\
 		printk.c\
 		printp.c\
 		printr.c\
-		f_scientific.c\
-		float_helper.c
+		printf_arb.c\
+		printe.c\
+		printe_helper.c
 OBJ_NAME = $(SRC_NAME:.c=.o)
 SRC = $(addprefix $(SRC_PATH), $(SRC_NAME))
 OBJ = $(addprefix $(OBJ_PATH), $(OBJ_NAME))
@@ -110,7 +111,7 @@ APA_OBJ = $(addprefix $(APA_PATH), $(APA_OBJ_NAME))
 all: $(NAME)
 
 test: re
-	@gcc main.c -L. -lftprintf $(LFT_SRC) $(INC) -g
+	@gcc test.c -L. -lftprintf $(LFT_SRC) $(INC) -g
 	@echo "Test executive established"
 
 $(NAME):

@@ -53,7 +53,7 @@ void	add_layer(char *n1, char* n2, int s)
 	}	
 }
 
-void	mult(char *n1, char *n2)
+void	mult(char *n1, const char *n2)
 {
 	char	to_ret[ft_strlen(n1) + 1]; // len + 1
 	char	res[ft_strlen(n1) + 1]; // len + 1
@@ -110,13 +110,13 @@ int		basic_divi(char *n1, char *n2, int leng)
 	return (to_ret);
 }
 
-void	divi(char *n1, char *n2)
+void	divi(char *n1, const char *n2)
 {
 	char	*n2_c;
 	char	cp[ft_strlen(n1) + 1]; // len + 1
 	int		leng;
 	
-	n2_c = n2;
+	n2_c = (char*)n2;
 	while (*n2_c && *n2_c == '0')
 		n2_c++;
 	ft_strcpy(cp, n1);
@@ -124,7 +124,7 @@ void	divi(char *n1, char *n2)
 	leng = ft_strlen(n2_c);
 	while (leng <= (int)ft_strlen(cp)) // len
 	{
-		n1[leng - 1] = basic_divi(cp, n2, leng) + '0'; // ???
+		n1[leng - 1] = basic_divi(cp, n2_c, leng) + '0'; // changed, check if have problem
 		leng++;
 	}
 	

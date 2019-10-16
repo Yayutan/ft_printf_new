@@ -1,6 +1,9 @@
 #include <stdio.h>
 #include <locale.h>
 #include "includes/ft_printf.h"
+//#include "includes/pow_of_two.h"
+#include "includes/arb_pre.h"
+
 
 //void test_binary()
 //{
@@ -147,57 +150,75 @@ void test_fail()
 
 //#include <stdio.h>
 
-union u_double
-{
-    double  dbl;
-    char    data[sizeof(double)];
-};
+//union u_double
+//{
+//    double  dbl;
+//    char    data[sizeof(double)];
+//};
+//
+//union u_float
+//{
+//    float   flt;
+//    char    data[sizeof(float)];
+//};
 
-union u_float
-{
-    float   flt;
-    char    data[sizeof(float)];
-};
-
-static void dump_float(union u_float f)
-{
-    int exp;
-    long mant;
-
-    printf("32-bit float: sign: %d, ", (f.data[0] & 0x80) >> 7);
-    exp = ((f.data[0] & 0x7F) << 1) | ((f.data[1] & 0x80) >> 7);
-    printf("expt: %4d (unbiassed %5d), ", exp, exp - 127);
-    mant = ((((f.data[1] & 0x7F) << 8) | (f.data[2] & 0xFF)) << 8) | (f.data[3] & 0xFF);
-    ft_printf("mant: %b %16ld (0x%06lX)\n", mant, mant, mant);
-}
-
-static void dump_double(union u_double d)
-{
-    int exp;
-    long long mant;
-
-    printf("64-bit float: sign: %d, ", (d.data[0] & 0x80) >> 7);
-    exp = ((d.data[0] & 0x7F) << 4) | ((d.data[1] & 0xF0) >> 4);
-    printf("expt: %4d (unbiassed %5d), ", exp, exp - 1023);
-    mant = ((((d.data[1] & 0x0F) << 8) | (d.data[2] & 0xFF)) << 8) | (d.data[3] & 0xFF);
-    mant = (mant << 32) | ((((((d.data[4] & 0xFF) << 8) | (d.data[5] & 0xFF)) << 8) | (d.data[6] & 0xFF)) << 8) | (d.data[7] & 0xFF);
-    ft_printf("mant: %b %16lld (0x%013llX)\n", mant, mant, mant);
-}
-
-static void print_value(double v)
-{
-    union u_double d;
-    union u_float  f;
-
-    f.flt = v;
-    d.dbl = v;
-
-    printf("SPARC: float/double of %g\n", v);
-//    image_print(stdout, 0, f.data, sizeof(f.data));
-//    image_print(stdout, 0, d.data, sizeof(d.data));
-    dump_float(f);
-    dump_double(d);
-}
+//int		get_exp(union u_double u_d)
+//{
+//	int		exp;
+//	int		i;
+//
+//	exp = 0;
+//	i = 0;
+//	while (i <= 3)
+//	{
+//		exp += (((u_d.data[6] >> (i + 4)) & 1) << i);
+//		i++;
+//	}
+//	while (i <= 10)
+//	{
+//		exp += (((u_d.data[7] >> (i - 4)) & 1) << i);
+//		i++;
+//	}	
+//	return (exp - 1023);
+//}
+//
+//void	get_mantissa(union u_double u_d, char *m)
+//{
+//	int	i;
+//	int	sh;
+//	int	p;
+//
+//	add(m, g_pow_two[0]);
+//	p = 1;
+//	i = 6;
+//	sh = 3;
+//	while (p <= 52)
+//	{
+//		while (sh >= 0)
+//		{
+//			if ((u_d.data[i] >> sh) & 1)
+//				add(m, g_pow_two[p]);
+//			p++;
+//			sh--;
+//		}
+//		i--;
+//		sh = 7;
+//	}
+//}
+//
+//char	*udtoa(double d)
+//{
+//	union u_double	u_d;
+//	int				exp;
+//	char			man[len + 1];
+//	
+//
+//	u_d.dbl = d;
+//	exp =  get_exp(u_d); // special case for 00000 and fffff ?
+//	clear_str(man, len);
+//	get_mantissa(u_d, man);
+//	return "";
+//}
 
 int	main()
 {
@@ -206,7 +227,23 @@ int	main()
 //	printf("Size of long double: %lld\n", sizeof(long double));
 //	print_value(0.25654);
 //	print_value(-3.244456);
+//	udtoa(0.35356);
+//	udtoa(0.03125);
+//	udtoa(0.0625);
+//	udtoa(0.125);
+//	udtoa(0.25);
+//	printf("%s\n", udtoa(0.375));
+//	printf("%s\n", udtoa(0.0000375));
+//	printf("%s\n", udtoa(375));
+//	printf("%s\n", udtoa(3.75));
+//	udtoa(0.5);
+//	udtoa(1.0);	
+//	udtoa(2.0);	
+//	udtoa(4.0);
+//	udtoa(8.0);
+//	udtoa(16.0);
+//	udtoa(32.0);
+//	udtoa(64.0);
+//	udtoa(128.0);
 	
-	printf("\033[0;31mHello world\n\033[0mYeah\n");
-	ft_printf("{RED}Hello world\n{CLEAR}Yeah\n");
 }

@@ -5,11 +5,11 @@
 # define wh 4933
 # define pow -112 // -112
 
-void	add(char *n1, char *n2);
-void	sub(char *n1, char *n2);
+void	add(char *n1, const char *n2);
+void	sub(char *n1, const char *n2);
 void	basic_mult(char *n1, char *n2);
-void	mult(char *n1, char *n2);
-void	divi(char *n1, char *n2);
+void	mult(char *n1, const char *n2);
+void	divi(char *n1, const char *n2);
 void	clear_str(char *n, int length);
 int		basic_divi(char *n1, char *n2, int leng);
 # endif

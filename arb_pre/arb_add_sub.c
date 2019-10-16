@@ -1,6 +1,6 @@
 #include "arb_pre.h"
 
-void	add(char *n1, char *n2)
+void	add(char *n1, const char *n2)
 {
 	int	i;
 	int	p;
@@ -16,7 +16,7 @@ void	add(char *n1, char *n2)
 	}
 }
 
-void	sub(char *n1, char *n2)
+void	sub(char *n1, const char *n2)
 {
 	int	i;
 	int	p;
