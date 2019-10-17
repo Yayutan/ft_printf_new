@@ -13,18 +13,6 @@
 #ifndef POW_OF_TWO_H
 # define POW_OF_TWO_H
 
-union		u_double
-{
-	double	dbl;
-	char	data[sizeof(double)];
-};
-
-union		u_l_double
-{
-	long double	l_dbl;
-	char		data[sizeof(long double)];
-};
-
 const		char *g_pos_pow_two[21] = {
 	"1", "2", "4", "8", "16", "32", "64", "128", "256", "512", "1024", "2048",
 	"4096", "8192", "16384", "32768", "65536", "131072", "262144", "524288",

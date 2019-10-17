@@ -18,7 +18,8 @@ SRC_NAME = ft_buf.c\
 		printk.c\
 		printp.c\
 		printr.c\
-		printf_arb.c\
+		printf_f.c\
+		printf_helper.c\
 		printe.c\
 		printe_helper.c
 OBJ_NAME = $(SRC_NAME:.c=.o)

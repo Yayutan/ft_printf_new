@@ -56,11 +56,12 @@ char			*initial_s(t_spec *sp, va_list orig);
 char			*initial_c(t_spec *sp, va_list org);
 char			*initial_diouxb(t_spec *sp, va_list orig);
 char			*initial_p(t_spec *sp, va_list orig);
-char			*initial_feg(t_spec *sp, va_list orig);
+char			*initial_f(t_spec *sp, va_list orig);
 char			*pos_dtoa(double d, int precision);
 int				find_large_ex(int prev, double *f);
 int				find_large_neg_ex(int prev, double *f);
 unsigned long long int pow_10(int n);
-char			*udtoa(double d, int pre);
+char			*udtoa(double d, int pre, int hash);
+char			*uldtoa(long double d, int pre, int hash);
 char			*finalize(t_spec *sp, char *str);
 #endif

@@ -150,12 +150,12 @@ void test_fail()
 
 //#include <stdio.h>
 
-//union u_double
+//union u_ldouble
 //{
-//    double  dbl;
+//    long double  ldbl;
 //    char    data[sizeof(double)];
 //};
-//
+
 //union u_float
 //{
 //    float   flt;
@@ -221,13 +221,10 @@ void test_fail()
 //}
 
 # include <math.h>
-
+# include<float.h>
 
 int	main()
 {
-//	udtoa(0.0625);
-//	udtoa(0.125);
-//	udtoa(0.25);
 //	printf("%f\n", 0.354353453434534534356);
 //	ft_printf("%f\n", 0.354353453434534534356);
 //	printf("%0f\n", 0.354353453434534534356);
@@ -257,54 +254,9 @@ int	main()
 //	ft_printf("%040.30f\n", -0.354353453434534534356);
 //	printf("%040.f\n", -0.354353453434534534356);
 //	ft_printf("%040.f\n", -0.354353453434534534356);
-	printf("%.112f\n", M_PI);
-	ft_printf("%.112f\n", M_PI);
-	printf("%.200f\n", M_PI);
-	ft_printf("%.200f\n", M_PI);
-//	ft_printf("%s\n", udtoa(0.35356));
-//	ft_printf("%s\n", udtoa(0.35356));
-//	ft_printf("%s\n", udtoa(0.03125));
-//	printf("%s\n", udtoa(375));
-//	printf("%s\n", udtoa(3.75));
-//	udtoa(0.5);
-//	udtoa(1.0);	
-//	udtoa(2.0);	
-//	udtoa(4.0);
-//	udtoa(8.0);
-//	udtoa(16.0);
-//	udtoa(32.0);
-//	udtoa(64.0);
-//	udtoa(128.0);
-//	t_buf	*buf = buf_init();
-	
-//	buf_store_str(buf, "012\n");
-//	buf_output_clear(buf);
-//	
-//	buf_store_str(buf, "012345678\n");
-//	buf_output_clear(buf);
-//	
-//	buf_store_str(buf, "0123456789012345\n");
-//	buf_output_clear(buf);
-//	
-//	buf_store_str(buf, "0123456789012345678\n");
-//	buf_output_clear(buf);
+
+//	printf("%+400.112f\n", M_PI);
+//	ft_printf("%+400.112f\n", M_PI);
+	printf("%f\n", DBL_MIN);
+	ft_printf("%f\n", DBL_MIN);
 }
-
-
-//union		u_double
-//{
-//	double	dbl;
-//	char	data[sizeof(double)];
-//};
-//
-//union		u_l_double
-//{
-//	long double	l_dbl;
-//	char		data[sizeof(long double)];
-//};
-//
-//const		char *g_pos_pow_two[21] = {
-//	"1", "2", "4", "8", "16", "32", "64", "128", "256", "512", "1024", "2048",
-//	"4096", "8192", "16384", "32768", "65536", "131072", "262144", "524288",
-//	"1048576"
-//};
