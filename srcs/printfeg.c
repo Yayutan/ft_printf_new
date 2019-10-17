@@ -55,41 +55,40 @@ long double		n_th_ld(t_spec *sp, va_list orig, int i)
 
 char	*initial_feg(t_spec *sp, va_list orig)
 {
-	char	*to_ret;
-	double	next;
-	
+	char		*to_ret;
+	double		n_d;
+	long double	n_ld;
+
 	sp->precision = (sp->precision == -1) ? 6 : sp->precision;
 	if (sp->len == 16)
 	{
 		if (sp->param != 0)
-			to_ret = ft_ldtoa(n_th_ld(sp, orig, sp->param), sp->precision);
+			n_ld = n_th_ld(sp, orig, sp->param);
 		else
-			to_ret = ft_ldtoa(va_arg(sp->param_lst, long double), sp->precision);
+			n_ld = va_arg(sp->param_lst, long double);
+		if (n_ld < 0)
+			sp->sign[0] = '-';
+		else
+		{
+			// ' ' or '+'
+		}
+		to_ret = ft_strnew(0); // to_ret = uldtoa(d, sp->precision);
 	}
 	else if (sp->specifier == 'f')
 	{
 		if (sp->param != 0)
-			next = n_th_d(sp, orig, sp->param);
+			n_d = n_th_d(sp, orig, sp->param);
 		else
-			next = va_arg(sp->param_lst, double);
-		if (next < 0)
-		{
+			n_d = va_arg(sp->param_lst, double);
+		if (n_d < 0)
 			sp->sign[0] = '-';
-			next *= -1;
-		} //  + and space?
-		to_ret = pos_dtoa(next, sp->precision);
-//		if (sp->param != 0)
-//			to_ret = ft_dtoa(n_th_d(sp, orig, sp->param), sp->precision);
-//		else
-//			to_ret = ft_dtoa(va_arg(sp->param_lst, double), sp->precision);
+		else
+		{
+			// ' ' or '+'
+		}
+		to_ret = udtoa(n_d, sp->precision);
 	}
 	else
 		to_ret = NULL;
 	return (to_ret);
 }
-
-// https://en.wikipedia.org/wiki/Single-precision_floating-point_format
-// https://en.wikipedia.org/wiki/Double-precision_floating-point_format
-// https://en.wikipedia.org/wiki/Quadruple-precision_floating-point_format
-
-// http://cstl-csm.semo.edu/xzhang/Class%20Folder/CS280/Workbook_HTML/FLOATING_tut.htm

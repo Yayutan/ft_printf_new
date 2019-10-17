@@ -101,21 +101,30 @@ char	*shorten_mantissa(char *man, int pre)
 	char	*s2;
 	char	*s3;
 
-	if (man[4932 + pre + 1] >= '5')
+	if (pre < 112 && man[4932 + pre + 1] >= '5') // if pre over 112(seg fault?)
 		increment(man, 4932 + pre);
 	i = 0;
 	while (man[i] && man[i] == '0' && i < 4932)
 		i++;
 	s1 = ft_strsub(man, i, 4933 - i);
-	s2 = ft_strjoin(s1, ".");
+	if (pre > 0)
+		s2 = ft_strjoin(s1, ".");
+	else
+		s2 = ft_strdup(s1);
 	free(s1);
-	s1 = ft_strsub(man, 4933, pre);
+	if (pre <= 112)
+		s1 = ft_strsub(man, 4933, pre);
+	else
+	{
+		s1 = ft_strsub(man, 4933, 112);
+		s3 = ft_stradd(s1, '0', 1, pre - 112);
+		free(s1);
+		s1 = s3;
+	}
 	s3 = ft_strjoin(s2, s1);
 	free(s1);
 	free(s2);
 	return (s3);
-//	return (s1);
-	
 }
 
 char	*udtoa(double d, int pre)

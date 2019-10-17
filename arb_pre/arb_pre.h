@@ -3,7 +3,7 @@
 # include "../libft/libft.h"
 # define len 5045
 # define wh 4932
-# define pow -112
+# define POW -112
 
 void	add(char *n1, const char *n2);
 void	sub(char *n1, const char *n2);
