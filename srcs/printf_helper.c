@@ -104,25 +104,25 @@ void	shift_mantissa(char *man, int e)
 {
 	while (e != 0)
 	{
-		if (e >= 20)
+		if (e >= 62)
 		{
-			mult(man, g_pos_pow_two[20]);
-			e -= 20;
+			mult(man, g_pos_pow_two[62]);
+			e -= 62;
 		}
 		else if (e > 0)
 		{
 			mult(man, g_pos_pow_two[e]);
 			e = 0;
 		}				
-		else if (e > -20)
+		else if (e > -62)
 		{
 			divi(man, g_pos_pow_two[e * -1]);
 			e = 0;
 		}
 		else
 		{
-			divi(man, g_pos_pow_two[20]);
-			e += 20;
+			divi(man, g_pos_pow_two[62]);
+			e += 62;
 		}
 	}
 }

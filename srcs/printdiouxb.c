@@ -133,7 +133,7 @@ char	*initial_diouxb(t_spec *sp, va_list orig)
 	int				i;
 	long long int	arg;
 	
-	if (sp->len == -1)
+	if (sp->len == -1 || sp->len == 16)
 		sp->len = 4;
 	if (sp->param == 0)
 		arg = va_arg(sp->param_lst, long long int);

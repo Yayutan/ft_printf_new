@@ -50,12 +50,14 @@ char	*uldtoa(long double ld, int pre, int hash)
 {
 	union u_ldouble	u_ld;
 	int				exp;
-	char			man[len + 1];
+	char			man[LEN + 1];
 	
 
 	u_ld.ldbl = ld;
-	exp =  get_ld_exp(u_ld); // special case for 00000 and fffff ?
-	clear_str(man, len);
+	exp =  get_ld_exp(u_ld);
+	clear_str(man, LEN);
+	if (exp == -16383)
+		return (shorten_mantissa(man, pre, hash)); // subnormal?
 	get_ld_mantissa(u_ld, man);
 	shift_mantissa(man, exp);
 	return (shorten_mantissa(man, pre, hash));
@@ -65,12 +67,14 @@ char	*udtoa(double d, int pre, int hash)
 {
 	union u_double	u_d;
 	int				exp;
-	char			man[len + 1];
+	char			man[LEN + 1];
 	
 
 	u_d.dbl = d;
-	exp =  get_d_exp(u_d); // special case for 00000 and fffff ?
-	clear_str(man, len);
+	exp =  get_d_exp(u_d);
+	clear_str(man, LEN);
+	if (exp == -1023)
+		return (shorten_mantissa(man, pre, hash)); // subnormal?
 	get_d_mantissa(u_d, man);
 	shift_mantissa(man, exp);
 	return (shorten_mantissa(man, pre, hash));

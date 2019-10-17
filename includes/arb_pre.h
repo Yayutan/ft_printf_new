@@ -1,8 +1,8 @@
 #ifndef ARB_PRE_H
 # define ARB_PRE_H
 # include "../libft/libft.h"
-# define len 5045
-# define wh 4932
+# define LEN 5045
+# define WH 4932
 # define POW -112
 
 union		u_double

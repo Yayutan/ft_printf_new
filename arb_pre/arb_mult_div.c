@@ -55,18 +55,18 @@ void	add_layer(char *n1, char* n2, int s)
 
 void	mult(char *n1, const char *n2)
 {
-	char	to_ret[ft_strlen(n1) + 1]; // len + 1
-	char	res[ft_strlen(n1) + 1]; // len + 1
+	char	to_ret[LEN + 1]; // len + 1
+	char	res[LEN + 1]; // len + 1
 	int		p;
 	int		i;
 	int		j;
-	
-	clear_str(to_ret, ft_strlen(n1)); // len
+
+	clear_str(to_ret, LEN); // len
 	i = ft_strlen(n2) - 1;
 	while (i >= 0)
 	{
-		clear_str(res, ft_strlen(n1)); // len
-		j = ft_strlen(n1) - 1; // len
+		clear_str(res, LEN); // len
+		j = LEN - 1; // len
 		p = 0;
 		while (j >= 0)
 		{
@@ -78,7 +78,7 @@ void	mult(char *n1, const char *n2)
 		i--;
 	}
 	i = -1;
-	while (++i < (int)ft_strlen(n1)) // len
+	while (++i < LEN) // len
 		n1[i] = to_ret[i];
 }
 
@@ -112,19 +112,15 @@ int		basic_divi(char *n1, char *n2, int leng)
 
 void	divi(char *n1, const char *n2)
 {
-	char	*n2_c;
-	char	cp[ft_strlen(n1) + 1]; // len + 1
+	char	cp[LEN + 1]; // len + 1
 	int		leng;
 	
-	n2_c = (char*)n2;
-	while (*n2_c && *n2_c == '0')
-		n2_c++;
 	ft_strcpy(cp, n1);
-	clear_str(n1, ft_strlen(n1)); // len
-	leng = ft_strlen(n2_c);
-	while (leng <= (int)ft_strlen(cp)) // len
+	clear_str(n1, LEN); // len
+	leng = ft_strlen(n2);
+	while (leng <= LEN) // len
 	{
-		n1[leng - 1] = basic_divi(cp, n2_c, leng) + '0'; // changed, check if have problem
+		n1[leng - 1] = basic_divi(cp, (char*)n2, leng) + '0'; // changed, check if have problem
 		leng++;
 	}
 	
