@@ -61,6 +61,6 @@ char			*pos_dtoa(double d, int precision);
 int				find_large_ex(int prev, double *f);
 int				find_large_neg_ex(int prev, double *f);
 unsigned long long int pow_10(int n);
-char			*udtoa(double d);
+char			*udtoa(double d, int pre);
 char			*finalize(t_spec *sp, char *str);
 #endif

@@ -27,7 +27,7 @@ t_buf	*buf_init(void)
 	return (to_ret);
 }
 
-int		till_full(t_buf *buf)
+int			till_full(t_buf *buf)
 {
 	return (BUFF_SIZE - buf->len);
 }
@@ -46,7 +46,7 @@ void		buf_store_str(t_buf *buf, char *to_add)
 		else	
 		{
 			i = 0;
-			while (i <= BUFF_SIZE)
+			while (i < BUFF_SIZE)
 				(buf->buf)[i++] = *(to_add++);
 			buf->len = BUFF_SIZE;
 			buf->total += BUFF_SIZE;
@@ -79,7 +79,7 @@ void	buf_output_clear(t_buf *buf)
 	write(1, buf->buf, buf->len);
 	i = 0;
 	while (i <= BUFF_SIZE)
-		(buf->buf)[i++] = 0;
+		(buf->buf)[i++] = '\0';
 	buf->len = 0;
 }
 

@@ -1,5 +1,12 @@
 #include "arb_pre.h"
 
+void	increment(char *n1, int index)
+{
+	n1[index] = ((n1[index] - '0' + 1) % 10) + '0';
+	if (n1[index] == '0')
+		increment(n1, index - 1);
+}
+
 void	add(char *n1, const char *n2)
 {
 	int	i;

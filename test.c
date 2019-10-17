@@ -222,18 +222,14 @@ void test_fail()
 
 int	main()
 {
-//	print_value(0.5);
-//	printf("Size of double: %lld\n", sizeof(double));
-//	printf("Size of long double: %lld\n", sizeof(long double));
-//	print_value(0.25654);
-//	print_value(-3.244456);
-//	udtoa(0.35356);
-//	udtoa(0.03125);
 //	udtoa(0.0625);
 //	udtoa(0.125);
 //	udtoa(0.25);
-//	printf("%s\n", udtoa(0.375));
-//	printf("%s\n", udtoa(0.0000375));
+	printf("%s\n", udtoa(1, 6));
+	printf("%s\n", udtoa(0.354353453434534534356, 20));
+	printf("%.20f\n", 0.354353453434534534356);
+//	ft_printf("%s\n", udtoa(0.35356));
+//	ft_printf("%s\n", udtoa(0.03125));
 //	printf("%s\n", udtoa(375));
 //	printf("%s\n", udtoa(3.75));
 //	udtoa(0.5);
@@ -245,5 +241,36 @@ int	main()
 //	udtoa(32.0);
 //	udtoa(64.0);
 //	udtoa(128.0);
+//	t_buf	*buf = buf_init();
 	
+//	buf_store_str(buf, "012\n");
+//	buf_output_clear(buf);
+//	
+//	buf_store_str(buf, "012345678\n");
+//	buf_output_clear(buf);
+//	
+//	buf_store_str(buf, "0123456789012345\n");
+//	buf_output_clear(buf);
+//	
+//	buf_store_str(buf, "0123456789012345678\n");
+//	buf_output_clear(buf);
 }
+
+
+//union		u_double
+//{
+//	double	dbl;
+//	char	data[sizeof(double)];
+//};
+//
+//union		u_l_double
+//{
+//	long double	l_dbl;
+//	char		data[sizeof(long double)];
+//};
+//
+//const		char *g_pos_pow_two[21] = {
+//	"1", "2", "4", "8", "16", "32", "64", "128", "256", "512", "1024", "2048",
+//	"4096", "8192", "16384", "32768", "65536", "131072", "262144", "524288",
+//	"1048576"
+//};

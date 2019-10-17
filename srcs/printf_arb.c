@@ -94,14 +94,31 @@ void	shift_mantissa(char *man, int exp)
 	}
 }
 
-void	shorten_mantissa(char *man)
+char	*shorten_mantissa(char *man, int pre)
 {
-	// use ft_strchr and ft_strrchr to look for 0s
-	while (*man && *man == '0')
-		man++;
+	int		i;
+	char	*s1;
+	char	*s2;
+	char	*s3;
+
+	if (man[4932 + pre + 1] >= '5')
+		increment(man, 4932 + pre);
+	i = 0;
+	while (man[i] && man[i] == '0' && i < 4932)
+		i++;
+	s1 = ft_strsub(man, i, 4933 - i);
+	s2 = ft_strjoin(s1, ".");
+	free(s1);
+	s1 = ft_strsub(man, 4933, pre);
+	s3 = ft_strjoin(s2, s1);
+	free(s1);
+	free(s2);
+	return (s3);
+//	return (s1);
+	
 }
 
-char	*udtoa(double d)
+char	*udtoa(double d, int pre)
 {
 	union u_double	u_d;
 	int				exp;
@@ -113,6 +130,5 @@ char	*udtoa(double d)
 	clear_str(man, len);
 	get_mantissa(u_d, man);
 	shift_mantissa(man, exp);
-//	shorten_mantissa(man); // might affect decimal??
-	return ft_strdup(man); // need to change
+	return shorten_mantissa(man, pre);
 }

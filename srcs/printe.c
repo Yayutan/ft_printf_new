@@ -12,11 +12,11 @@
 
 #include "../includes/ft_printf.h"
 
-void	increment(char *res, int index)
+static void	increment(char *n1, int index)
 {
-	res[index] = (res[index] + 1) % 10;
-	if (res[index] == 0)
-		increment(res, index - 1);
+	n1[index] = ((n1[index] - '0' + 1) % 10) + '0';
+	if (n1[index] == '0')
+		increment(n1, index - 1);
 }
 
 //void	form_str_large(char *res, double d, int exp, int precision)
