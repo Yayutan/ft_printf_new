@@ -66,7 +66,10 @@ void	mult(char *n1, char *n2)
 	while (i >= 0)
 	{
 		if (n2[i] == '0')
-			continue;
+		{
+			i--;
+			continue;			
+		}
 		clear_str(res, LEN);
 		j = LEN - 1;
 		p = 0;

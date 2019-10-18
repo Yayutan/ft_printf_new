@@ -72,7 +72,7 @@ char	*initial_f(t_spec *sp, va_list orig)
 	if (sp->len == 16)
 	{
 		n_ld = get_ld_param(sp, orig);
-		if (n_ld < 0)
+		if ((long double)n_ld < 0)
 			sp->sign[0] = '-';
 		else if (sp->flags[1] || sp->flags[2])
 			sp->sign[0] = (sp->flags[1]) ? '+' : ' ';
@@ -81,7 +81,7 @@ char	*initial_f(t_spec *sp, va_list orig)
 	else
 	{
 		n_d = get_d_param(sp, orig);
-		if (n_d < 0)
+		if ((double)n_d < 0)
 			sp->sign[0] = '-';
 		else if (sp->flags[1] || sp->flags[2])
 			sp->sign[0] = (sp->flags[1]) ? '+' : ' ';

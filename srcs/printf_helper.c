@@ -100,18 +100,15 @@ void	get_ld_mantissa(union u_ldouble u_ld, char *m)
 	}
 }
 
-void	shift_mantissa(char *res, char *man, int e)
+int		shift_mantissa(char *res, int e)
 {
-	if (e > 0)
-	{
-		
-	}
-	else if (e < 0)
-	{
-		
-	}
+	int		sh;
+
+	sh = 0;
 	while (e != 0)
 	{
+		if (e < 0)
+			sh++;
 		if (e > 64)
 		{
 			mult(res, g_pos_pow_two[64]);
@@ -131,4 +128,5 @@ void	shift_mantissa(char *res, char *man, int e)
 			e += 64;
 		}
 	}
+	return (sh);
 }

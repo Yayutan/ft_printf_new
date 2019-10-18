@@ -225,24 +225,20 @@ void test_fail()
 
 int	main()
 {
-	printf("%f\n", DBL_MIN);
-	ft_printf("%f\n", DBL_MIN);
-//	printf("%.400f\n", DBL_MIN);
-//    printf("%.3f\n", DBL_MIN);
-//    printf("%f\n", DBL_MIN);
-//    printf("%.8f\n", DBL_MIN);
-//    printf("%.0f\n", -DBL_MIN);
-//    printf("%.3f\n", -DBL_MIN);
-//    printf("%f\n", -DBL_MIN);
-//    printf("%.8f\n", -DBL_MIN);
-//    printf("%.0Lf\n", LDBL_MIN);
-//    printf("%.3Lf\n", LDBL_MIN);
+//	printf("%LLf\n", 42.5);
+//	ft_printf("%LLf\n", 42.5);
+    printf("%.399Lf\n", (long double)DBL_MIN);
+    ft_printf("%.399Lf\n", (long double)DBL_MIN);
 //    printf("%Lf\n", LDBL_MIN);
+//    ft_printf("%Lf\n", LDBL_MIN);
 //    printf("%.8Lf\n", LDBL_MIN);
+//    ft_printf("%.8Lf\n", LDBL_MIN);
 //    printf("%.0Lf\n", -LDBL_MIN);
+//    ft_printf("%.0Lf\n", -LDBL_MIN);
 //    printf("%.3Lf\n", -LDBL_MIN);
+//    ft_printf("%.3Lf\n", -LDBL_MIN);
 //    printf("%Lf\n", -LDBL_MIN);
+//    ft_printf("%Lf\n", -LDBL_MIN);
 //    printf("%.8Lf\n", -LDBL_MIN);
-
-	
+//    ft_printf("%.8Lf\n", -LDBL_MIN);
 }

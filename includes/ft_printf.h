@@ -43,6 +43,18 @@ typedef struct	s_spec
 	t_buf		*buf;
 }				t_spec;
 
+union		u_double
+{
+	double	dbl;
+	char	data[sizeof(double)];
+};
+
+union		u_ldouble
+{
+	long double	ldbl;
+	char		data[sizeof(long double)];
+};
+
 int				ft_printf(const char *format, ...);
 void			clear_param(t_spec *sp);
 int				num_param(t_spec *sp, char *ft, int i);
@@ -61,6 +73,11 @@ char			*pos_dtoa(double d, int precision);
 int				find_large_ex(int prev, double *f);
 int				find_large_neg_ex(int prev, double *f);
 unsigned long long int pow_10(int n);
+int				get_d_exp(union u_double u_d);
+void			get_d_mantissa(union u_double u_d, char *m);
+int				get_ld_exp(union u_ldouble u_ld);
+void			get_ld_mantissa(union u_ldouble u_d, char *m);
+int				shift_mantissa(char *man, int e);
 char			*udtoa(double d, int pre, int hash);
 char			*uldtoa(long double d, int pre, int hash);
 char			*finalize(t_spec *sp, char *str);
