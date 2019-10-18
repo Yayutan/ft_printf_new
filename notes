@@ -38,19 +38,4 @@ https://en.wikipedia.org/wiki/ISO_8601
 
 
 
-    printf("%.0f", DBL_MIN);
-    printf("%.3f", DBL_MIN);
-    printf("%f", DBL_MIN);
-    printf("%.8f", DBL_MIN);
-    printf("%.0f", -DBL_MIN);
-    printf("%.3f", -DBL_MIN);
-    printf("%f", -DBL_MIN);
-    printf("%.8f", -DBL_MIN);
-    printf("%.0Lf", LDBL_MIN);
-    printf("%.3Lf", LDBL_MIN);
-    printf("%Lf", LDBL_MIN);
-    printf("%.8Lf", LDBL_MIN);
-    printf("%.0Lf", -LDBL_MIN);
-    printf("%.3Lf", -LDBL_MIN);
-    printf("%Lf", -LDBL_MIN);
-    printf("%.8Lf", -LDBL_MIN);
+    

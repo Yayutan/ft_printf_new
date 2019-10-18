@@ -49,7 +49,7 @@ void	get_d_mantissa(union u_double u_d, char *m)
 		while (sh >= 0)
 		{
 			if ((u_d.data[i] >> sh) & 1)
-				add(m, (char*)g_neg_pow_two[p]);
+				add(m, g_neg_pow_two[p]);
 			p++;
 			sh--;
 		}
@@ -86,13 +86,13 @@ void	get_ld_mantissa(union u_ldouble u_ld, char *m)
 
 	p = 0;
 	i = 7;
-	while (p < 64)
+	while (p <= 63)
 	{
 		sh = 7;
 		while (sh >= 0)
 		{
 			if ((u_ld.data[i] >> sh) & 1)
-				add(m, (char*)g_neg_pow_two[p]);
+				add(m, g_neg_pow_two[p]);
 			p++;
 			sh--;
 		}
@@ -100,29 +100,35 @@ void	get_ld_mantissa(union u_ldouble u_ld, char *m)
 	}
 }
 
-void	shift_mantissa(char *man, int e)
+void	shift_mantissa(char *res, char *man, int e)
 {
+	if (e > 0)
+	{
+		
+	}
+	else if (e < 0)
+	{
+		
+	}
 	while (e != 0)
 	{
-		if (e >= 62)
+		if (e > 64)
 		{
-			mult(man, g_pos_pow_two[62]);
-			e -= 62;
+			mult(res, g_pos_pow_two[64]);
+			e -= 64;
 		}
-		else if (e > 0)
+		else if (e >= -64)
 		{
-			mult(man, g_pos_pow_two[e]);
-			e = 0;
-		}				
-		else if (e > -62)
-		{
-			divi(man, g_pos_pow_two[e * -1]);
+			if (e > 0)
+				mult(res, g_pos_pow_two[e]);
+			else
+				mult(res, g_neg_pow_two[e * -1]);
 			e = 0;
 		}
 		else
 		{
-			divi(man, g_pos_pow_two[62]);
-			e += 62;
+			mult(res, g_neg_pow_two[64]);
+			e += 64;
 		}
 	}
 }

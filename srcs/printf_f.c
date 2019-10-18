@@ -50,16 +50,17 @@ char	*uldtoa(long double ld, int pre, int hash)
 {
 	union u_ldouble	u_ld;
 	int				exp;
-	char			man[LEN + 1];
-	
+	char			man[DEC + 1];
+	char			res[LEN + 1];
 
 	u_ld.ldbl = ld;
 	exp =  get_ld_exp(u_ld);
-	clear_str(man, LEN);
+	clear_str(man, DEC);
 	if (exp == -16383)
-		return (shorten_mantissa(man, pre, hash)); // subnormal?
+		return (shorten_mantissa(man, pre, hash)); // subnormal? exp 0? after get mantissa?
 	get_ld_mantissa(u_ld, man);
-	shift_mantissa(man, exp);
+	clear_str(res, LEN);
+	shift_mantissa(res, man, exp); // step required to append WH places
 	return (shorten_mantissa(man, pre, hash));
 }
 
@@ -67,15 +68,16 @@ char	*udtoa(double d, int pre, int hash)
 {
 	union u_double	u_d;
 	int				exp;
-	char			man[LEN + 1];
-	
+	char			man[DEC + 1];
+	char			res[LEN + 1];
 
 	u_d.dbl = d;
 	exp =  get_d_exp(u_d);
-	clear_str(man, LEN);
+	clear_str(man, DEC);
 	if (exp == -1023)
-		return (shorten_mantissa(man, pre, hash)); // subnormal?
+		return (shorten_mantissa(man, pre, hash)); // subnormal? exp 0? after get mantissa?
 	get_d_mantissa(u_d, man);
-	shift_mantissa(man, exp);
-	return (shorten_mantissa(man, pre, hash));
+	clear_str(res, LEN);
+	shift_mantissa(res, man, exp); // step required to append WH places
+	return (shorten_mantissa(res, pre, hash));
 }

@@ -53,20 +53,22 @@ void	add_layer(char *n1, char* n2, int s)
 	}	
 }
 
-void	mult(char *n1, const char *n2)
+void	mult(char *n1, char *n2)
 {
-	char	to_ret[LEN + 1]; // len + 1
-	char	res[LEN + 1]; // len + 1
+	char	to_ret[LEN + 1];
+	char	res[LEN + 1];
 	int		p;
 	int		i;
 	int		j;
 
-	clear_str(to_ret, LEN); // len
+	clear_str(to_ret, LEN);
 	i = ft_strlen(n2) - 1;
 	while (i >= 0)
 	{
-		clear_str(res, LEN); // len
-		j = LEN - 1; // len
+		if (n2[i] == '0')
+			continue;
+		clear_str(res, LEN);
+		j = LEN - 1;
 		p = 0;
 		while (j >= 0)
 		{
@@ -74,11 +76,11 @@ void	mult(char *n1, const char *n2)
 			res[j] = p % 10 + '0';
 			j--;
 		}
-		add_layer(to_ret, res, ft_strlen(n2) - 1 - i); // len - i
+		add_layer(to_ret, res, ft_strlen(n2) - 1 - i);
 		i--;
 	}
 	i = -1;
-	while (++i < LEN) // len
+	while (++i < LEN)
 		n1[i] = to_ret[i];
 }
 
