@@ -4,9 +4,11 @@ void	increment(char *n1, int index)
 {
 	if (index >= 0)
 	{
+		if (n1[index] == '.')
+			increment(n1, index - 1);
 		n1[index] = ((n1[index] - '0' + 1) % 10) + '0';
 		if (n1[index] == '0')
-			increment(n1, index - 1);	
+			increment(n1, index - 1);
 	}
 }
 

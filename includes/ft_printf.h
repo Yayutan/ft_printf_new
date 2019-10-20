@@ -14,6 +14,7 @@
 # define FT_PRINTF_H
 # include "libft.h"
 # include "ft_buf.h"
+# include "arb_pre.h"
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdarg.h>
@@ -69,10 +70,8 @@ char			*initial_c(t_spec *sp, va_list org);
 char			*initial_diouxb(t_spec *sp, va_list orig);
 char			*initial_p(t_spec *sp, va_list orig);
 char			*initial_f(t_spec *sp, va_list orig);
-char			*pos_dtoa(double d, int precision);
-int				find_large_ex(int prev, double *f);
-int				find_large_neg_ex(int prev, double *f);
-unsigned long long int pow_10(int n);
+char			*initial_e(t_spec *sp, va_list orig);
+char			*initial_g(t_spec *sp, va_list orig);
 int				get_d_exp(union u_double u_d);
 void			get_d_mantissa(union u_double u_d, char *m);
 int				get_ld_exp(union u_ldouble u_ld);
@@ -80,5 +79,8 @@ void			get_ld_mantissa(union u_ldouble u_d, char *m);
 int				shift_mantissa(char *man, int e);
 char			*udtoa(double d, int pre, int hash);
 char			*uldtoa(long double d, int pre, int hash);
+int				calc_exp(char *dec);
+//char			*form_dec(char *dec, int exp, int hash, int pre);
+char			*increment_e(char *dec, int pre);
 char			*finalize(t_spec *sp, char *str);
 #endif

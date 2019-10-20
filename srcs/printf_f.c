@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 # include "ft_printf.h"
-# include "arb_pre.h"
 
 static char	*shorten_mantissa(char *man, int dec, int pre, int hash)
 {

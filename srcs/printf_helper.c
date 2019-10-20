@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 # include "ft_printf.h"
-# include "arb_pre.h"
 # include "pow_of_two.h"
 
 int		get_d_exp(union u_double u_d)
@@ -101,7 +100,7 @@ void	get_ld_mantissa(union u_ldouble u_ld, char *m)
 }
 
 int		shift_mantissa(char *res, int e)
-{
+{ // to speed up, add more entries to global
 	int		sh;
 
 	sh = 0;

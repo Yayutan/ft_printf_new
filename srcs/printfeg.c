@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/ft_printf.h"
+#include "ft_printf.h"
 
 
 double		get_d_param(t_spec *sp, va_list orig)
@@ -86,5 +86,43 @@ char	*initial_f(t_spec *sp, va_list orig)
 		else if (sp->flags[1] || sp->flags[2])
 			sp->sign[0] = (sp->flags[1]) ? '+' : ' ';
 		return (udtoa(n_d, sp->precision, sp->flags[3]));
+	}
+}
+
+char	*initial_e(t_spec *sp, va_list orig)
+{
+	char	*f_res;
+//	char	*to_ret;
+	int		pre;
+	int		exp;
+
+	pre = (sp->precision == -1) ? 6 : sp->precision;
+	sp->precision = LEN;
+	f_res = initial_f(sp, orig);
+	sp->precision = pre;
+	f_res = increment_e(f_res, pre); // rounding is done here
+	exp = calc_exp(f_res);
+//	to_ret = form_dec(f_res, exp, sp->flags[3], pre);
+//	free(f_res);
+//	return (to_ret);
+	return (ft_itoa(exp));
+}
+
+char	*initial_g(t_spec *sp, va_list orig)
+{
+	char	*f_res;
+	char	*e_res;
+
+	f_res = initial_f(sp, orig);
+	e_res = initial_e(sp, orig);
+	if (ft_strlen(f_res) < ft_strlen(e_res))
+	{
+		free(e_res);
+		return (f_res);
+	}
+	else
+	{
+		free(f_res);
+		return (e_res);
 	}
 }
