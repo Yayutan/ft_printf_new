@@ -80,7 +80,7 @@ int				shift_mantissa(char *man, int e);
 char			*udtoa(double d, int pre, int hash);
 char			*uldtoa(long double d, int pre, int hash);
 int				calc_exp(char *dec);
-//char			*form_dec(char *dec, int exp, int hash, int pre);
+char			*form_dec(char *dec, int exp, int hash, int pre);
 char			*increment_e(char *dec, int pre);
 char			*finalize(t_spec *sp, char *str);
 #endif

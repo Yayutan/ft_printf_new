@@ -92,7 +92,7 @@ char	*initial_f(t_spec *sp, va_list orig)
 char	*initial_e(t_spec *sp, va_list orig)
 {
 	char	*f_res;
-//	char	*to_ret;
+	char	*to_ret;
 	int		pre;
 	int		exp;
 
@@ -102,10 +102,10 @@ char	*initial_e(t_spec *sp, va_list orig)
 	sp->precision = pre;
 	f_res = increment_e(f_res, pre); // rounding is done here
 	exp = calc_exp(f_res);
-//	to_ret = form_dec(f_res, exp, sp->flags[3], pre);
-//	free(f_res);
-//	return (to_ret);
-	return (ft_itoa(exp));
+	to_ret = form_dec(f_res, exp, sp->flags[3], pre);
+	free(f_res);
+	return (to_ret);
+//	return (ft_itoa(exp));
 }
 
 char	*initial_g(t_spec *sp, va_list orig)

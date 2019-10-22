@@ -270,7 +270,7 @@ int	main()
 //	ft_printf("%e\n", 4.0);
 //	ft_printf("%e\n", 2.0);
 //	ft_printf("%e\n", 1.0);
-//	ft_printf("%e\n", 0.0);
+	ft_printf("%e\n", 0.0);
 //	ft_printf("%e\n", 0.2);
 //	ft_printf("%e\n", 0.02);
 //	printf("%e\n", 1e200);
@@ -295,14 +295,14 @@ int	main()
 //    ft_printf("%.399Lf\n", (long double)DBL_MIN);
 //    printf("%Lf\n", LDBL_MIN);
 //    ft_printf("%Lf\n", LDBL_MIN);
-    printf("%.5000Lf\n", LDBL_MIN);
-    ft_printf("%.5000Lf\n", LDBL_MIN);
+//    printf("%.5000Lf\n", LDBL_MIN);
+//    ft_printf("%.5000Lf\n", LDBL_MIN);
 //    printf("%.0Lf\n", -LDBL_MIN);
 //    ft_printf("%.0Lf\n", -LDBL_MIN);
 //    printf("%.3Lf\n", -LDBL_MIN);
 //    ft_printf("%.3Lf\n", -LDBL_MIN);
 //    printf("%Lf\n", -LDBL_MIN);
 //    ft_printf("%Lf\n", -LDBL_MIN);
-    printf("%.5000Lf\n", -LDBL_MIN);
-    ft_printf("%.5000Lf\n", -LDBL_MIN);
+//    printf("%.5000Lf\n", -LDBL_MIN);
+//    ft_printf("%.5000Lf\n", -LDBL_MIN);
 }

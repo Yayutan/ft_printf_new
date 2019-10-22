@@ -170,58 +170,5 @@ int		shift_mantissa(char *res, int e) // think about how to trim only front
 		}
 		e -= p;
 	}
-//        if (e >= 4096)
-//		{
-//			mult(res, g_pos_pow_two[67]);
-//			e -= 4096;
-//		}
-//        else if (e >= 1024)
-//		{
-//			mult(res, g_pos_pow_two[66]);
-//			e -= 1024;
-//		}
-//		else if (e >= 256)
-//		{
-//			mult(res, g_pos_pow_two[65]);
-//			e -= 256;
-//		}
-//        else if (e >= 64)
-//		{
-//			mult(res, g_pos_pow_two[64]);
-//			e -= 64;
-//		}
-//		else if (e >= -64)
-//		{
-//			if (e > 0)
-//				mult(res, g_pos_pow_two[e]);
-//			else
-//				mult(res, g_neg_pow_two[e * -1]);
-//            sh += (e > 0) ? 0 : -1 * e;
-//			e = 0;
-//		}
-//        else if (e <= -4096)
-//		{
-//			mult(res, g_neg_pow_two[67]);
-//			e += 4096;
-//            sh += 4096;
-//		}
-//        else if (e <= -1024)
-//		{
-//			mult(res, g_neg_pow_two[66]);
-//			e += 1024;
-//            sh += 1024;
-//		}
-//        else if (e <= -256)
-//		{
-//			mult(res, g_neg_pow_two[65]);
-//			e += 256;
-//			sh += 256;
-//		}
-//        else if (e <= -64)
-//		{
-//			mult(res, g_neg_pow_two[64]);
-//			e += 64;
-//            sh += 64;
-//		}
 	return (sh);
 }
