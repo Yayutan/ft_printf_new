@@ -45,30 +45,37 @@ void	add_layer(char *n1, char* n2, int s)
 void	mult(char *n1, char *n2)
 {
 	char	to_ret[LEN + 1];
-	char	res[LEN + 1];
+	char	res[9][LEN + 1];
 	int		p;
 	int		i;
 	int		j;
 
+	
 	clear_str(to_ret, LEN);
+	i = 0;
+	while (i < 9)
+		res[i++][0] = '\0';		
 	i = ft_strlen(n2) - 1;
 	while (i >= 0)
 	{
 		if (n2[i] == '0')
 		{
 			i--;
-			continue;			
+			continue;
 		}
-		clear_str(res, LEN);
-		j = LEN - 1;
-		p = 0;
-		while (j >= 0)
+		if (res[n2[i] - '0' - 1][0] == '\0')
 		{
-			p = (n2[i] - '0') * (n1[j] - '0') + p / 10;
-			res[j] = p % 10 + '0';
-			j--;
+			clear_str(res[n2[i] - '0' - 1], LEN);
+			j = LEN - 1;
+			p = 0;
+			while (j >= 0)
+			{
+				p = (n2[i] - '0') * (n1[j] - '0') + p / 10;
+				res[n2[i] - '0' - 1][j] = p % 10 + '0';
+				j--;
+			}	
 		}
-		add_layer(to_ret, res, ft_strlen(n2) - 1 - i);
+		add_layer(to_ret, res[n2[i] - '0' - 1], ft_strlen(n2) - 1 - i);
 		i--;
 	}
 	i = -1;

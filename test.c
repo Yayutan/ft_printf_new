@@ -289,22 +289,20 @@ int	main()
 //	printf("%e\n", 20.3433);
 //	printf("%.5e\n", 20.3433);
 //	printf("%.e\n", 20.3433);
-//	printf("%LLf\n", 42.5);
-//	ft_printf("%LLf\n", 42.5);
-    printf("%.399f\n", DBL_MIN);
-    ft_printf("%.399f\n", DBL_MIN);
+//	printf("%LLf\n", (long double)42.5);
+//	ft_printf("%LLf\n", (long double)42.5);
 //    printf("%.399Lf\n", (long double)DBL_MIN);
 //    ft_printf("%.399Lf\n", (long double)DBL_MIN);
 //    printf("%Lf\n", LDBL_MIN);
 //    ft_printf("%Lf\n", LDBL_MIN);
-//    printf("%.8Lf\n", LDBL_MIN);
-//    ft_printf("%.8Lf\n", LDBL_MIN);
+    printf("%.5000Lf\n", LDBL_MIN);
+    ft_printf("%.5000Lf\n", LDBL_MIN);
 //    printf("%.0Lf\n", -LDBL_MIN);
 //    ft_printf("%.0Lf\n", -LDBL_MIN);
 //    printf("%.3Lf\n", -LDBL_MIN);
 //    ft_printf("%.3Lf\n", -LDBL_MIN);
 //    printf("%Lf\n", -LDBL_MIN);
 //    ft_printf("%Lf\n", -LDBL_MIN);
-//    printf("%.8Lf\n", -LDBL_MIN);
-//    ft_printf("%.8Lf\n", -LDBL_MIN);
+    printf("%.5000Lf\n", -LDBL_MIN);
+    ft_printf("%.5000Lf\n", -LDBL_MIN);
 }

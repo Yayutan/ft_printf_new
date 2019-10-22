@@ -65,7 +65,7 @@ char	*uldtoa(long double ld, int pre, int hash)
 	if (exp >= 0)
 		return (shorten_mantissa(res, WH + 1,  pre, hash));
 	else
-		return (shorten_mantissa(res, WH + 1 - sh * 4096, pre, hash));
+		return (shorten_mantissa(res, WH + 1 - sh, pre, hash));
 }
 
 char	*udtoa(double d, int pre, int hash)

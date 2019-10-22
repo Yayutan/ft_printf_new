@@ -100,4 +100,5 @@ char				*ft_stradd(char *s, char t, int m, int n);
 char				*ft_dtoa(double d, int pre);
 char				*ft_ldtoa(long double d, int pre);
 char				*ft_ftoa(float f, int pre);
+char				*ft_strtrimc(char const *s, char c);
 #endif

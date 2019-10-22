@@ -111,8 +111,12 @@ int		shift_mantissa(char *res, int e) // think about how to trim only front
 	{
         if (e >= 4096)
             p = 4096;
+		else if (e >= 2048)
+			p = 2048;
         else if (e >= 1024)
             p = 1024;
+		else if (e >= 512)
+			p = 512;
 		else if (e >= 256)
 			p = 256;
         else if (e >= 64)
@@ -121,18 +125,25 @@ int		shift_mantissa(char *res, int e) // think about how to trim only front
 			p = e;
         else if (e <= -4096)
 			p = -4096;
+		else if (e <= -2048)
+			p = -2048;
         else if (e <= -1024)
 			p = -1024;
+		else if (e <= -512)
+			p = -512;
         else if (e <= -256)
 			p = -256;
         else if (e <= -64)
 			p = -64;
-		
 		if (e > 0)
 		{
 			if (p == 4096)
-				mult(res, g_pos_pow_two[67]);
+				mult(res, g_pos_pow_two[69]);
+			else if (p == 2048)
+				mult(res, g_pos_pow_two[68]);
 			else if (p == 1024)
+				mult(res, g_pos_pow_two[67]);
+			else if (p == 512)
 				mult(res, g_pos_pow_two[66]);
 			else if (p == 256)
 				mult(res, g_pos_pow_two[65]);
@@ -142,13 +153,17 @@ int		shift_mantissa(char *res, int e) // think about how to trim only front
 		else if (e < 0)
 		{
 			if (p == -4096)
-				neg = ft_strtrim(g_neg_pow_two[67]);
+				neg = ft_strtrimc(g_neg_pow_two[69], '0');
+			else if (p == -2048)
+				neg = ft_strtrimc(g_neg_pow_two[68], '0');
 			else if (p == -1024)
-				neg = ft_strtrim(g_neg_pow_two[66]);
+				neg = ft_strtrimc(g_neg_pow_two[67], '0');
+			else if (p == -512)
+				neg = ft_strtrimc(g_neg_pow_two[66], '0');
 			else if (p == -256)
-				neg = ft_strtrim(g_neg_pow_two[65]);
+				neg = ft_strtrimc(g_neg_pow_two[65], '0');
 			else
-				neg = ft_strtrim(g_neg_pow_two[p]);
+				neg = ft_strtrimc(g_neg_pow_two[-1 * p], '0');
 			mult(res, neg);
 			free(neg);
 			 sh += -1 * p;

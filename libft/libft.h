@@ -6,7 +6,7 @@
 /*   By: mchuang <mchuang@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 18:35:15 by mchuang           #+#    #+#             */
-/*   Updated: 2019/09/18 18:35:19 by mchuang          ###   ########.fr       */
+/*   Updated: 2019/10/21 21:54:12 by mchuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,4 +100,5 @@ char				*ft_stradd(char *s, char t, int m, int n);
 char				*ft_dtoa(double d, int pre);
 char				*ft_ldtoa(long double d, int pre);
 char				*ft_ftoa(float f, int pre);
+char				*ft_strtrimc(char const *s, char c);
 #endif
