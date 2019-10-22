@@ -32,7 +32,7 @@ char	*increment_e(char *dec, int pre)
 		if (*tmp && pre <= (int)ft_strlen(tmp) - 2 && *(tmp + pre + 2) >= '5')
 			increment(dec, (tmp - dec) + pre + 1);
 	}
-	else // no dec in pre
+	else
 	{
 		if (*tmp && pre <= (int)ft_strlen(tmp) - 1 && *(tmp + pre + 1) >= '5')
 			increment(dec, (tmp - dec) + pre);
@@ -63,14 +63,16 @@ int		calc_exp(char *dec)
 
 //char	*form_dec(char *dec, int exp, int hash, int pre)
 //{
-//	char	*exp_s;  // 1 digit + . + prec + e/E + exp
-//	int		i;
+//	char	*exp_s;  // 1 digit + (.) + prec + e/E + exp_sign + (0) + exp
+//    char    *to_ret; // 3 + (0) + (.) + prec + exp
+//	int		i; // hash
+//
+//	exp_s = (exp < 0) ? ft_itoa(-1 * exp) : ft_itoa(exp); // pad 0 if |exp| < 10
+//    i = pre + ft_strlen(exp_s) + 3;
+//    if (ft_strlen(exp_s) < 2)
+//        
+//	to_ret = ft_strnew(i);
+//    
 //	
-//	exp_s = ft_itoa(exp); // pad 0 if |exp| < 10
-//	i = 0;
-//	while (dec[i] && dec[i])
-//	
-//	
-//	
-//	return (dec); // fix 
+//	return (to_ret); // fix 
 //}
