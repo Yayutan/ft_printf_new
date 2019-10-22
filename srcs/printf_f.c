@@ -45,21 +45,30 @@ static char	*shorten_mantissa(char *man, int dec, int pre, int hash)
 	return (s3);
 }
 
-char	*uldtoa(long double ld, int pre, int hash)
+char	*uldtoa(union u_ldouble u_ld, int pre, int hash)
 {
-	union u_ldouble	u_ld;
 	int				exp;
 	char			man[DEC + 1];	
 	char			res[LEN + 1];
 	int				sh;
+	int				m_zero;
 
-	u_ld.ldbl = ld;
 	exp =  get_ld_exp(u_ld);
 	clear_str(man, DEC);
-//	if (exp == -16383)
-//		return (shorten_mantissa(man, pre, hash)); // subnormal? exp 0? after get mantissa?
-	get_ld_mantissa(u_ld, man);
+	m_zero = get_ld_mantissa(u_ld, man);
 	clear_str(res, LEN);
+	if (exp == -16383)
+	{
+		if (!m_zero)
+			return (shorten_mantissa(res, WH + 1,  pre, hash));
+		divi(man, "2");
+	}
+	else if (exp == 16384)
+	{
+		if (m_zero)
+			return (ft_strdup("nan"));
+		return (ft_strdup("inf"));	
+	}
 	ft_strcpy(res + WH + 1, man);
 	sh = shift_mantissa(res, exp);
 	if (exp >= 0)
@@ -68,21 +77,30 @@ char	*uldtoa(long double ld, int pre, int hash)
 		return (shorten_mantissa(res, WH + 1 - sh, pre, hash));
 }
 
-char	*udtoa(double d, int pre, int hash)
+char	*udtoa(union u_double u_d, int pre, int hash)
 {
-	union u_double	u_d;
 	int				exp;
 	char			man[DEC + 1];
 	char			res[LEN + 1];
 	int				sh;
+	int				m_zero;
 
-	u_d.dbl = d;
 	exp =  get_d_exp(u_d);
 	clear_str(man, DEC);
-//	if (exp == -1023)
-//		return (shorten_mantissa(man, pre, hash)); // subnormal? exp 0? after get mantissa?
-	get_d_mantissa(u_d, man);
+	m_zero = get_d_mantissa(u_d, man);
 	clear_str(res, LEN);
+		if (exp == -1023)
+	{
+		if (!m_zero)
+			return (shorten_mantissa(res, WH + 1, pre, hash));
+		divi(man, "2");
+	}
+	else if (exp == 1024)
+	{
+		if (m_zero)
+			return (ft_strdup("nan"));
+		return (ft_strdup("inf"));	
+	}
 	ft_strcpy(res + WH + 1, man);
 	sh = shift_mantissa(res, exp);
 	if (exp >= 0)

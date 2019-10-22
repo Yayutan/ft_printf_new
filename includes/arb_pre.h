@@ -1,6 +1,6 @@
 #ifndef ARB_PRE_H
 # define ARB_PRE_H
-# include "../libft/libft.h"
+# include "libft.h"
 # define LEN 20481
 # define DEC 4097
 # define WH 16384
@@ -13,4 +13,5 @@ void	divi(char *n1, const char *n2);
 void	clear_str(char *n, int length);
 int		basic_divi(char *n1, char *n2, int leng);
 void	increment(char *n1, int index);
+int		cmp_size(char *n1, char *n2, int leng);
 # endif

@@ -83,13 +83,15 @@ char	*form_dec(char *dec, int exp, int hash, int pre)
 	if (pre > 0 || hash)
 		i++;
 	to_ret = ft_strnew(i);
-	to_ret[0] = dec[0];
+	to_ret[0] = (*dec) ? dec[0] : '0';
 	to_ret[1] = '.';
 	i = 2;
 	j = 1;
 	while (i < pre + 2)
 	{
-		if (dec[j] != '.')
+		if (!(*dec))
+			to_ret[i++] = '0';
+		else if (dec[j] != '.')
 			to_ret[i++] = dec[j];
 		j++;
 	}

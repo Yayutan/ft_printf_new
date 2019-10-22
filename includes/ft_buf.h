@@ -14,7 +14,7 @@
 # define FT_BUF_H
 # include <unistd.h>
 # include "libft.h"
-# define BUFF_SIZE 10 // 1024
+# define BUFF_SIZE 1024
 
 typedef struct	s_buf
 {

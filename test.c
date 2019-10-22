@@ -270,7 +270,8 @@ int	main()
 //	ft_printf("%e\n", 4.0);
 //	ft_printf("%e\n", 2.0);
 //	ft_printf("%e\n", 1.0);
-	ft_printf("%e\n", 0.0);
+	printf("%+f\n", 0.0/0.0);
+//	ft_printf("%+f\n", 0.0/0.0);
 //	ft_printf("%e\n", 0.2);
 //	ft_printf("%e\n", 0.02);
 //	printf("%e\n", 1e200);

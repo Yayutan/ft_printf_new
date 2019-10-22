@@ -30,10 +30,14 @@ void	add_layer(char *n1, char* n2, int s)
 {
 	int	i;
 	int	p;
-	
+	int	sh;
+
+	sh = 0;
+	while (n2[sh] && n2[sh] == '0')
+		sh++;
 	i = ft_strlen(n2) - 1;
 	p = 0;
-	while (i - s >= 0)
+	while (i >= sh)
 	{
 		n1[i - s] += p / 10;
 		p = n1[i - s] + n2[i] - '0' * 2;

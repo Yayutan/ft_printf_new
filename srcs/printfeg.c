@@ -13,11 +13,11 @@
 #include "ft_printf.h"
 
 
-double		get_d_param(t_spec *sp, va_list orig)
+union u_double		get_d_param(t_spec *sp, va_list orig)
 {
+	union u_double	u_d;
 	va_list	cp;
 	int		j;
-	double	to_ret;
 
 	if(sp->param != 0)
 	{
@@ -28,21 +28,21 @@ double		get_d_param(t_spec *sp, va_list orig)
 			va_arg(cp, double);
 			j++;
 		}
-		to_ret = va_arg(cp, double);
+		u_d.dbl = va_arg(cp, double);
 		va_end(sp->param_lst);
 		va_copy(sp->param_lst, cp);
 		va_end(cp);
 	}
 	else
-		to_ret = va_arg(sp->param_lst, double);
-	return (to_ret);
+		u_d.dbl = va_arg(sp->param_lst, double);
+	return (u_d);
 }
 
-long double		get_ld_param(t_spec *sp, va_list orig)
+union u_ldouble		get_ld_param(t_spec *sp, va_list orig)
 {
+	union u_ldouble	u_ld;
 	va_list		cp;
 	int			j;
-	long double	to_ret;
 
 	if(sp->param != 0)
 	{
@@ -53,39 +53,39 @@ long double		get_ld_param(t_spec *sp, va_list orig)
 			va_arg(cp, long double);
 			j++;
 		}
-		to_ret = va_arg(cp, long double);
+		u_ld.ldbl = va_arg(cp, long double);
 		va_end(sp->param_lst);
 		va_copy(sp->param_lst, cp);
 		va_end(cp);
 	}
 	else
-		to_ret = va_arg(sp->param_lst, long double);
-	return (to_ret);
+		u_ld.ldbl = va_arg(sp->param_lst, long double);
+	return (u_ld);
 }
 
 char	*initial_f(t_spec *sp, va_list orig)
 {
-	double		n_d;
-	long double	n_ld;
+	union u_double	u_d;
+	union u_ldouble	u_ld;
 
 	sp->precision = (sp->precision == -1) ? 6 : sp->precision;
 	if (sp->len == 16)
 	{
-		n_ld = get_ld_param(sp, orig);
-		if ((long double)n_ld < 0)
+		u_ld = get_ld_param(sp, orig);
+		if ((u_ld.data[9] >> 7) & 1)
 			sp->sign[0] = '-';
 		else if (sp->flags[1] || sp->flags[2])
 			sp->sign[0] = (sp->flags[1]) ? '+' : ' ';
-		return (uldtoa(n_ld, sp->precision, sp->flags[3]));
+		return (uldtoa(u_ld, sp->precision, sp->flags[3]));
 	}
 	else
 	{
-		n_d = get_d_param(sp, orig);
-		if ((double)n_d < 0)
+		u_d = get_d_param(sp, orig);
+		if ((u_d.data[7] >> 7) & 1)
 			sp->sign[0] = '-';
 		else if (sp->flags[1] || sp->flags[2])
 			sp->sign[0] = (sp->flags[1]) ? '+' : ' ';
-		return (udtoa(n_d, sp->precision, sp->flags[3]));
+		return (udtoa(u_d, sp->precision, sp->flags[3]));
 	}
 }
 
@@ -105,7 +105,6 @@ char	*initial_e(t_spec *sp, va_list orig)
 	to_ret = form_dec(f_res, exp, sp->flags[3], pre);
 	free(f_res);
 	return (to_ret);
-//	return (ft_itoa(exp));
 }
 
 char	*initial_g(t_spec *sp, va_list orig)

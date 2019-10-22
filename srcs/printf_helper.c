@@ -33,12 +33,14 @@ int		get_d_exp(union u_double u_d)
 	return (exp - 1023);
 }
 
-void	get_d_mantissa(union u_double u_d, char *m)
+int		get_d_mantissa(union u_double u_d, char *m)
 {
 	int	i;
 	int	sh;
 	int	p;
+	int zero;
 
+	zero = 0;
 	add(m, g_neg_pow_two[0]);
 	p = 1;
 	i = 6;
@@ -48,13 +50,17 @@ void	get_d_mantissa(union u_double u_d, char *m)
 		while (sh >= 0)
 		{
 			if ((u_d.data[i] >> sh) & 1)
+			{
 				add(m, g_neg_pow_two[p]);
+				zero = 1;
+			}				
 			p++;
 			sh--;
 		}
 		i--;
 		sh = 7;
 	}
+	return (zero);
 }
 
 int		get_ld_exp(union u_ldouble u_ld)
@@ -77,26 +83,32 @@ int		get_ld_exp(union u_ldouble u_ld)
 	return (exp - 16383);
 }
 
-void	get_ld_mantissa(union u_ldouble u_ld, char *m)
+int		get_ld_mantissa(union u_ldouble u_ld, char *m)
 {
 	int	i;
 	int	sh;
 	int	p;
+	int	zero;
 
 	p = 0;
 	i = 7;
+	zero = 0;
 	while (p <= 63)
 	{
 		sh = 7;
 		while (sh >= 0)
 		{
 			if ((u_ld.data[i] >> sh) & 1)
+			{
 				add(m, g_neg_pow_two[p]);
+				zero = 1;
+			}
 			p++;
 			sh--;
 		}
 		i--;
 	}
+	return (zero);
 }
 
 int		shift_mantissa(char *res, int e) // think about how to trim only front

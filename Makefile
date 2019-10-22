@@ -129,7 +129,7 @@ $(LFT_OBJ_PATH)%.o: $(LFT_SRC_PATH)%.c
 	@gcc $(FLAGS) -o $@ -c $<
 
 $(APA_OBJ_PATH)%.o: $(APA_SRC_PATH)%.c
-	@gcc $(FLAGS) -o $@ -c $<
+	@gcc $(FLAGS) $(INC) -o $@ -c $<
 	
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c
 	@mkdir -p $(OBJ_PATH)
