@@ -29,20 +29,19 @@ int		cmp_size(char *n1, char *n2, int leng)
 void	add_layer(char *n1, char* n2, int s)
 {
 	int	i;
+	int	l_1;
 	int	p;
-	int	sh;
 
-	sh = 0;
-	while (n2[sh] && n2[sh] == '0')
-		sh++;
+	l_1 = ft_strlen(n1) - 1;
 	i = ft_strlen(n2) - 1;
 	p = 0;
-	while (i >= sh)
+	while (i >= 0 && l_1 >= s)
 	{
-		n1[i - s] += p / 10;
-		p = n1[i - s] + n2[i] - '0' * 2;
-		n1[i - s] = p % 10 + '0';
+		n1[l_1 - s] += p / 10;
+		p = n1[l_1 - s] + n2[i] - '0' * 2;
+		n1[l_1 - s] = p % 10 + '0';
 		i--;
+		l_1--;
 	}	
 }
 

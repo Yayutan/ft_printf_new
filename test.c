@@ -222,6 +222,7 @@ void test_fail()
 
 # include <math.h>
 # include<float.h>
+# include<limits.h>
 
 int	main()
 {
@@ -270,8 +271,8 @@ int	main()
 //	ft_printf("%e\n", 4.0);
 //	ft_printf("%e\n", 2.0);
 //	ft_printf("%e\n", 1.0);
-	printf("%+f\n", 0.0/0.0);
-//	ft_printf("%+f\n", 0.0/0.0);
+	ft_printf("%e\n", (double)42);
+	ft_printf("%E\n", (double)42);
 //	ft_printf("%e\n", 0.2);
 //	ft_printf("%e\n", 0.02);
 //	printf("%e\n", 1e200);

@@ -27,7 +27,7 @@ int		parse_format(char *ft, t_spec *sp, int i, va_list orig)
 		else
 			i = not_num_param(sp, ft, i);
 	}
-	if (ft[i] && ft_strchr("dDioOuUxXbBfegcsprk%", ft[i]))
+	if (ft[i] && ft_strchr("dDioOuUxXbBfeEgcsprk%", ft[i]))
 	{
 		sp->valid = 1;
 		sp->specifier = (ft_strchr("DOUB", ft[i])) ? ft[i] + 32 : ft[i];

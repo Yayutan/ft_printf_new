@@ -111,7 +111,7 @@ int		get_ld_mantissa(union u_ldouble u_ld, char *m)
 	return (zero);
 }
 
-int		shift_mantissa(char *res, int e) // think about how to trim only front
+int		shift_mantissa(char *res, int e)
 {
 	int		sh;
     int     p;

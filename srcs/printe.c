@@ -12,6 +12,19 @@
 
 #include "ft_printf.h"
 
+static void	clear_digits(char *dec)
+{
+	int		i;
+
+	i = 0;
+	while (dec[i])
+	{
+		if (dec[i] != '.')
+			dec[i] = '0';
+		i++;
+	}
+}
+
 char	*increment_e(char *dec, int pre)
 {
 	char	*tmp;
@@ -34,14 +47,14 @@ char	*increment_e(char *dec, int pre)
 		if (*tmp && pre <= (int)ft_strlen(tmp) - 2 && *(tmp + pre + 2) >= '5')
 			increment(dec, (tmp - dec) + pre + 1);
 		if (pre <= (int)ft_strlen(tmp) - 2)
-			clear_str(tmp + pre + 2, ft_strlen(tmp) - pre - 2);
+			clear_digits(tmp + pre + 2);
 	}
 	else
 	{
 		if (*tmp && pre <= (int)ft_strlen(tmp) - 1 && *(tmp + pre + 1) >= '5')
 			increment(dec, (tmp - dec) + pre);
 		if (pre <= (int)ft_strlen(tmp) - 1)
-			clear_str(tmp + pre + 1, ft_strlen(tmp) - pre - 1);
+			clear_digits(tmp + pre + 1);
 	}
 	return (dec);
 }
