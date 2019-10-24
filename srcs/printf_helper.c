@@ -101,7 +101,8 @@ int		get_ld_mantissa(union u_ldouble u_ld, char *m)
 			if ((u_ld.data[i] >> sh) & 1)
 			{
 				add(m, g_neg_pow_two[p]);
-				zero = 1;
+				if (p)
+					zero = 1;
 			}
 			p++;
 			sh--;

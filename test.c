@@ -227,7 +227,5 @@ void test_fail()
 
 int	main()
 {
-	printf("%.5000f\n", 0.0);
-	printf("%.5000e\n", 0.0);
 
 }

@@ -18,7 +18,7 @@ void	clear_digits(char *n, int pos)
 	int		len;
 
 	len = ft_strlen(n);
-	i = p;
+	i = pos;
 	while (i < len && n[i])
 	{
 		if (n[i] != '.')
@@ -60,7 +60,7 @@ char	*form_final(char *man, int dec, int pre, int hash)
 	return (s3);
 }
 
-char	*uldtoa_basic(union u_ldouble u_ld, char *str)
+int		uldtoa_basic(union u_ldouble u_ld, char *str)
 {
 	int				exp;
 	char			man[DEC + 1];	
@@ -71,6 +71,7 @@ char	*uldtoa_basic(union u_ldouble u_ld, char *str)
 	exp =  get_ld_exp(u_ld);
 	clear_str(man, DEC);
 	m_zero = get_ld_mantissa(u_ld, man);
+	clear_str(res, LEN);
 	if (exp == -16383)
 	{
 		if (!m_zero) // special case: 0
@@ -88,14 +89,13 @@ char	*uldtoa_basic(union u_ldouble u_ld, char *str)
 			ft_strcpy(str, "inf");
 		return (-4242);
 	}
-	clear_str(res, LEN);
 	ft_strcpy(res + WH + 1, man);
 	sh = shift_mantissa(res, exp);
 	ft_strcpy(str, res);
 	return (WH + 1 - sh);
 }
 
-char	*udtoa_basic(union u_double u_d, char *str)
+int		udtoa_basic(union u_double u_d, char *str)
 {
 	int				exp;
 	char			man[DEC + 1];
@@ -106,6 +106,7 @@ char	*udtoa_basic(union u_double u_d, char *str)
 	exp =  get_d_exp(u_d);
 	clear_str(man, DEC);
 	m_zero = get_d_mantissa(u_d, man);
+	clear_str(res, LEN);
 	if (exp == -1023)
 	{
 		if (!m_zero) // special case: 0
@@ -123,7 +124,6 @@ char	*udtoa_basic(union u_double u_d, char *str)
 			ft_strcpy(str, "inf");
 		return (-4242);
 	}
-	clear_str(res, LEN);
 	ft_strcpy(res + WH + 1, man);
 	sh = shift_mantissa(res, exp);
 	ft_strcpy(str, res);
