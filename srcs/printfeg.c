@@ -147,6 +147,7 @@ char	*form_g(char *basic, int dec, int exp, int p, int hash)
 		end = dec_pos - to_ret;
 		while (to_ret[end] && to_ret[end] == '0')
 			end--;
+		
 	}
 	// remove all trailing 0s
 	
