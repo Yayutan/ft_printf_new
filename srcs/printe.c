@@ -12,19 +12,6 @@
 
 #include "ft_printf.h"
 
-static void	clear_digits(char *dec)
-{
-	int		i;
-
-	i = 0;
-	while (dec[i])
-	{
-		if (dec[i] != '.')
-			dec[i] = '0';
-		i++;
-	}
-}
-
 char	*increment_e(char *dec, int pre)
 {
 	char	*tmp;
@@ -114,4 +101,19 @@ char	*form_dec(char *dec, int exp, int hash, int pre)
 		to_ret[i++] = '0';
 	ft_strcpy(to_ret + i, exp_s);
 	return (to_ret); // fix 
+}
+
+char	*append_exp(char *dec, int exp)
+{
+	char	*to_ret;
+	char	*tmp;
+
+	tmp = ft_strjoin(dec, "e");
+	if (exp < 0)
+		to_ret = ft_itoa(exp * -1);
+	else
+		to_ret = ft_itoa(exp);
+	
+	// if to_ret len < 2, add 0
+	
 }

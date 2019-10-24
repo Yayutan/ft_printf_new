@@ -12,7 +12,22 @@
 
 # include "ft_printf.h"
 
-static char	*shorten_mantissa(char *man, int dec, int pre, int hash)
+void	clear_digits(char *n, int pos)
+{
+	int		i;
+	int		len;
+
+	len = ft_strlen(n);
+	i = p;
+	while (i < len && n[i])
+	{
+		if (n[i] != '.')
+			n[i] = '0';
+		i++;
+	}
+}
+
+char	*form_final(char *man, int dec, int pre, int hash)
 {
 	int		i;
 	char	*s1;
@@ -21,6 +36,7 @@ static char	*shorten_mantissa(char *man, int dec, int pre, int hash)
 
 	if (dec + pre + 1 < LEN && man[dec + pre + 1] >= '5')
 		increment(man, dec + pre);
+	clear_digits(man, dec + pre + 1);
 	i = 0;
 	while (man[i] && man[i] == '0' && i < dec)
 		i++;
@@ -34,10 +50,9 @@ static char	*shorten_mantissa(char *man, int dec, int pre, int hash)
 		s1 = ft_strsub(man, dec + 1, pre);
 	else
 	{
-		s1 = ft_strdup(man + (dec + 1));
-		s3 = ft_stradd(s1, '0', 1, pre - (LEN - dec));
-		free(s1);
-		s1 = s3;
+		s3 = ft_strdup(man + (dec + 1));
+		s1 = ft_stradd(s3, '0', 1, pre - (LEN - dec));
+		free(s3);
 	}
 	s3 = ft_strjoin(s2, s1);
 	free(s1);
@@ -45,7 +60,7 @@ static char	*shorten_mantissa(char *man, int dec, int pre, int hash)
 	return (s3);
 }
 
-char	*uldtoa(union u_ldouble u_ld, int pre, int hash)
+char	*uldtoa_basic(union u_ldouble u_ld, char *str)
 {
 	int				exp;
 	char			man[DEC + 1];	
@@ -56,28 +71,31 @@ char	*uldtoa(union u_ldouble u_ld, int pre, int hash)
 	exp =  get_ld_exp(u_ld);
 	clear_str(man, DEC);
 	m_zero = get_ld_mantissa(u_ld, man);
-	clear_str(res, LEN);
 	if (exp == -16383)
 	{
-		if (!m_zero)
-			return (shorten_mantissa(res, WH + 1,  pre, hash));
-		divi(man, "2");
+		if (!m_zero) // special case: 0
+		{
+			ft_strcpy(str, res);
+			return (WH + 1);
+		}
+		divi(man, "2"); // special case: subnormal
 	}
 	else if (exp == 16384)
 	{
 		if (m_zero)
-			return (ft_strdup("nan"));
-		return (ft_strdup("inf"));	
+			ft_strcpy(str, "nan");
+		else
+			ft_strcpy(str, "inf");
+		return (-4242);
 	}
+	clear_str(res, LEN);
 	ft_strcpy(res + WH + 1, man);
 	sh = shift_mantissa(res, exp);
-	if (exp >= 0)
-		return (shorten_mantissa(res, WH + 1,  pre, hash));
-	else
-		return (shorten_mantissa(res, WH + 1 - sh, pre, hash));
+	ft_strcpy(str, res);
+	return (WH + 1 - sh);
 }
 
-char	*udtoa(union u_double u_d, int pre, int hash)
+char	*udtoa_basic(union u_double u_d, char *str)
 {
 	int				exp;
 	char			man[DEC + 1];
@@ -88,23 +106,26 @@ char	*udtoa(union u_double u_d, int pre, int hash)
 	exp =  get_d_exp(u_d);
 	clear_str(man, DEC);
 	m_zero = get_d_mantissa(u_d, man);
-	clear_str(res, LEN);
-		if (exp == -1023)
+	if (exp == -1023)
 	{
-		if (!m_zero)
-			return (shorten_mantissa(res, WH + 1, pre, hash));
-		divi(man, "2");
+		if (!m_zero) // special case: 0
+		{
+			ft_strcpy(str, res);
+			return (WH + 1);
+		}
+		divi(man, "2"); // special case: subnormal
 	}
 	else if (exp == 1024)
 	{
 		if (m_zero)
-			return (ft_strdup("nan"));
-		return (ft_strdup("inf"));	
+			ft_strcpy(str, "nan");
+		else
+			ft_strcpy(str, "inf");
+		return (-4242);
 	}
+	clear_str(res, LEN);
 	ft_strcpy(res + WH + 1, man);
 	sh = shift_mantissa(res, exp);
-	if (exp >= 0)
-		return (shorten_mantissa(res, WH + 1,  pre, hash));
-	else
-		return (shorten_mantissa(res, WH + 1 - sh, pre, hash));
+	ft_strcpy(str, res);
+	return (WH + 1 - sh);
 }

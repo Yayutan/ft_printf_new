@@ -47,12 +47,8 @@ char	*d_p_f(t_spec *sp, va_list orig) // distribute, process, finalize
 		to_ret = initial_s(sp, orig);
 	else if (ft_strchr("diouxXb", sp->specifier))
 		to_ret = initial_diouxb(sp, orig);
-	else if (sp->specifier == 'f')
-		to_ret = initial_f(sp, orig);
-	else if (ft_strchr("eE", sp->specifier))
-		to_ret = initial_e(sp, orig);
-	else if (sp->specifier == 'g')
-		to_ret = initial_e(sp, orig);
+	else if (ft_strchr("feEg", sp->specifier))
+		to_ret = initial_feg(sp, orig);
 //	else if (sp->specifier == 'k')
 //		to_ret = ;
 	else if (sp->specifier == 'p')

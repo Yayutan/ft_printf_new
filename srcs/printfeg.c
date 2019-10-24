@@ -63,13 +63,12 @@ union u_ldouble		get_ld_param(t_spec *sp, va_list orig)
 	return (u_ld);
 }
 
-char	*initial_f(t_spec *sp, va_list orig)
+int		setup_basic(t_spec *sp, va_list orig, char *basic)
 {
 	union u_double	u_d;
 	union u_ldouble	u_ld;
-	char			*to_ret;
-
-	sp->precision = (sp->precision == -1) ? 6 : sp->precision;
+	int				dec;
+	
 	if (sp->len == 16)
 	{
 		u_ld = get_ld_param(sp, orig);
@@ -77,8 +76,7 @@ char	*initial_f(t_spec *sp, va_list orig)
 			sp->sign[0] = '-';
 		else if (sp->flags[1] || sp->flags[2])
 			sp->sign[0] = (sp->flags[1]) ? '+' : ' ';
-		to_ret = uldtoa(u_ld, sp->precision, sp->flags[3]);
-
+		dec = uldtoa_basic(u_ld, basic);
 	}
 	else
 	{
@@ -87,56 +85,87 @@ char	*initial_f(t_spec *sp, va_list orig)
 			sp->sign[0] = '-';
 		else if (sp->flags[1] || sp->flags[2])
 			sp->sign[0] = (sp->flags[1]) ? '+' : ' ';
-		to_ret = udtoa(u_d, sp->precision, sp->flags[3]);
+		dec = udtoa_basic(u_d, basic);
 	}
-	if (!ft_strcmp(to_ret, "nan"))
-		sp->sign[0] = '\0';
-	return (to_ret);
+	return (dec);
 }
 
-char	*initial_e(t_spec *sp, va_list orig)
+char	*form_f(char *basic, int dec, int p, int hash)
 {
-	char	*f_res;
-	char	*to_ret;
 	int		pre;
-	int		exp;
 
-	pre = (sp->precision == -1) ? 6 : sp->precision;
-	sp->precision = LEN;
-	f_res = initial_f(sp, orig);
-	if (!ft_strcmp(f_res, "nan"))
-		return (f_res);
-	sp->precision = pre;
-	f_res = increment_e(f_res, pre); // rounding is done here
-	exp = calc_exp(f_res);
-	to_ret = form_dec(f_res, exp, sp->flags[3], pre);
-	free(f_res);
+	pre = (p == -1) ? 6 : p;
+	return (form_final(basic, dec, pre, hash));
+}
+
+char	*form_e(char *basic, int exp, int p, int hash)
+{
+	int		pre;
+	int		i;
+	char	*to_ret;
+	char	*pt1;
+
+	pre = (p == -1) ? 6 : p;
+	i = 0;
+	while (basic[i] && basic[i] == '0')
+		i++;
+	if (basic[i])
+		pt1 = form_final(basic + i, 2, pre, hash);
+	else
+		pt1 = ft_stradd("0.", '0', 1, pre); // 0.000
+	to_ret = append_exp(pt1, exp, hash);
+	free(pt1);
+	
 	return (to_ret);
 }
 
-char	*initial_g(t_spec *sp, va_list orig)
+char	*form_g(char *basic, int dec, int exp, int p, int hash)
 {
-	char	*f_res;
-	char	*e_res;
+	int		pre;
+
+	if (p == -1)
+		pre  = 6;
+	else if (p == 0)
+		pre = 1;
+	else
+		pre = p;
+	// decide which function to call	
 	
+	// remove all trailing 0s
 	
-	
-//	The double argument is converted in style f or e (or F or E for G conversions).  	The precision specifies the number of significant digits.
+//	The double argument is converted in style f or e (or F or E for G conversions). The precision specifies the number of significant digits.
 //	If the precision is missing, 6 digits are given; if the precision is zero, it is treated as 1.
 //	Style e is used if the exponent from its conversion is less than -4 or greater than or equal to the precision.
 //	Trailing zeros are removed from the fractional part of the result; 
 //	 a decimal point appears only if it is followed by at least one digit.
-
-	f_res = initial_f(sp, orig);
-	e_res = initial_e(sp, orig);
-	if (ft_strlen(f_res) < ft_strlen(e_res))
-	{
-		free(e_res);
-		return (f_res);
-	}
-	else
-	{
-		free(f_res);
-		return (e_res);
-	}
 }
+
+char	*initial_feg(t_spec *sp, va_list orig)
+{
+	char	*basic;
+	char	*to_ret;
+	int		dec;
+	int		exp;
+
+	basic = ft_strnew(LEN);
+	dec = setup_basic(sp, orig, basic);
+	if (dec == -4242) // special cases
+	{
+		sp->flags[4] = 0;
+		if (!ft_strcmp(basic, "nan"))
+			sp->sign[0] = '\0';
+		return (basic);
+	}
+	exp = ;
+	
+	if (sp->specifier == 'f')
+		to_ret = form_f(basic, dec, sp->precision, sp->flags[3]); // f function
+	else if (sp->specifier == 'g')
+		to_ret = form_g(basic, dec, exp, sp->precision, sp->flags[3]); // g function, takes exp and decides call e or f
+	else
+		to_ret = form_e(basic, exp, sp->precision, sp->flags[3]); // e function
+	free(basic);
+	return (to_ret);
+}
+
+
