@@ -3,7 +3,10 @@
 #include "includes/ft_printf.h"
 //#include "includes/pow_of_two.h"
 #include "includes/arb_pre.h"
-
+# include <math.h>
+# include<float.h>
+# include <limits.h>
+# include <stdarg.h>
 
 //void test_binary()
 //{
@@ -220,151 +223,164 @@ void test_fail()
 //	return "";
 //}
 
-
-# include <math.h>
-# include<float.h>
-# include<limits.h>
-# include <stdarg.h>
-
 // Testing out $
-//double nth_next_d(int n, ...)
-//{
-//	int j = 1;
-//	va_list cp;
-//	va_start(cp, n);
-//	while (j < n)
-//	{
-//		va_arg(cp, double);
-//		j++;
-//	}
-//	return (va_arg(cp, double));
-//}
-//
-//char *nth_next_s(int n, ...)
-//{
-//	int j = 1;
-//	va_list cp;
-//	va_start(cp, n);
-//	char	*s;
-//	while (j < n)
-//	{
-//		s = va_arg(cp, char *);
-//		j++;
-//	}
-//	s = va_arg(cp, char *);
-//	return (s);
-//}
-//
-//int	main()
-//{
+double nth_next_d(int n, ...)
+{
+	int j = 1;
+	va_list cp;
+	va_start(cp, n);
+	while (j < n)
+	{
+		va_arg(cp, double);
+		j++;
+	}
+	return (va_arg(cp, double));
+}
+
+char *nth_next_s(int n, ...)
+{
+	int j = 1;
+	va_list cp;
+	va_start(cp, n);
+	char	*s;
+	while (j < n)
+	{
+		s = va_arg(cp, char *);
+		j++;
+	}
+	s = va_arg(cp, char *);
+	return (s);
+}
+
+int	main()
+{
+//		printf("%2$f\n", "world", 4.2);
+//		printf("%1$f\n", 1.0, 2.0, 4.2, 8.4);
+//		printf("%2$f\n", 1.0, 2.0, 4.2, 8.4);
+//		printf("%3$f\n", 1.0, 2.0, 4.2, 8.4);
+//		printf("%4$f\n", 1.0, 2.0, 4.2, 8.4);
+//		printf("%5$f\n", 1.0, 2.0, 4.2, 8.4);
+//		printf("%6$f\n", 1.0, 2.0, 4.2, 8.4);
+//		printf("%7$f\n", 1.0, 2.0, 4.2, 8.4);
+//		printf("%2$f, %1$s!", "world", 5.75);
+//		ft_printf("%2$f, %1$s!", "world", 5.75);
+//    
+//        printf("%2$d, %1$s!", "world", 5);
+//		ft_printf("%2$d, %1$s!", "world", 5);
+    
+        ft_printf("%2$s %% %1$d!\n", 5.75, "abc");
+        ft_printf("%2$s, %1$f!\n", 5.75, "abc");
+        ft_printf("%2$s, %1$Lf!\n", 5.75L, "abc");
+        ft_printf("%f\n");
+        ft_printf("%f\n", NULL);
 //		printf("%f\n", nth_next_d(1,"0.0", 1.0,"2.0"));
 //		printf("%s\n", nth_next_s(2,"0.0", 1.0,"2.0"));
+}
+
+
+//void timed_out_pft()
+//{
+//	printf("Thier: |%.2000Lf|\n", LDBL_MIN);
+//	ft_printf("Mine:  |%.2000Lf|\n", LDBL_MIN);
+//	
+//	printf("Thier: |%.2000Lf|\n", -LDBL_MIN);
+//	ft_printf("Mine:  |%.2000Lf|\n", -LDBL_MIN);
+//	
+//	printf("Thier: |%.0Lf|\n", LDBL_MAX);
+//	ft_printf("Mine:  |%.0Lf|\n", LDBL_MAX);
+//	
+//	printf("Thier: |%.3Lf|\n", LDBL_MAX);
+//	ft_printf("Mine:  |%.3Lf|\n", LDBL_MAX);
+//	
+//	printf("Thier: |%Lf|\n", LDBL_MAX);
+//	ft_printf("Mine:  |%Lf|\n", LDBL_MAX);
+//	
+//	printf("Thier: |%.8Lf|\n", LDBL_MAX);
+//	ft_printf("Mine:  |%.8Lf|\n", LDBL_MAX);
+//	
+//	printf("Thier: |%.12Lf|\n", LDBL_MAX);
+//	ft_printf("Mine:  |%.12Lf|\n", LDBL_MAX);
+//	
+//	printf("Thier: |%.16Lf|\n", LDBL_MAX);
+//	ft_printf("Mine:  |%.16Lf|\n", LDBL_MAX);
+//	
+//	printf("Thier: |%.18Lf|\n", LDBL_MAX);
+//	ft_printf("Mine:  |%.18Lf|\n", LDBL_MAX);
+//	
+//	printf("Thier: |%.0Lf|\n", -LDBL_MAX);
+//	ft_printf("Mine:  |%.0Lf|\n", -LDBL_MAX);
+//	
+//	printf("Thier: |%.3Lf|\n", -LDBL_MAX);
+//	ft_printf("Mine:  |%.3Lf|\n", -LDBL_MAX);
+//	
+//	printf("Thier: |%Lf|\n", -LDBL_MAX);
+//	ft_printf("Mine:  |%Lf|\n", -LDBL_MAX);
+//	
+//	printf("Thier: |%.8Lf|\n", -LDBL_MAX);
+//	ft_printf("Mine:  |%.8Lf|\n", -LDBL_MAX);
+//	
+//	printf("Thier: |%.12Lf|\n", -LDBL_MAX);
+//	ft_printf("Mine:  |%.12Lf|\n", -LDBL_MAX);
+//	
+//	printf("Thier: |%.16Lf|\n", -LDBL_MAX);
+//	ft_printf("Mine:  |%.16Lf|\n", -LDBL_MAX);
+//	
+//	printf("Thier: |%.18Lf|\n", -LDBL_MAX);
+//	ft_printf("Mine:  |%.18Lf|\n", -LDBL_MAX);
+//	
+//	printf("Thier: |%.0Lf|\n", LDBL_MIN);
+//	ft_printf("Mine:  |%.0Lf|\n", LDBL_MIN);
+//	
+//	printf("Thier: |%.3Lf|\n", LDBL_MIN);
+//	ft_printf("Mine:  |%.3Lf|\n", LDBL_MIN);
+//	
+//	printf("Thier: |%Lf|\n", LDBL_MIN);
+//	ft_printf("Mine:  |%Lf|\n", LDBL_MIN);
+//	
+//	printf("Thier: |%.8Lf|\n", LDBL_MIN);
+//	ft_printf("Mine:  |%.8Lf|\n", LDBL_MIN);
+//	
+//	printf("Thier: |%.12Lf|\n", LDBL_MIN);
+//	ft_printf("Mine:  |%.12Lf|\n", LDBL_MIN);
+//	
+//	printf("Thier: |%.16Lf|\n", LDBL_MIN);
+//	ft_printf("Mine:  |%.16Lf|\n", LDBL_MIN);
+//	
+//	printf("Thier: |%.18Lf|\n", LDBL_MIN);
+//	ft_printf("Mine:  |%.18Lf|\n", LDBL_MIN);
+//	
+//	printf("Thier: |%.0Lf|\n", -LDBL_MIN);
+//	ft_printf("Mine:  |%.0Lf|\n", -LDBL_MIN);
+//	
+//	printf("Thier: |%.3Lf|\n", -LDBL_MIN);
+//	ft_printf("Mine:  |%.3Lf|\n", -LDBL_MIN);
+//	
+//	printf("Thier: |%Lf|\n", -LDBL_MIN);
+//	ft_printf("Mine:  |%Lf|\n", -LDBL_MIN);
+//	
+//	printf("Thier: |%.8Lf|\n", -LDBL_MIN);
+//	ft_printf("Mine:  |%.8Lf|\n", -LDBL_MIN);
+//	
+//	printf("Thier: |%.12Lf|\n", -LDBL_MIN);
+//	ft_printf("Mine:  |%.12Lf|\n", -LDBL_MIN);
+//	
+//	printf("Thier: |%.16Lf|\n", -LDBL_MIN);
+//	ft_printf("Mine:  |%.16Lf|\n", -LDBL_MIN);
+//	
+//	printf("Thier: |%.18Lf|\n", -LDBL_MIN);
+//	ft_printf("Mine:  |%.18Lf|\n", -LDBL_MIN);
+//	
+//	printf("Thier: |%LLf|\n", 42.5);
+//	ft_printf("Mine:  |%LLf|\n", 42.5);
+//	
+//	printf("Thier: |%Llf|\n", 42.5);
+//	ft_printf("Mine:  |%Llf|\n", 42.5);
+//	
+//	printf("Thier: |%lLf|\n", 42.5);
+//	ft_printf("Mine:  |%lLf|\n", 42.5);
 //}
 
-
-void timed_out_pft()
-{
-	printf("Thier: |%.2000Lf|\n", LDBL_MIN);
-	ft_printf("Mine:  |%.2000Lf|\n", LDBL_MIN);
-	
-	printf("Thier: |%.2000Lf|\n", -LDBL_MIN);
-	ft_printf("Mine:  |%.2000Lf|\n", -LDBL_MIN);
-	
-	printf("Thier: |%.0Lf|\n", LDBL_MAX);
-	ft_printf("Mine:  |%.0Lf|\n", LDBL_MAX);
-	
-	printf("Thier: |%.3Lf|\n", LDBL_MAX);
-	ft_printf("Mine:  |%.3Lf|\n", LDBL_MAX);
-	
-	printf("Thier: |%Lf|\n", LDBL_MAX);
-	ft_printf("Mine:  |%Lf|\n", LDBL_MAX);
-	
-	printf("Thier: |%.8Lf|\n", LDBL_MAX);
-	ft_printf("Mine:  |%.8Lf|\n", LDBL_MAX);
-	
-	printf("Thier: |%.12Lf|\n", LDBL_MAX);
-	ft_printf("Mine:  |%.12Lf|\n", LDBL_MAX);
-	
-	printf("Thier: |%.16Lf|\n", LDBL_MAX);
-	ft_printf("Mine:  |%.16Lf|\n", LDBL_MAX);
-	
-	printf("Thier: |%.18Lf|\n", LDBL_MAX);
-	ft_printf("Mine:  |%.18Lf|\n", LDBL_MAX);
-	
-	printf("Thier: |%.0Lf|\n", -LDBL_MAX);
-	ft_printf("Mine:  |%.0Lf|\n", -LDBL_MAX);
-	
-	printf("Thier: |%.3Lf|\n", -LDBL_MAX);
-	ft_printf("Mine:  |%.3Lf|\n", -LDBL_MAX);
-	
-	printf("Thier: |%Lf|\n", -LDBL_MAX);
-	ft_printf("Mine:  |%Lf|\n", -LDBL_MAX);
-	
-	printf("Thier: |%.8Lf|\n", -LDBL_MAX);
-	ft_printf("Mine:  |%.8Lf|\n", -LDBL_MAX);
-	
-	printf("Thier: |%.12Lf|\n", -LDBL_MAX);
-	ft_printf("Mine:  |%.12Lf|\n", -LDBL_MAX);
-	
-	printf("Thier: |%.16Lf|\n", -LDBL_MAX);
-	ft_printf("Mine:  |%.16Lf|\n", -LDBL_MAX);
-	
-	printf("Thier: |%.18Lf|\n", -LDBL_MAX);
-	ft_printf("Mine:  |%.18Lf|\n", -LDBL_MAX);
-	
-	printf("Thier: |%.0Lf|\n", LDBL_MIN);
-	ft_printf("Mine:  |%.0Lf|\n", LDBL_MIN);
-	
-	printf("Thier: |%.3Lf|\n", LDBL_MIN);
-	ft_printf("Mine:  |%.3Lf|\n", LDBL_MIN);
-	
-	printf("Thier: |%Lf|\n", LDBL_MIN);
-	ft_printf("Mine:  |%Lf|\n", LDBL_MIN);
-	
-	printf("Thier: |%.8Lf|\n", LDBL_MIN);
-	ft_printf("Mine:  |%.8Lf|\n", LDBL_MIN);
-	
-	printf("Thier: |%.12Lf|\n", LDBL_MIN);
-	ft_printf("Mine:  |%.12Lf|\n", LDBL_MIN);
-	
-	printf("Thier: |%.16Lf|\n", LDBL_MIN);
-	ft_printf("Mine:  |%.16Lf|\n", LDBL_MIN);
-	
-	printf("Thier: |%.18Lf|\n", LDBL_MIN);
-	ft_printf("Mine:  |%.18Lf|\n", LDBL_MIN);
-	
-	printf("Thier: |%.0Lf|\n", -LDBL_MIN);
-	ft_printf("Mine:  |%.0Lf|\n", -LDBL_MIN);
-	
-	printf("Thier: |%.3Lf|\n", -LDBL_MIN);
-	ft_printf("Mine:  |%.3Lf|\n", -LDBL_MIN);
-	
-	printf("Thier: |%Lf|\n", -LDBL_MIN);
-	ft_printf("Mine:  |%Lf|\n", -LDBL_MIN);
-	
-	printf("Thier: |%.8Lf|\n", -LDBL_MIN);
-	ft_printf("Mine:  |%.8Lf|\n", -LDBL_MIN);
-	
-	printf("Thier: |%.12Lf|\n", -LDBL_MIN);
-	ft_printf("Mine:  |%.12Lf|\n", -LDBL_MIN);
-	
-	printf("Thier: |%.16Lf|\n", -LDBL_MIN);
-	ft_printf("Mine:  |%.16Lf|\n", -LDBL_MIN);
-	
-	printf("Thier: |%.18Lf|\n", -LDBL_MIN);
-	ft_printf("Mine:  |%.18Lf|\n", -LDBL_MIN);
-	
-	printf("Thier: |%LLf|\n", 42.5);
-	ft_printf("Mine:  |%LLf|\n", 42.5);
-	
-	printf("Thier: |%Llf|\n", 42.5);
-	ft_printf("Mine:  |%Llf|\n", 42.5);
-	
-	printf("Thier: |%lLf|\n", 42.5);
-	ft_printf("Mine:  |%lLf|\n", 42.5);
-}
-
-int main()
-{
-	timed_out_pft();
-}
+//int main()
+//{
+//	printf("%");
+//}
