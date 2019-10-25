@@ -25,8 +25,8 @@ union u_double		get_d_param(t_spec *sp, va_list orig)
 		j = 1;
 		while (j < sp->param)
 		{
-			va_arg(cp, int);
-//			va_arg(cp, void*);
+//			va_arg(cp, int);
+			va_arg(cp, void*);
 			j++;
 		}
 		u_d.dbl = va_arg(cp, double);
@@ -51,8 +51,8 @@ union u_ldouble		get_ld_param(t_spec *sp, va_list orig)
 		j = 1;
 		while (j < sp->param)
 		{
-			va_arg(cp, int);
-//			va_arg(cp, void*);
+//			va_arg(cp, int);
+			va_arg(cp, void*);
 			j++;
 		}
 		u_ld.ldbl = va_arg(cp, long double);
