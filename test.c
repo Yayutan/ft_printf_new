@@ -224,8 +224,147 @@ void test_fail()
 # include <math.h>
 # include<float.h>
 # include<limits.h>
+# include <stdarg.h>
 
-int	main()
+// Testing out $
+//double nth_next_d(int n, ...)
+//{
+//	int j = 1;
+//	va_list cp;
+//	va_start(cp, n);
+//	while (j < n)
+//	{
+//		va_arg(cp, double);
+//		j++;
+//	}
+//	return (va_arg(cp, double));
+//}
+//
+//char *nth_next_s(int n, ...)
+//{
+//	int j = 1;
+//	va_list cp;
+//	va_start(cp, n);
+//	char	*s;
+//	while (j < n)
+//	{
+//		s = va_arg(cp, char *);
+//		j++;
+//	}
+//	s = va_arg(cp, char *);
+//	return (s);
+//}
+//
+//int	main()
+//{
+//		printf("%f\n", nth_next_d(1,"0.0", 1.0,"2.0"));
+//		printf("%s\n", nth_next_s(2,"0.0", 1.0,"2.0"));
+//}
+
+
+void timed_out_pft()
 {
+	printf("Thier: |%.2000Lf|\n", LDBL_MIN);
+	ft_printf("Mine:  |%.2000Lf|\n", LDBL_MIN);
+	
+	printf("Thier: |%.2000Lf|\n", -LDBL_MIN);
+	ft_printf("Mine:  |%.2000Lf|\n", -LDBL_MIN);
+	
+	printf("Thier: |%.0Lf|\n", LDBL_MAX);
+	ft_printf("Mine:  |%.0Lf|\n", LDBL_MAX);
+	
+	printf("Thier: |%.3Lf|\n", LDBL_MAX);
+	ft_printf("Mine:  |%.3Lf|\n", LDBL_MAX);
+	
+	printf("Thier: |%Lf|\n", LDBL_MAX);
+	ft_printf("Mine:  |%Lf|\n", LDBL_MAX);
+	
+	printf("Thier: |%.8Lf|\n", LDBL_MAX);
+	ft_printf("Mine:  |%.8Lf|\n", LDBL_MAX);
+	
+	printf("Thier: |%.12Lf|\n", LDBL_MAX);
+	ft_printf("Mine:  |%.12Lf|\n", LDBL_MAX);
+	
+	printf("Thier: |%.16Lf|\n", LDBL_MAX);
+	ft_printf("Mine:  |%.16Lf|\n", LDBL_MAX);
+	
+	printf("Thier: |%.18Lf|\n", LDBL_MAX);
+	ft_printf("Mine:  |%.18Lf|\n", LDBL_MAX);
+	
+	printf("Thier: |%.0Lf|\n", -LDBL_MAX);
+	ft_printf("Mine:  |%.0Lf|\n", -LDBL_MAX);
+	
+	printf("Thier: |%.3Lf|\n", -LDBL_MAX);
+	ft_printf("Mine:  |%.3Lf|\n", -LDBL_MAX);
+	
+	printf("Thier: |%Lf|\n", -LDBL_MAX);
+	ft_printf("Mine:  |%Lf|\n", -LDBL_MAX);
+	
+	printf("Thier: |%.8Lf|\n", -LDBL_MAX);
+	ft_printf("Mine:  |%.8Lf|\n", -LDBL_MAX);
+	
+	printf("Thier: |%.12Lf|\n", -LDBL_MAX);
+	ft_printf("Mine:  |%.12Lf|\n", -LDBL_MAX);
+	
+	printf("Thier: |%.16Lf|\n", -LDBL_MAX);
+	ft_printf("Mine:  |%.16Lf|\n", -LDBL_MAX);
+	
+	printf("Thier: |%.18Lf|\n", -LDBL_MAX);
+	ft_printf("Mine:  |%.18Lf|\n", -LDBL_MAX);
+	
+	printf("Thier: |%.0Lf|\n", LDBL_MIN);
+	ft_printf("Mine:  |%.0Lf|\n", LDBL_MIN);
+	
+	printf("Thier: |%.3Lf|\n", LDBL_MIN);
+	ft_printf("Mine:  |%.3Lf|\n", LDBL_MIN);
+	
+	printf("Thier: |%Lf|\n", LDBL_MIN);
+	ft_printf("Mine:  |%Lf|\n", LDBL_MIN);
+	
+	printf("Thier: |%.8Lf|\n", LDBL_MIN);
+	ft_printf("Mine:  |%.8Lf|\n", LDBL_MIN);
+	
+	printf("Thier: |%.12Lf|\n", LDBL_MIN);
+	ft_printf("Mine:  |%.12Lf|\n", LDBL_MIN);
+	
+	printf("Thier: |%.16Lf|\n", LDBL_MIN);
+	ft_printf("Mine:  |%.16Lf|\n", LDBL_MIN);
+	
+	printf("Thier: |%.18Lf|\n", LDBL_MIN);
+	ft_printf("Mine:  |%.18Lf|\n", LDBL_MIN);
+	
+	printf("Thier: |%.0Lf|\n", -LDBL_MIN);
+	ft_printf("Mine:  |%.0Lf|\n", -LDBL_MIN);
+	
+	printf("Thier: |%.3Lf|\n", -LDBL_MIN);
+	ft_printf("Mine:  |%.3Lf|\n", -LDBL_MIN);
+	
+	printf("Thier: |%Lf|\n", -LDBL_MIN);
+	ft_printf("Mine:  |%Lf|\n", -LDBL_MIN);
+	
+	printf("Thier: |%.8Lf|\n", -LDBL_MIN);
+	ft_printf("Mine:  |%.8Lf|\n", -LDBL_MIN);
+	
+	printf("Thier: |%.12Lf|\n", -LDBL_MIN);
+	ft_printf("Mine:  |%.12Lf|\n", -LDBL_MIN);
+	
+	printf("Thier: |%.16Lf|\n", -LDBL_MIN);
+	ft_printf("Mine:  |%.16Lf|\n", -LDBL_MIN);
+	
+	printf("Thier: |%.18Lf|\n", -LDBL_MIN);
+	ft_printf("Mine:  |%.18Lf|\n", -LDBL_MIN);
+	
+	printf("Thier: |%LLf|\n", 42.5);
+	ft_printf("Mine:  |%LLf|\n", 42.5);
+	
+	printf("Thier: |%Llf|\n", 42.5);
+	ft_printf("Mine:  |%Llf|\n", 42.5);
+	
+	printf("Thier: |%lLf|\n", 42.5);
+	ft_printf("Mine:  |%lLf|\n", 42.5);
+}
 
+int main()
+{
+	timed_out_pft();
 }

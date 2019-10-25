@@ -25,7 +25,7 @@ union u_double		get_d_param(t_spec *sp, va_list orig)
 		j = 1;
 		while (j < sp->param)
 		{
-			va_arg(cp, double);
+			u_d.dbl	= va_arg(cp, double);
 			j++;
 		}
 		u_d.dbl = va_arg(cp, double);
@@ -123,6 +123,7 @@ char	*form_g(char *basic, int dec, int exp, int p, int hash)
 	int		pre;
     char    *to_ret;
     char    *dec_pos;
+	char	*tmp;
 	int		end;
 
 	if (p == -1)
@@ -131,23 +132,36 @@ char	*form_g(char *basic, int dec, int exp, int p, int hash)
 		pre = 1;
 	else
 		pre = p;
-	if (exp >= -4 && exp < p)
-        to_ret = form_f(basic, dec, p, hash);
+	if (exp >= -4 && exp < pre)
+        tmp = form_f(basic, dec, pre - exp - 1, hash);
     else
-        to_ret = form_e(basic, exp, p, hash);
-    dec_pos = ft_strchr(to_ret, 'e');
+        tmp = form_e(basic, exp, pre - 1, hash);
+	if (hash)
+		return (tmp);
+    dec_pos = ft_strchr(tmp, 'e');
 	if (!dec_pos) // f
 	{
-		end = ft_strlen(to_ret) - 1;
-		while (to_ret[end] && to_ret[end] == '0')
+		end = ft_strlen(tmp) - 1;
+		while (tmp[end] && tmp[end] == '0')
 			end--;
+		if (tmp[end] == '.')
+			end--;
+		to_ret = ft_strsub(tmp, 0, end + 1);
+		free(tmp);
+		return (to_ret);
 	}
-	else
+	else // refactor duplicate parts
 	{
-		end = dec_pos - to_ret;
-		while (to_ret[end] && to_ret[end] == '0')
+		end = dec_pos - tmp;
+    	dec_pos = ft_strdup(dec_pos);
+		while (tmp[end] && tmp[end] == '0')
 			end--;
-		
+		to_ret = ft_strsub(tmp, 0, end);
+		free(tmp);
+		tmp = ft_strjoin(to_ret, dec_pos);
+		free(to_ret);
+		free(dec_pos);
+		return (tmp);
 	}
 	// remove all trailing 0s
 	
@@ -156,8 +170,6 @@ char	*form_g(char *basic, int dec, int exp, int p, int hash)
 //	Style e is used if the exponent from its conversion is less than -4 or greater than or equal to the precision.
 //	Trailing zeros are removed from the fractional part of the result; 
 //	 a decimal point appears only if it is followed by at least one digit.
-    
-    return (to_ret);
 }
 
 char	*initial_feg(t_spec *sp, va_list orig)
@@ -177,9 +189,9 @@ char	*initial_feg(t_spec *sp, va_list orig)
 		return (basic);
 	}
 	exp = calc_exp(basic, dec);
-	if (sp->specifier == 'f')
+	if (sp->specifier == 'f' || sp->specifier == 'F')
 		to_ret = form_f(basic, dec, sp->precision, sp->flags[3]); // f function
-	else if (sp->specifier == 'g')
+	else if (sp->specifier == 'g' || sp->specifier == 'G')
 		to_ret = form_g(basic, dec, exp, sp->precision, sp->flags[3]); // g function, takes exp and decides call e or f
 	else
 		to_ret = form_e(basic, exp, sp->precision, sp->flags[3]); // e function

@@ -33,7 +33,7 @@ char	*finalize(t_spec *sp, char *str) // process width, etc.
 	else
 		tmp = ft_stradd(str, ' ', -1, sp->width - (int)ft_strlen(str));
 	free(str);
-	str = (ft_strchr("XE", sp->specifier)) ? ft_strup(tmp) : tmp;
+	str = (ft_strchr("XEG", sp->specifier)) ? ft_strup(tmp) : tmp;
 	return (str);
 }
 
@@ -47,7 +47,7 @@ char	*d_p_f(t_spec *sp, va_list orig) // distribute, process, finalize
 		to_ret = initial_s(sp, orig);
 	else if (ft_strchr("diouxXb", sp->specifier))
 		to_ret = initial_diouxb(sp, orig);
-	else if (ft_strchr("feEg", sp->specifier))
+	else if (ft_strchr("fFeEgG", sp->specifier))
 		to_ret = initial_feg(sp, orig);
 //	else if (sp->specifier == 'k')
 //		to_ret = ;

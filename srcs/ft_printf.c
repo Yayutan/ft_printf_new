@@ -27,7 +27,7 @@ int		parse_format(char *ft, t_spec *sp, int i, va_list orig)
 		else
 			i = not_num_param(sp, ft, i);
 	}
-	if (ft[i] && ft_strchr("dDioOuUxXbBfeEgcsprk%", ft[i]))
+	if (ft[i] && ft_strchr("dDioOuUxXbBfFeEgGcsprk%", ft[i]))
 	{
 		sp->valid = 1;
 		sp->specifier = (ft_strchr("DOUB", ft[i])) ? ft[i] + 32 : ft[i];
@@ -89,14 +89,12 @@ int		ft_printf(const char *format, ...)
 			buf_store_chr(spec->buf, format[i++]);
 		else
 		{
-//			printf("Spec being set up for %s:..\n", format + i);
 			i = parse_format((char*)format, spec, i + 1, ap_orig);
-//			printf("Param: %d\nFlags: %d%d%d%d%d%d\nWidth: %d\nPrecision: %d\nLength: %d\nSpecifier: %c\nValid: %d\n", spec->param, spec->flags[0], spec->flags[1], spec->flags[2], spec->flags[3], spec->flags[4], spec->flags[5], spec->width, spec->precision, spec->len, spec->specifier, spec->valid);
 			if (spec->valid > 0)
 			{
 				s = d_p_f(spec, ap_orig);
 				buf_store_str(spec->buf, s);
-				free(s); // cannot free???	
+				free(s);
 			}
 			else
 			{
@@ -106,10 +104,9 @@ int		ft_printf(const char *format, ...)
 				s = ft_strsub(format, j, i - j);
 				tmp = finalize(spec, s);
 				buf_store_str(spec->buf, tmp);
-				free(tmp); // cannot free???	
+				free(tmp);
 			}
 		}
-	
 	}
 	buf_output_clear(spec->buf);
 	i = buf_del(spec->buf);
