@@ -15,10 +15,10 @@
 # include "libft.h"
 # include "ft_buf.h"
 # include "arb_pre.h"
+# include "arg_list.h"
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdarg.h>
-# include <locale.h>
 
 # define RED "\033[0;31m"
 # define GREEN "\033[0;32m"
@@ -41,8 +41,14 @@ typedef struct	s_spec
 	int			valid;
 	char		sign[2];
 	char		pref[3];
-	t_buf		*buf;
+	char		*res;	//	t_buf		*buf;
 }				t_spec;
+
+typedef struct  s_ptqueue
+{
+    t_spec      *sp;
+    s_ptqueue   *next;
+}               t_ptqueue;
 
 union		u_double
 {

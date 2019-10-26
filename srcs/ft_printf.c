@@ -62,10 +62,6 @@ int		change_color(char *ft, int i, t_spec *sp)
 	return (i);
 }
 
-//////////
-//# include <stdio.h>
-/////////
-
 int		ft_printf(const char *format, ...)
 {
 	int		i;

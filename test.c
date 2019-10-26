@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <locale.h>
-#include "includes/ft_printf.h"
+//#include "includes/ft_printf.h" 
 //#include "includes/pow_of_two.h"
-#include "includes/arb_pre.h"
+//#include "includes/arb_pre.h"
 # include <math.h>
 # include<float.h>
 # include <limits.h>
@@ -265,14 +265,18 @@ int	main()
 //		printf("%2$f, %1$s!", "world", 5.75);
 //		ft_printf("%2$f, %1$s!", "world", 5.75);
 //    
-//        printf("%2$d, %1$s!", "world", 5);
+        printf("%.*2$s\n", "world", 3);
 //		ft_printf("%2$d, %1$s!", "world", 5);
-    
-        ft_printf("%2$s %% %1$d!\n", 5.75, "abc");
-        ft_printf("%2$s, %1$f!\n", 5.75, "abc");
-        ft_printf("%2$s, %1$Lf!\n", 5.75L, "abc");
-        ft_printf("%f\n");
-        ft_printf("%f\n", NULL);
+
+	
+	
+	
+	
+//        ft_printf("%2$s %% %1$d!\n", 5.75, "abc");
+//        ft_printf("%2$s, %1$f!\n", 5.75, "abc");
+//        ft_printf("%2$s, %1$Lf!\n", 5.75L, "abc");
+//        ft_printf("%f\n");
+//        ft_printf("%f\n", NULL);
 //		printf("%f\n", nth_next_d(1,"0.0", 1.0,"2.0"));
 //		printf("%s\n", nth_next_s(2,"0.0", 1.0,"2.0"));
 }
