@@ -14,12 +14,17 @@
 # define ARG_LIST_H
 # include <stdlib.h>
 
-typedef struct  s_args  // works like hashtable
+typedef struct  s_args
 {
 	int			index;
-    char		type; // or int size?
+   	size_t		size;
     s_args		*next;
 }				t_args;
 
+t_args	*new_arg(int i, char t);
+t_args	*insert_arg(t_args *lst, t_args *t);
+int		arg_lst_len(t_args *lst);
+t_args	*arg_lst_at(t_args *lst, int i);
+void	arg_lst_del(t_args *lst);
 
 #endif

@@ -12,7 +12,6 @@
 
 # include "arg_list.h"
 
-// create
 t_args	*new_arg(int i, char t)
 {
 	t_args	*to_ret;
@@ -24,30 +23,27 @@ t_args	*new_arg(int i, char t)
 	return (to_ret);
 }
 
-// insert 
 t_args	*insert_arg(t_args *lst, t_args *t)
 {
-	int		target;
 	t_args	*cur;
 	t_args	*pre;
 
-	target = t->index;
-	pre = NULL;
-	cur = lst;
-	if (target < cur->index)
+	if (t->index < lst->index)
 	{
-		t->next = cur;
+		t->next = lst;
 		lst = t;
 		return (lst);
 	}
-	while (cur && cur->index <= target)
+	pre = NULL;
+	cur = lst;
+	while (cur && cur->index <= t->index)
 	{
-		if (target == cur->index)
+		if (t->index == cur->index)
 		{
 			cur->type = t->type;
 			return (lst);
 		}			
-		else if (target < cur->index && target > pre->index)
+		else if (t->index < cur->index && t->index > pre->index)
 		{
 			pre->next = t;
 			t->next = cur;
@@ -60,9 +56,55 @@ t_args	*insert_arg(t_args *lst, t_args *t)
 	return (lst);
 }
 
+int		arg_lst_len(t_args *lst)
+{
+	int		len;
+	t_args	*cur;
 
-// len
+	if (!lst)
+		return (0);
+	len = 0;
+	cur = lst;
+	while (cur)
+	{
+		cur = cur->next;
+		len++;
+	}
+	return (len);
+}
 
+t_args	*arg_lst_at(t_args *lst, int i)
+{
+	t_args	*cur;
 
-// del
+	if (!lst)
+		return (NULL);
+	else if (pos == 0)
+		return (lst);
+	else
+	{
+		cur = lst;
+		while (cur)
+		{
+			if (pos == 0)
+				return (cur);
+			pos--;
+			cur = cur->next;
+		}
+		return (NULL);
+	}
+}
 
+void	arg_lst_del(t_args *lst)
+{
+	t_args	*cur;
+	t_args	*nxt;
+
+	cur = lst;
+	while (cur)
+	{
+		nxt = cur->next;
+		free(cur);
+		cur = nxt;
+	}
+}
