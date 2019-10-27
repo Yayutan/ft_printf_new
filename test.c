@@ -224,6 +224,11 @@ void test_fail()
 //}
 
 // Testing out $
+void skip_param(va_list lst)
+{
+	va_arg(lst, char*);
+}
+
 double nth_next_d(int n, ...)
 {
 	int j = 1;
@@ -243,9 +248,10 @@ char *nth_next_s(int n, ...)
 	va_list cp;
 	va_start(cp, n);
 	char	*s;
-	while (j < n)
+	while (j < n / 2)
 	{
 		s = va_arg(cp, char *);
+		skip_param(cp);
 		j++;
 	}
 	s = va_arg(cp, char *);
@@ -265,7 +271,7 @@ int	main()
 //		printf("%2$f, %1$s!", "world", 5.75);
 //		ft_printf("%2$f, %1$s!", "world", 5.75);
 //    
-        printf("%.*2$s\n", "world", 3);
+//        printf("%.*2$s\n", "world", 3);
 //		ft_printf("%2$d, %1$s!", "world", 5);
 
 	
@@ -278,7 +284,7 @@ int	main()
 //        ft_printf("%f\n");
 //        ft_printf("%f\n", NULL);
 //		printf("%f\n", nth_next_d(1,"0.0", 1.0,"2.0"));
-//		printf("%s\n", nth_next_s(2,"0.0", 1.0,"2.0"));
+		printf("%s\n", nth_next_s(4,"0.0", "1.0","2.0", "3.0"));
 }
 
 

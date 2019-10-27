@@ -5,106 +5,56 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mchuang <mchuang@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/25 16:38:02 by mchuang           #+#    #+#             */
-/*   Updated: 2019/10/25 16:38:03 by mchuang          ###   ########.fr       */
+/*   Created: 2019/10/26 18:35:23 by mchuang           #+#    #+#             */
+/*   Updated: 2019/10/26 18:35:26 by mchuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "arg_list.h"
+# include "ft_printf.h"
 
-t_args	*new_arg(int i, char t)
+
+
+
+
+int		add_param_info(char *ft, int i, t_args *arg, int *nxt_arg)
 {
-	t_args	*to_ret;
-
-	to_ret = (t_args*)ftmemalloc(sizeof(t_args));
-	to_ret->index = i;
-	to_ret->type = t;
-	to_ret->next = NULL;
-	return (to_ret);
-}
-
-t_args	*insert_arg(t_args *lst, t_args *t)
-{
-	t_args	*cur;
-	t_args	*pre;
-
-	if (t->index < lst->index)
+	while (ft[i] && ft_strchr(",;:_vaACSnjz0123456789hlL*.'#-+ ", ft[i]))
 	{
-		t->next = lst;
-		lst = t;
-		return (lst);
+		if (ft[i] >= '1' && ft[i] <= '9')
+			i = num_arg(arg, ft, i); // make new node if $
+		else if (ft[i] == '*') // *(next) or *n$(n) (diff in precision and width)
+			i = star_arg(arg, ft, i, nxt_arg);
+		else
+			i++;
 	}
-	pre = NULL;
-	cur = lst;
-	while (cur && cur->index <= t->index)
+	if (ft[i] && ft_strchr("dDioOuUxXbBfFeEgGcsprk%", ft[i]))
 	{
-		if (t->index == cur->index)
+		if (ft[i] != '%')
 		{
-			cur->type = t->type;
-			return (lst);
-		}			
-		else if (t->index < cur->index && t->index > pre->index)
-		{
-			pre->next = t;
-			t->next = cur;
-			return (lst);
+			sp->specifier = (ft_strchr("DOUB", ft[i])) ? ft[i] + 32 : ft[i];
+			
+			// make new node (after *nxt_arg)	
 		}
-		pre = cur;
-		cur = cur->next;
+		i++;
 	}
-	pre->next = t;
-	return (lst);
+	return (i);
 }
 
-int		arg_lst_len(t_args *lst)
+t_args	*set_args_lst(const char *format)
 {
-	int		len;
-	t_args	*cur;
+	t_args	*arg;
+	int		i;
+	int		arg_c;
 
-	if (!lst)
-		return (0);
-	len = 0;
-	cur = lst;
-	while (cur)
+	arg = NULL;
+	i = 0;
+	arg_c = 0;
+	while (format[i])
 	{
-		cur = cur->next;
-		len++;
+		if (format[i] == '%')
+			i = add_param_info(format, i, arg, &arg_c);
+		else
+			i++;
 	}
-	return (len);
-}
-
-t_args	*arg_lst_at(t_args *lst, int i)
-{
-	t_args	*cur;
-
-	if (!lst)
-		return (NULL);
-	else if (pos == 0)
-		return (lst);
-	else
-	{
-		cur = lst;
-		while (cur)
-		{
-			if (pos == 0)
-				return (cur);
-			pos--;
-			cur = cur->next;
-		}
-		return (NULL);
-	}
-}
-
-void	arg_lst_del(t_args *lst)
-{
-	t_args	*cur;
-	t_args	*nxt;
-
-	cur = lst;
-	while (cur)
-	{
-		nxt = cur->next;
-		free(cur);
-		cur = nxt;
-	}
+	
 }

@@ -26,6 +26,7 @@ SRC = $(addprefix $(SRC_PATH), $(SRC_NAME))
 OBJ = $(addprefix $(OBJ_PATH), $(OBJ_NAME))
 
 LFT_SRC_NAME = ft_atoi.c\
+		ft_err_exit.c\
         ft_isascii.c\
         ft_memchr.c\
         ft_memset.c\

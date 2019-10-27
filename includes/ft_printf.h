@@ -37,7 +37,6 @@ typedef struct	s_spec
 	int			precision;
 	int			len;
 	char		specifier;
-	va_list		param_lst;
 	int			valid;
 	char		sign[2];
 	char		pref[3];

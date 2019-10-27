@@ -1,30 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   arg_list.h                                         :+:      :+:    :+:   */
+/*   ft_err_exit.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mchuang <mchuang@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/25 16:37:54 by mchuang           #+#    #+#             */
-/*   Updated: 2019/10/25 16:37:55 by mchuang          ###   ########.fr       */
+/*   Created: 2019/10/26 16:15:26 by mchuang           #+#    #+#             */
+/*   Updated: 2019/10/26 16:24:40 by mchuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ARG_LIST_H
-# define ARG_LIST_H
-# include <stdarg.h>
-# include <stdlib.h>
+# include "libft.h"
 
-typedef struct  s_args
+void	ft_err_exit(char *msg)
 {
-	int			index;
-   	size_t		size;
-    s_args		*next;
-}				t_args;
-
-t_args	*new_arg(int i, size_t s);
-t_args	*insert_arg(t_args *lst, t_args *t);
-t_args	*arg_lst_at(t_args *lst, int i);
-void	arg_lst_del(t_args *lst);
-
-#endif
+	ft_putendl(msg);
+	exit(0);
+}

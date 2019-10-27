@@ -101,4 +101,5 @@ char				*ft_dtoa(double d, int pre);
 char				*ft_ldtoa(long double d, int pre);
 char				*ft_ftoa(float f, int pre);
 char				*ft_strtrimc(char const *s, char c);
+void				ft_err_exit(char *msg);
 #endif

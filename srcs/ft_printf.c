@@ -10,8 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../includes/ft_printf.h"
-
+# include "ft_printf.h"
 
 int		parse_format(char *ft, t_spec *sp, int i, va_list orig)
 {
@@ -39,75 +38,90 @@ int		parse_format(char *ft, t_spec *sp, int i, va_list orig)
 	return (i);
 }
 
-int		change_color(char *ft, int i, t_spec *sp)
+int		process_output(char *format, t_buf *buf, t_args *arg_info, va_list ap_orig)
 {
-	if (!ft_strncmp(ft + i, "{RED}", ft_strlen("{RED}")))
-		buf_store_str(sp->buf, RED);
-	else if (!ft_strncmp(ft + i, "{GREEN}", ft_strlen("{GREEN}")))
-		buf_store_str(sp->buf, GREEN);
-	else if (!ft_strncmp(ft + i, "{YELLOW}", ft_strlen("{YELLOW}")))
-		buf_store_str(sp->buf, YELLOW);
-	else if (!ft_strncmp(ft + i, "{BLUE}", ft_strlen("{BLUE}")))
-		buf_store_str(sp->buf, BLUE);
-	else if (!ft_strncmp(ft + i, "{MAG}", ft_strlen("{MAG}")))
-		buf_store_str(sp->buf, MAG);
-	else if (!ft_strncmp(ft + i, "{CYAN}", ft_strlen("{CYAN}")))
-		buf_store_str(sp->buf, CYAN);
-	else if (!ft_strncmp(ft + i, "{CLEAR}", ft_strlen("{CLEAR}")))
-		buf_store_str(sp->buf, CLEAR);
-	else
-		return (i);
-	while (ft[i] && ft[i - 1] != '}')
-		i++;
-	return (i);
+	int		i;
+	t_spec	*sp;
+
+	if(!(sp = (t_spec*)ft_memealloc(sizeof(t_spec))))
+		ft_err_exit("Failed to allocate specifications");
+	i = 0;
+	while (format[i])
+	{
+		if (format[i] == '{')
+			i = change_color(format, i, spec);
+		else if (format[i] != '%')
+			buf_store_chr(buf, format[i++]);
+		else
+		{
+			i = parse_format(format, spec, i + 1, ap_orig);
+			s = d_p_f(spec, ap_orig);
+			buf_store_str(spec->buf, s);
+			free(s);
+		}
+	}
 }
 
 int		ft_printf(const char *format, ...)
 {
-	int		i;
-	int 	j;
-	char	*s;
-	char	*tmp;
-	t_spec	*spec;
+	t_buf   *buf;
 	va_list	ap_orig;
+	t_args	*arg_info;
 
-	i = 0;
-	if (!(spec = (t_spec*)ft_memalloc(sizeof(t_spec))))
-		return (-1);
-	spec->buf = buf_init();
-	va_start(spec->param_lst, format);
-	va_copy(ap_orig, spec->param_lst);
-	while (format[i])
-	{
-		if (format[i] == '{')
-			i = change_color((char*)format, i, spec);
-		if (format[i] != '%')
-			buf_store_chr(spec->buf, format[i++]);
-		else
-		{
-			i = parse_format((char*)format, spec, i + 1, ap_orig);
-			if (spec->valid > 0)
-			{
-				s = d_p_f(spec, ap_orig);
-				buf_store_str(spec->buf, s);
-				free(s);
-			}
-			else
-			{
-				j = i;
-				while (format[i] && format[i] != '%')
-					i++;
-				s = ft_strsub(format, j, i - j);
-				tmp = finalize(spec, s);
-				buf_store_str(spec->buf, tmp);
-				free(tmp);
-			}
-		}
-	}
-	buf_output_clear(spec->buf);
-	i = buf_del(spec->buf);
-	va_end(spec->param_lst);
-	free(spec);
+	if (!(buf = buf_init()))
+		return (-42);
+	va_start(ap_orig, format);
+	arg_info = set_args_lst(format);
+//	process_output(format, buf, arg_info, ap_orig);
 	va_end(ap_orig);
-	return (i);
+//	buf_output_clear(spec->buf);
+//	return (buf_del(buf));
+	return (0);
 }
+	
+	
+//	int		i;
+//	int 	j;
+//	char	*s;
+//	char	*tmp;
+//	t_spec	*spec;
+//  t_buf   *buf;
+//	va_list	ap_orig;
+//
+//	i = 0;
+//	if (!(spec = (t_spec*)ft_memalloc(sizeof(t_spec))))
+//		return (-1);
+//	spec->buf = buf_init();
+//	va_start(ap_orig, format);
+//    // arg info
+//	va_end(ap_orig);
+//	while (format[i])
+//	{
+//		if (format[i] == '{')
+//			i = change_color((char*)format, i, spec);
+//		if (format[i] != '%')
+//			buf_store_chr(spec->buf, format[i++]);
+//		else
+//		{
+//			i = parse_format((char*)format, spec, i + 1, ap_orig);
+//			if (spec->valid > 0)
+//			{
+//				s = d_p_f(spec, ap_orig);
+//				buf_store_str(spec->buf, s);
+//				free(s);
+//			}
+//			else
+//			{
+//				j = i;
+//				while (format[i] && format[i] != '%')
+//					i++;
+//				s = ft_strsub(format, j, i - j);
+//				tmp = finalize(spec, s);
+//				buf_store_str(spec->buf, tmp);
+//				free(tmp);
+//			}
+//		}
+//	}
+//	buf_output_clear(spec->buf);
+//	free(spec);
+//	return (buf_del(buf));

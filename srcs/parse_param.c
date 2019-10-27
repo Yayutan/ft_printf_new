@@ -12,24 +12,6 @@
 
 # include "../includes/ft_printf.h"
 
-int		n_th_int(va_list orig, int i)
-{
-	va_list		cp;
-	int			j;
-	int			to_ret;
-	
-	va_copy(cp, orig);
-	j = 1;
-	while (j < i)
-	{
-		va_arg(cp, int);
-		j++;
-	}
-	to_ret = va_arg(cp, int);
-	va_end(cp);
-	return (to_ret);
-}
-
 int		star_param(t_spec *sp, char *ft, int i, va_list orig)
 {
 	int		num;
@@ -102,21 +84,16 @@ int		not_num_param(t_spec *sp, char *ft, int i)
 	else if (ft[i] == '\'')
 		sp->flags[5] = 1;
 	else if (ft[i] == 'h')
-	{
 		len = (ft[i + 1] == 'h') ? 1 : 2;
-		i += (ft[i + 1] == 'h') ? 1 : 0;
-	}
 	else if (ft[i] == 'l')
-	{
 		len = 8;
-		i += (ft[i + 1] == 'l') ? 1 : 0;
-	}
 	else if (ft[i] == 'L')
 		len = 16;
 	else if (ft[i] == 'j')
 		len = 8;
 	else if (ft[i] == 'z')
 		len = 8;
+	i += (ft[i + 1] == 'h' || ft[i + 1] == 'l') ? 1 : 0;
 	sp->len = (sp->len > len) ? sp->len : len;
 	return (++i);
 }
@@ -138,6 +115,29 @@ int		num_param(t_spec *sp, char *ft, int i)
 	else
 		sp->width = num;
 	return (j);
+}
+
+int		change_color(char *ft, int i, t_spec *sp)
+{
+	if (!ft_strncmp(ft + i, "{RED}", ft_strlen("{RED}")))
+		buf_store_str(sp->buf, RED);
+	else if (!ft_strncmp(ft + i, "{GREEN}", ft_strlen("{GREEN}")))
+		buf_store_str(sp->buf, GREEN);
+	else if (!ft_strncmp(ft + i, "{YELLOW}", ft_strlen("{YELLOW}")))
+		buf_store_str(sp->buf, YELLOW);
+	else if (!ft_strncmp(ft + i, "{BLUE}", ft_strlen("{BLUE}")))
+		buf_store_str(sp->buf, BLUE);
+	else if (!ft_strncmp(ft + i, "{MAG}", ft_strlen("{MAG}")))
+		buf_store_str(sp->buf, MAG);
+	else if (!ft_strncmp(ft + i, "{CYAN}", ft_strlen("{CYAN}")))
+		buf_store_str(sp->buf, CYAN);
+	else if (!ft_strncmp(ft + i, "{CLEAR}", ft_strlen("{CLEAR}")))
+		buf_store_str(sp->buf, CLEAR);
+	else
+		return (i);
+	while (ft[i] && ft[i - 1] != '}')
+		i++;
+	return (i);
 }
 
 void	clear_param(t_spec *sp)

@@ -60,4 +60,12 @@ char	*d_p_f(t_spec *sp, va_list orig) // distribute, process, finalize
 	else
 		return (NULL);
 	return (finalize(sp, to_ret));
+	
+	
+//	handle case for invalid		
+//	s = ft_strsub(format, i, ft_strchr(format + i, '%') - (format + i));
+//	tmp = finalize(spec, s);
+//	buf_store_str(buf, tmp);
+//	free(tmp);
+
 }
