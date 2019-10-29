@@ -24,10 +24,10 @@ int		star_param(t_spec *sp, char *ft, int i, va_list orig) // pass in int* to av
 			i++;
 		width = (ft[i] != '$') ? num : n_th_int(orig, num);
 		if (ft[i] != '$')
-			va_arg(sp->param_lst, int);
+			; //va_arg(sp->param_lst, int);
 	}	
 	else if (ft[i] != '$')
-		width = va_arg(sp->param_lst, int);
+		; // width = va_arg(sp->param_lst, int);
 	if (sp->precision == -420)
 		sp->precision = width;
 	else

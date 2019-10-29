@@ -18,7 +18,7 @@ int		parse_format(char *ft, t_spec *sp, int i, va_list orig)
 	while (ft[i] && ft_strchr(",;:_vaACSnjz0123456789hlL*.'#-+ ", ft[i]))
 	{
 		if (ft[i] >= '1' && ft[i] <= '9')
-			i = num_param(sp, ft, i);
+			 i = num_param(sp, ft, i);
 		else if (ft[i] == '*')
 			i = star_param(sp, ft, i + 1, orig);
 		else if (ft[i] == '.')
@@ -42,6 +42,7 @@ void		process_output(char *format, t_buf *buf, t_args *arg_info, va_list ap_orig
 {
 	int		i;
 	t_spec	*sp;
+	char	*res;
 
 	if(!(sp = (t_spec*)ft_memalloc(sizeof(t_spec*))))
 		ft_err_exit("Failed to allocate specifications");
@@ -55,11 +56,12 @@ void		process_output(char *format, t_buf *buf, t_args *arg_info, va_list ap_orig
 		else
 		{
 			i = parse_format(format, sp, i + 1, ap_orig);
-			s = d_p_f(spec, ap_orig);
-			buf_store_str(buf, s);
-			free(s);
+			res = d_p_f(sp, ap_orig);
+			buf_store_str(buf, res);
+			free(res);
 		}
 	}
+	arg_info++; // remove later
 }
 
 int		ft_printf(const char *format, ...)
@@ -74,9 +76,8 @@ int		ft_printf(const char *format, ...)
 	arg_info = set_args_lst(format);
 	process_output(format, buf, arg_info, ap_orig);
 	va_end(ap_orig);
-//	buf_output_clear(spec->buf);
-//	return (buf_del(buf));
-	return (0);
+	buf_output_clear(buf);
+	return (buf_del(buf));
 }
 	
 	

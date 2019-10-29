@@ -40,7 +40,7 @@ typedef struct	s_spec
 	int			valid;
 	char		sign[2];
 	char		pref[3];
-	char		*res;	//	t_buf		*buf;
+	t_args		*arg;
 }				t_spec;
 
 union		u_double
@@ -55,9 +55,22 @@ union		u_ldouble
 	char		data[sizeof(long double)];
 };
 
+union		argument
+{
+	char			c;
+	char			*str;
+	// time
+	double			d;
+	long double 	ld;
+	short			sh;
+	long int		li;
+	long long int	lli;
+};
+
 int				ft_printf(const char *format, ...);
 void			clear_param(t_spec *sp);
-void		process_output(char *format, t_buf *buf, t_args *arg_info, va_list ap_orig);
+t_args			*set_args_lst(const char *format);
+void			process_output(char *format, t_buf *buf, t_args *arg_info, va_list ap_orig);
 int				num_param(t_spec *sp, char *ft, int i);
 int				not_num_param(t_spec *sp, char *ft, int i);
 int				dot_param(t_spec *sp, char *ft, int i, va_list orig);
