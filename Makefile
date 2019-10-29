@@ -20,7 +20,9 @@ SRC_NAME = ft_buf.c\
 		printr.c\
 		printf_f.c\
 		printf_helper.c\
-		printe.c
+		printe.c\
+		arg_list.c\
+		arg_lst_util.c
 OBJ_NAME = $(SRC_NAME:.c=.o)
 SRC = $(addprefix $(SRC_PATH), $(SRC_NAME))
 OBJ = $(addprefix $(OBJ_PATH), $(OBJ_NAME))

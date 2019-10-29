@@ -268,10 +268,13 @@ int	main()
 //		printf("%5$f\n", 1.0, 2.0, 4.2, 8.4);
 //		printf("%6$f\n", 1.0, 2.0, 4.2, 8.4);
 //		printf("%7$f\n", 1.0, 2.0, 4.2, 8.4);
-//		printf("%2$f, %1$s!", "world", 5.75);
+		printf("%2$f, %s!", "world", 5.75);
 //		ft_printf("%2$f, %1$s!", "world", 5.75);
 //    
-//        printf("%.*2$s\n", "world", 3);
+//        printf("%.*2$s%s\n", "world", 3, "hi");
+//        printf("%.*2$s%s\n", "world", 3, "hi");
+//        printf("%*2$s%s\n", "world", 3, "hi");
+//        printf("%2$s%s\n", "world", 3, "hi");
 //		ft_printf("%2$d, %1$s!", "world", 5);
 
 	
@@ -284,7 +287,7 @@ int	main()
 //        ft_printf("%f\n");
 //        ft_printf("%f\n", NULL);
 //		printf("%f\n", nth_next_d(1,"0.0", 1.0,"2.0"));
-		printf("%s\n", nth_next_s(4,"0.0", "1.0","2.0", "3.0"));
+//		printf("%s\n", nth_next_s(4,"0.0", "1.0","2.0", "3.0"));
 }
 
 

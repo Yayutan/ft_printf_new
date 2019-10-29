@@ -12,12 +12,11 @@
 
 # include "../includes/ft_printf.h"
 
-int		star_param(t_spec *sp, char *ft, int i, va_list orig)
+int		star_param(t_spec *sp, char *ft, int i, va_list orig) // pass in int* to avoid prec to be -420 by chance
 {
 	int		num;
 	int		width;
 
-	i++;
 	if (ft[i] >= '0' && ft[i] <= '9')
 	{
 		num = ft_atoi(ft + i);
@@ -47,7 +46,6 @@ int		dot_param(t_spec *sp, char *ft, int i, va_list orig)
 {
 	int		num;
 
-	i++;
 	if (ft[i] >= '0' && ft[i] <= '9')
 	{
 		num = ft_atoi(ft + i);
@@ -58,7 +56,7 @@ int		dot_param(t_spec *sp, char *ft, int i, va_list orig)
 	else if (ft[i] == '*')
 	{
 		sp->precision = -420;
-		return (star_param(sp, ft, i, orig));
+		return (star_param(sp, ft, i + 1, orig));
 	}
 	else
 		sp->precision = 0;
@@ -98,12 +96,10 @@ int		not_num_param(t_spec *sp, char *ft, int i)
 	return (++i);
 }
 
-int		num_param(t_spec *sp, char *ft, int i)
+int		num_param(t_spec *sp, char *ft, int j)
 {
 	int		num;
-	int		j;
 	
-	j = i;
 	num = ft_atoi(ft + j);
 	while (ft[j] && ft[j] >= '0' && ft[j] <= '9')
 		j++;
@@ -117,22 +113,22 @@ int		num_param(t_spec *sp, char *ft, int i)
 	return (j);
 }
 
-int		change_color(char *ft, int i, t_spec *sp)
+int		change_color(char *ft, int i, t_buf *buf)
 {
 	if (!ft_strncmp(ft + i, "{RED}", ft_strlen("{RED}")))
-		buf_store_str(sp->buf, RED);
+		buf_store_str(buf, RED);
 	else if (!ft_strncmp(ft + i, "{GREEN}", ft_strlen("{GREEN}")))
-		buf_store_str(sp->buf, GREEN);
+		buf_store_str(buf, GREEN);
 	else if (!ft_strncmp(ft + i, "{YELLOW}", ft_strlen("{YELLOW}")))
-		buf_store_str(sp->buf, YELLOW);
+		buf_store_str(buf, YELLOW);
 	else if (!ft_strncmp(ft + i, "{BLUE}", ft_strlen("{BLUE}")))
-		buf_store_str(sp->buf, BLUE);
+		buf_store_str(buf, BLUE);
 	else if (!ft_strncmp(ft + i, "{MAG}", ft_strlen("{MAG}")))
-		buf_store_str(sp->buf, MAG);
+		buf_store_str(buf, MAG);
 	else if (!ft_strncmp(ft + i, "{CYAN}", ft_strlen("{CYAN}")))
-		buf_store_str(sp->buf, CYAN);
+		buf_store_str(buf, CYAN);
 	else if (!ft_strncmp(ft + i, "{CLEAR}", ft_strlen("{CLEAR}")))
-		buf_store_str(sp->buf, CLEAR);
+		buf_store_str(buf, CLEAR);
 	else
 		return (i);
 	while (ft[i] && ft[i - 1] != '}')

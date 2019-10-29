@@ -12,7 +12,7 @@
 
 # include "arg_list.h"
 
-t_args	*new_arg(int i, size_t s)
+t_args	*new_arg(int i, char s)
 {
 	t_args	*to_ret;
 
