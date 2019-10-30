@@ -6,8 +6,11 @@
 ** provided in argument node arg.
 */
 
-union argument next_arg(union argument next, t_args *arg, va_list param)
+union argument next_arg(t_args *arg, va_list param)
 {
+	union argument next;
+
+	next.str = "";
 	if (ft_strchr("crH", arg->size))
 		next.c = (char)va_args(param, int);
 	else if (arg->size == 's')
@@ -17,6 +20,8 @@ union argument next_arg(union argument next, t_args *arg, va_list param)
 	else if (arg->size == 'F')
 		next.ld = va_args(param, long double);
 	else if (arg->size == 'i')
+		next.i = va_args(param, int);
+	else if (arg->size == 'h')
 		next.sh = (short)va_args(param, int);
 	else if (arg->size == 'l')
 		next.li = va_args(param, long int);
@@ -30,12 +35,14 @@ union argument next_arg(union argument next, t_args *arg, va_list param)
 ** Copies from the original va_list
 */
 
-union argument nth_arg_orig(union argument next, t_args *arg, int n, va_list orig)
+union argument nth_arg_orig(t_args *arg, int n, va_list orig)
 {
 	int i;
 	t_args *cur;
 	va_list	cp;
+	union argument next;
 
+	next.str = "";
 	i = 1;
 	cur = arg;
 	va_copy(cp, orig);
@@ -54,11 +61,13 @@ union argument nth_arg_orig(union argument next, t_args *arg, int n, va_list ori
 ** Changes the provided va_list
 */
 
-union argument nth_arg_sp(union argument next, t_args *arg, int n, va_list sp)
+union argument nth_arg_sp(t_args *arg, int n, va_list sp)
 {
 	int i;
 	t_args *cur;
+	union argument next;
 
+	next.str = "";
 	i = 1;
 	cur = arg;
 	while (i <= n)

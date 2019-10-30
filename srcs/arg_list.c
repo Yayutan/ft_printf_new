@@ -15,6 +15,7 @@
 /*
 ** Setting up a new argument node depending on whether we encounter a  
 ** specifier character. 
+** NOTE: The length char l preceeds the char h
 ** Returns 0 if no valid spec char is found
 ** Adds new node to arg list and returns 1 if valid spec is found
 */
@@ -38,9 +39,9 @@ int		spec_arg(t_args *arg, char sp, int *n_l, int *nxt_arg)
 				insert_arg(arg, new_arg(*nxt_arg, 'l'));
 			else if (n_l[0] == 2)
 				insert_arg(arg, new_arg(*nxt_arg, 'L'));
-			else if (n_l[0] == 1)
+			else if (n_l[1] == 1)
 				insert_arg(arg, new_arg(*nxt_arg, 'h'));
-			else if (n_l[0] == 2)
+			else if (n_l[1] == 2)
 				insert_arg(arg, new_arg(*nxt_arg, 'H'));
 		}
 		else if (ft_strchr("DOU", ft[i]))
@@ -130,7 +131,7 @@ int		add_arg_info(char *ft, int i, t_args *arg, int *nxt_arg)
 			i = star_arg(arg, ft, i + 1, nxt_arg);
         else if (ft[i] == 'l' || ft[i] == 'h')
         {
-            (ft[i] == 'l') ? n_l[1] = 0 : n_l[0] = 0;
+//            (ft[i] == 'l') ? n_l[1] = 0 : n_l[0] = 0;
 			if (ft[i] == 'l')
 				n_l[0] = (n_l[0] == 1) ? 2 : 1;
 			else
@@ -147,30 +148,4 @@ int		add_arg_info(char *ft, int i, t_args *arg, int *nxt_arg)
 		(*nxt_arg)++;
 	}
 	return (i);
-}
-
-/*
-** Iterates the format string to set up all arguments used.
-** Whenever we find the '%', we start looking into that "set" of format and 
-** add nodes to the argument list if needed.
-** Returns the list of arguments with their types.
-*/
-
-t_args	*set_args_lst(const char *format)
-{
-	t_args	*arg;
-	int		i;
-	int		arg_c;
-
-	arg = NULL;
-	i = 0;
-	arg_c = 0;
-	while (format[i])
-	{
-		if (format[i] == '%')
-			i = add_arg_info(format, i, arg, &arg_c);
-		else
-			i++;
-	}
-	return (arg);
 }

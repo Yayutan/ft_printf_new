@@ -10,28 +10,47 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../includes/ft_printf.h"
+# include "ft_printf.h"
 
-int		star_param(t_spec *sp, char *ft, int i, va_list orig) // pass in int* to avoid prec to be -420 by chance
+/*
+** When we encounter '.', we need to set the precision
+** There are 3 cases:
+** *: next parameter
+** *n: uses up next argument, but sets to n 
+** *n$: sets to the nth argument(does not affect the cur_arg)
+** Returns the beginning index of the next part of format.
+*/
+
+int		star_param(int *set, char *ft, t_spec *sp, t_args *arg_l, va_list orig)
 {
 	int		num;
 	int		width;
+	int		i;
+	union arguemnt arg;
 
+	i = 0;
 	if (ft[i] >= '0' && ft[i] <= '9')
 	{
 		num = ft_atoi(ft + i);
 		while (ft[i] >= '0' && ft[i] <= '9')
 			i++;
-		width = (ft[i] != '$') ? num : n_th_int(orig, num);
 		if (ft[i] != '$')
-			; //va_arg(sp->param_lst, int);
+		{
+			*set = num;
+			va_arg(sp->param_lst, int);
+			sp->arg = (sp->arg)->next;
+		}
+		else
+		{
+			arg = nth_arg_orig(arg_l, num, orig);
+			*set = arg.i;
+		}
 	}	
 	else if (ft[i] != '$')
-		; // width = va_arg(sp->param_lst, int);
-	if (sp->precision == -420)
-		sp->precision = width;
-	else
-		sp->width = width;
+	{
+		*set = va_arg(sp->param_lst, int);
+		sp->arg = (sp->arg)->next;
+	}
 	i += (ft[i] != '$') ? 0: 1;
 	if (sp->width < 0)
 	{
@@ -41,28 +60,43 @@ int		star_param(t_spec *sp, char *ft, int i, va_list orig) // pass in int* to av
 	return (i);
 }
 
+/*
+** When we encounter '.', we need to set the precision
+** There are 3 cases:
+** .n: set 
+** .*: handled in star_param
+** .*n: handled in star_param
+** .*n$: handled in star_param
+** Returns the beginning index of the next part of format.
+*/
 
-int		dot_param(t_spec *sp, char *ft, int i, va_list orig)
+int		dot_param(int *prec, char *ft, t_spec *sp, t_args *arg_info, va_list orig)
 {
 	int		num;
+	int		i;
 
+	i = 0;
 	if (ft[i] >= '0' && ft[i] <= '9')
 	{
 		num = ft_atoi(ft + i);
 		while (ft[i] >= '0' && ft[i] <= '9')
 			i++;
-		sp->precision = num;
+		*prec = num;
 	}
 	else if (ft[i] == '*')
-	{
-		sp->precision = -420;
-		return (star_param(sp, ft, i + 1, orig));
-	}
+		return (star_param(prec, ft, i + 1, orig));
 	else
-		sp->precision = 0;
+		*prec = 0;
 	return (i);
 }
 
+/*
+** When we encounter char not related to numbers, it can be the flags, or the
+** length of the specifier.
+** If a bigger length is already assigned to the spec, it preceeds all upcoming
+** smaller ones.
+** Returns the beginning index of the next part of format.
+*/
 
 int		not_num_param(t_spec *sp, char *ft, int i)
 {
@@ -83,20 +117,22 @@ int		not_num_param(t_spec *sp, char *ft, int i)
 		sp->flags[5] = 1;
 	else if (ft[i] == 'h')
 		len = (ft[i + 1] == 'h') ? 1 : 2;
-	else if (ft[i] == 'l')
-		len = 8;
 	else if (ft[i] == 'L')
 		len = 16;
-	else if (ft[i] == 'j')
+	else if (ft_strchr("ljz", ft[i]))
 		len = 8;
-	else if (ft[i] == 'z')
-		len = 8;
-	i += (ft[i + 1] == 'h' || ft[i + 1] == 'l') ? 1 : 0;
 	sp->len = (sp->len > len) ? sp->len : len;
-	return (++i);
+	i += (ft[i + 1] && (ft[i + 1] == 'h' || ft[i + 1] == 'l')) ? 2 : 1;
+	return (i);
 }
 
-int		num_param(t_spec *sp, char *ft, int j)
+/*
+** When we encounter numbers in the format string, it can be the width, or the
+** indicator of which argument this input is.
+** Returns the beginning index of the next part of format.
+*/
+
+int		num_param(t_spec *sp, char *ft, int j) // assumes that always spec char follows?s
 {
 	int		num;
 	
@@ -112,6 +148,12 @@ int		num_param(t_spec *sp, char *ft, int j)
 		sp->width = num;
 	return (j);
 }
+
+/*
+** Checks the next few characters in the stirnf to check if a color is used.
+** If so, puts the color code to the buffer.
+** Returns the beginning index of the next part of format.
+*/
 
 int		change_color(char *ft, int i, t_buf *buf)
 {
@@ -136,23 +178,23 @@ int		change_color(char *ft, int i, t_buf *buf)
 	return (i);
 }
 
+/*
+** Clears all elements of the spec to default.
+** Since there will only be 1 specification struct, we need to clear it each
+** time we are processing a new format.
+*/
+
 void	clear_param(t_spec *sp)
 {
-	int	i;
-
 	sp->param = 0;
-	i = 0;
-	while(i < 6)
-		sp->flags[i++] = 0;
+	ft_bzero(sp->flags, sizeof(int) * 6);
 	sp->width = 0;
 	sp->precision = -1;
 	sp->len = -1;
 	sp->specifier = '\0';
 	sp->valid = 0;
-	sp->sign[0] = '\0';
-	sp->sign[1] = '\0';
-	sp->pref[0] = '\0';
-	sp->pref[1] = '\0';
-	sp->pref[2] = '\0';
+	ft_bzero(sp->sign, sizeof(char) * 2);
+	ft_bzero(sp->pref, sizeof(char) * 3);
+	ap->arg = NULL;
 }
 

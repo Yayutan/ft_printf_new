@@ -37,22 +37,43 @@ char	*finalize(t_spec *sp, char *str) // process width, etc.
 	return (str);
 }
 
-char	*d_p_f(t_spec *sp, va_list orig) // distribute, process, finalize
+
+/*
+** Function that forms the 
+** First finds the next parameter, then distributes initial string processing
+** functions according to the sp, then adds padding, signs, etc. to form the
+** final string.
+** Returns the final result of the output for the sp given.
+*/
+
+char	*d_p_f(t_spec *sp, t_arg *arg_lst, va_list orig) // distribute, process, finalize
 {
 	char	*to_ret;
+	union argument arg;
 
+	if (sp->specifier != '%' && sp->param == 0)
+	{
+		arg = next_arg(sp->arg, sp->param_lst);
+		sp->arg = (sp->arg)->next;
+	}
+	else if (sp->specifier != '%')
+	{
+		va_copy(sp->param_lst, orig);
+		arg = nth_arg_sp(arg_lst, sp->param, sp->param_lst);
+		sp->arg = arg_lst_at(arg_lst, sp->param);
+	}
 	if (sp->specifier == 'c')
-		return (initial_c(sp, orig));
+		return (initial_c(sp, arg, orig));
 	else if (sp->specifier == 's')
-		to_ret = initial_s(sp, orig);
+		to_ret = initial_s(sp, arg, orig);
 	else if (ft_strchr("diouxXb", sp->specifier))
-		to_ret = initial_diouxb(sp, orig);
+		to_ret = initial_diouxb(sp, arg, orig);
 	else if (ft_strchr("fFeEgG", sp->specifier))
-		to_ret = initial_feg(sp, orig);
+		to_ret = initial_feg(sp, arg, orig);
 //	else if (sp->specifier == 'k')
 //		to_ret = ;
 	else if (sp->specifier == 'p')
-		to_ret = initial_p(sp, orig);
+		to_ret = initial_p(sp, arg, orig);
 //	else if (sp->specifier == 'r')
 //		to_ret = ;
 	else if (sp->specifier == '%')

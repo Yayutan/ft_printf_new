@@ -41,6 +41,7 @@ typedef struct	s_spec
 	char		sign[2];
 	char		pref[3];
 	t_args		*arg;
+	va_list		param_lst;
 }				t_spec;
 
 union		u_double
@@ -63,6 +64,7 @@ union		argument
 	double			d;
 	long double 	ld;
 	short			sh;
+	int				i;
 	long int		li;
 	long long int	lli;
 };
