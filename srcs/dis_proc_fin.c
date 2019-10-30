@@ -49,31 +49,31 @@ char	*finalize(t_spec *sp, char *str) // process width, etc.
 char	*d_p_f(t_spec *sp, t_arg *arg_lst, va_list orig) // distribute, process, finalize
 {
 	char	*to_ret;
-	union argument arg;
+	union argument u_arg;
 
 	if (sp->specifier != '%' && sp->param == 0)
 	{
-		arg = next_arg(sp->arg, sp->param_lst);
+		u_arg = next_arg(sp->arg, sp->param_lst);
 		sp->arg = (sp->arg)->next;
 	}
 	else if (sp->specifier != '%')
 	{
 		va_copy(sp->param_lst, orig);
-		arg = nth_arg_sp(arg_lst, sp->param, sp->param_lst);
+		u_arg = nth_arg_sp(arg_lst, sp->param, sp->param_lst);
 		sp->arg = arg_lst_at(arg_lst, sp->param);
 	}
 	if (sp->specifier == 'c')
-		return (initial_c(sp, arg, orig));
+		return (initial_c(sp, u_arg));
 	else if (sp->specifier == 's')
-		to_ret = initial_s(sp, arg, orig);
+		to_ret = initial_s(sp, u_arg);
 	else if (ft_strchr("diouxXb", sp->specifier))
-		to_ret = initial_diouxb(sp, arg, orig);
+		to_ret = initial_diouxb(sp, u_arg);
 	else if (ft_strchr("fFeEgG", sp->specifier))
-		to_ret = initial_feg(sp, arg, orig);
+		to_ret = initial_feg(sp, u_arg);
 //	else if (sp->specifier == 'k')
 //		to_ret = ;
 	else if (sp->specifier == 'p')
-		to_ret = initial_p(sp, arg, orig);
+		to_ret = initial_p(sp, u_arg);
 //	else if (sp->specifier == 'r')
 //		to_ret = ;
 	else if (sp->specifier == '%')

@@ -58,7 +58,7 @@ union		u_ldouble
 
 union		argument
 {
-	char			c;
+	unsigned char	c;
 	char			*str;
 	// time
 	double			d;
@@ -70,9 +70,11 @@ union		argument
 };
 
 int				ft_printf(const char *format, ...);
+
 void			clear_param(t_spec *sp);
 t_args			*set_args_lst(const char *format);
 void			process_output(char *format, t_buf *buf, t_args *arg_info, va_list ap_orig);
+
 int				num_param(t_spec *sp, char *ft, int i);
 int				not_num_param(t_spec *sp, char *ft, int i);
 int				dot_param(t_spec *sp, char *ft, int i, va_list orig);

@@ -10,30 +10,16 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../includes/ft_printf.h"
+# include "ft_printf.h"
 
-char	*initial_p(t_spec *sp, va_list orig)
+char	*initial_p(t_spec *sp, union argument u_arg)
 {
 	char			*str;
 	char			*address;
-	va_list			cp;
 	int				i;
 	long long int	arg;
 	
-	if (sp->param == 0)
-		arg = va_arg(sp->param_lst, long long int);
-	else
-	{
-		va_copy(cp, orig);
-		i = 1;
-		while (i < sp->param)
-		{
-			va_arg(cp, long long int);
-			i++;
-		}
-		arg = va_arg(cp, long long int);
-		va_end(cp);
-	}
+	arg = u_arg.lli;
 	if (arg == 0 && sp->precision == 0)
 		address = ft_strnew(0);
 	else

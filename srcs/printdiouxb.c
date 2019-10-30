@@ -127,26 +127,12 @@ char	*split_n_fix(t_spec *sp, long long int arg)
 	return (str);
 }
 
-char	*initial_diouxb(t_spec *sp, va_list orig)
+char	*initial_diouxb(t_spec *sp, union argument u_arg) // fix to be longer?
 {
 	va_list			cp;
 	int				i;
-	long long int	arg;
 	
 	if (sp->len == -1 || sp->len == 16)
 		sp->len = 4;
-	if (sp->param == 0)
-		arg = va_arg(sp->param_lst, long long int);
-	else
-	{
-		va_copy(cp, orig);
-		i = 1;
-		while (i++ < sp->param)
-			va_arg(cp, long long int);
-		arg = va_arg(cp, long long int);
-		va_end(sp->param_lst);
-		va_copy(sp->param_lst, cp);
-		va_end(cp);
-	}
-	return (split_n_fix(sp, arg));
+	return (split_n_fix(sp, u_arg.lli));
 }

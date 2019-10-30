@@ -12,55 +12,54 @@
 
 # include "../includes/ft_printf.h"
 
-char		*n_th_s(t_spec *sp, va_list orig, int i)
-{
-	va_list		cp;
-	int			j;
-	char		*to_ret;
-	
-	va_copy(cp, orig);
-	j = 1;
-	while (j < i)
-	{
-		va_arg(cp, int);
-//		va_arg(cp, void*);
-		j++;
-	}
-	to_ret = va_arg(cp, char*);
-	va_end(sp->param_lst);
-	va_copy(sp->param_lst, cp);
-	va_end(cp);
-	return (to_ret);
-}
+//char		*n_th_s(t_spec *sp, va_list orig, int i)
+//{
+//	va_list		cp;
+//	int			j;
+//	char		*to_ret;
+//	
+//	va_copy(cp, orig);
+//	j = 1;
+//	while (j < i)
+//	{
+//		va_arg(cp, int);
+////		va_arg(cp, void*);
+//		j++;
+//	}
+//	to_ret = va_arg(cp, char*);
+//	va_end(sp->param_lst);
+//	va_copy(sp->param_lst, cp);
+//	va_end(cp);
+//	return (to_ret);
+//}
+//
+//unsigned char		n_th_c(t_spec *sp, va_list orig, int i)
+//{
+//	va_list				cp;
+//	int					j;
+//	unsigned char		to_ret;
+//	
+//	va_copy(cp, orig);
+//	j = 1;
+//	while (j < i)
+//	{
+//		va_arg(cp, int);
+////		va_arg(cp, void*);
+//		j++;
+//	}
+//	to_ret = (unsigned char)va_arg(cp, int);
+//	va_end(sp->param_lst);
+//	va_copy(sp->param_lst, cp);
+//	va_end(cp);
+//	return (to_ret);
+//}
 
-unsigned char		n_th_c(t_spec *sp, va_list orig, int i)
-{
-	va_list				cp;
-	int					j;
-	unsigned char		to_ret;
-	
-	va_copy(cp, orig);
-	j = 1;
-	while (j < i)
-	{
-		va_arg(cp, int);
-//		va_arg(cp, void*);
-		j++;
-	}
-	to_ret = (unsigned char)va_arg(cp, int);
-	va_end(sp->param_lst);
-	va_copy(sp->param_lst, cp);
-	va_end(cp);
-	return (to_ret);
-}
-
-char	*initial_c(t_spec *sp, va_list org)
+char	*initial_c(t_spec *sp, union argument u_arg)
 {
 	char	*str;
 	unsigned char	n_c;
 
-	n_c = (sp->param != 0) ?
-		n_th_c(sp, org, sp->param) : (unsigned char)va_arg(sp->param_lst, int);
+	n_c = u_arg.c;
 	if (sp->flags[4] && !sp->flags[0])
 		str = ft_stradd("", '0', -1, sp->width - 1);
 	else
@@ -79,13 +78,13 @@ char	*initial_c(t_spec *sp, va_list org)
 	return (ft_strnew(0));
 }
 
-char	*initial_s(t_spec *sp, va_list orig)
+char	*initial_s(t_spec *sp, union argument u_arg)
 {
 	char	*str;
 	char	*n_s;
 	int		nd_free;
 	
-	n_s = (sp->param != 0) ? n_th_s(sp, orig, sp->param): va_arg(sp->param_lst, char*);
+	n_s = u_arg.str;
 	if (!n_s)
 	{
 		nd_free = 1;

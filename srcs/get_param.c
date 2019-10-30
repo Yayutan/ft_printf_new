@@ -12,7 +12,7 @@ union argument next_arg(t_args *arg, va_list param)
 
 	next.str = "";
 	if (ft_strchr("crH", arg->size))
-		next.c = (char)va_args(param, int);
+		next.c = (unsigned char)va_args(param, int);
 	else if (arg->size == 's')
 		next.str = va_args(param, char*);
 	else if (arg->size == 'f')
