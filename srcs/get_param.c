@@ -1,5 +1,5 @@
 
-# include "ft_pritnf.h"
+# include "ft_printf.h"
 
 /*
 ** Function that sets the argument union from the information
@@ -10,23 +10,25 @@ union argument next_arg(t_args *arg, va_list param)
 {
 	union argument next;
 
-	next.str = "";
+	next.lli = 0;
+	if (!arg)
+		return (next);
 	if (ft_strchr("crH", arg->size))
-		next.c = (unsigned char)va_args(param, int);
+		next.uc = (unsigned char)va_arg(param, int);
 	else if (arg->size == 's')
-		next.str = va_args(param, char*);
+		next.str = va_arg(param, char*);
 	else if (arg->size == 'f')
-		next.d = va_args(param, double);
+		next.d = va_arg(param, double);
 	else if (arg->size == 'F')
-		next.ld = va_args(param, long double);
+		next.ld = va_arg(param, long double);
 	else if (arg->size == 'i')
-		next.i = va_args(param, int);
+		next.i = va_arg(param, int);
 	else if (arg->size == 'h')
-		next.sh = (short)va_args(param, int);
+		next.sh = (short)va_arg(param, int);
 	else if (arg->size == 'l')
-		next.li = va_args(param, long int);
+		next.li = va_arg(param, long int);
 	else if (arg->size == 'L' || arg->size == 'p')
-		next.lli = va_args(param, long long int);
+		next.lli = va_arg(param, long long int);
 	return (next);
 }
 
@@ -48,7 +50,7 @@ union argument nth_arg_orig(t_args *arg, int n, va_list orig)
 	va_copy(cp, orig);
 	while (i <= n)
 	{
-		next = next_arg(next, cur, cp);
+		next = next_arg(cur, cp);
 		i++;
 		cur = cur->next;
 	}
@@ -72,7 +74,7 @@ union argument nth_arg_sp(t_args *arg, int n, va_list sp)
 	cur = arg;
 	while (i <= n)
 	{
-		next = next_arg(next, cur, sp);
+		next = next_arg(cur, sp);
 		i++;
 		cur = cur->next;
 	}

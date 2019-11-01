@@ -37,7 +37,6 @@ char	*finalize(t_spec *sp, char *str) // process width, etc.
 	return (str);
 }
 
-
 /*
 ** Function that forms the 
 ** First finds the next parameter, then distributes initial string processing
@@ -46,7 +45,7 @@ char	*finalize(t_spec *sp, char *str) // process width, etc.
 ** Returns the final result of the output for the sp given.
 */
 
-char	*d_p_f(t_spec *sp, t_arg *arg_lst, va_list orig) // distribute, process, finalize
+char	*d_p_f(t_buf *buf, t_spec *sp, t_args *arg_lst, va_list orig)
 {
 	char	*to_ret;
 	union argument u_arg;
@@ -58,12 +57,13 @@ char	*d_p_f(t_spec *sp, t_arg *arg_lst, va_list orig) // distribute, process, fi
 	}
 	else if (sp->specifier != '%')
 	{
+		va_end(sp->param_lst);
 		va_copy(sp->param_lst, orig);
 		u_arg = nth_arg_sp(arg_lst, sp->param, sp->param_lst);
 		sp->arg = arg_lst_at(arg_lst, sp->param);
 	}
 	if (sp->specifier == 'c')
-		return (initial_c(sp, u_arg));
+		return (initial_c(sp, buf, u_arg));
 	else if (sp->specifier == 's')
 		to_ret = initial_s(sp, u_arg);
 	else if (ft_strchr("diouxXb", sp->specifier))
@@ -81,12 +81,17 @@ char	*d_p_f(t_spec *sp, t_arg *arg_lst, va_list orig) // distribute, process, fi
 	else
 		return (NULL);
 	return (finalize(sp, to_ret));
+}
+
+char	*invalid_format(t_spec *sp, char *format, int *i)
+{
+	char	*to_ret;
+	int		j;
 	
-	
-//	handle case for invalid		
-//	s = ft_strsub(format, i, ft_strchr(format + i, '%') - (format + i));
-//	tmp = finalize(spec, s);
-//	buf_store_str(buf, tmp);
-//	free(tmp);
+	j = *i;
+	while (format[*i] && format[*i] != '%')
+		(*i)++;
+	to_ret = ft_strsub(format, j, *i - j);
+	return (finalize(sp, to_ret));
 
 }

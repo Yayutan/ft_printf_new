@@ -20,32 +20,32 @@
 ** Adds new node to arg list and returns 1 if valid spec is found
 */
 
-int		spec_arg(t_args *arg, char sp, int *n_l, int *nxt_arg)
+int		spec_arg(t_args **arg, char sp, int *n_l, int *nxt_arg)
 {
 	if (ft_strchr("dDioOuUxXbBfFeEgGcsprk%", sp))
 	{
-		if (ft_strchr("csprk", ft[i]))
-            insert_arg(arg, new_arg(*nxt_arg, ft[i]));
-		else if (ft_strchr("fFeEgG", ft[i]))
+		if (ft_strchr("csprk", sp))
+            *arg = insert_arg(*arg, new_arg(*nxt_arg, sp));
+		else if (ft_strchr("fFeEgG", sp))
 		{
-			insert_arg(arg, new_arg(*nxt_arg, 'f'));
+			*arg = insert_arg(*arg, new_arg(*nxt_arg, 'f'));
 			if (n_l[2] == 1)
-				insert_arg(arg, new_arg(*nxt_arg, 'F'));				
+				*arg = insert_arg(*arg, new_arg(*nxt_arg, 'F'));				
 		}
-		else if (ft_strchr("diouxXbB", ft[i]))
+		else if (ft_strchr("diouxXbB", sp))
 		{
-			insert_arg(arg, new_arg(*nxt_arg, 'i'));
+			*arg = insert_arg(*arg, new_arg(*nxt_arg, 'i'));
 			if (n_l[0] == 1)
-				insert_arg(arg, new_arg(*nxt_arg, 'l'));
+				*arg = insert_arg(*arg, new_arg(*nxt_arg, 'l'));
 			else if (n_l[0] == 2)
-				insert_arg(arg, new_arg(*nxt_arg, 'L'));
+				*arg = insert_arg(*arg, new_arg(*nxt_arg, 'L'));
 			else if (n_l[1] == 1)
-				insert_arg(arg, new_arg(*nxt_arg, 'h'));
+				*arg = insert_arg(*arg, new_arg(*nxt_arg, 'h'));
 			else if (n_l[1] == 2)
-				insert_arg(arg, new_arg(*nxt_arg, 'H'));
+				*arg = insert_arg(*arg, new_arg(*nxt_arg, 'H'));
 		}
-		else if (ft_strchr("DOU", ft[i]))
-			insert_arg(arg, new_arg(*nxt_arg, 'l'));
+		else if (ft_strchr("DOU", sp))
+			*arg = insert_arg(*arg, new_arg(*nxt_arg, 'l'));
 		return (1);
 	}
 	return (0);
@@ -60,7 +60,7 @@ int		spec_arg(t_args *arg, char sp, int *n_l, int *nxt_arg)
 ** Returns the index of the next char to look at in ft
 */
 
-int		star_arg(t_args *arg, char *ft, int i, int *nxt_arg)
+int		star_arg(t_args **arg, char *ft, int i, int *nxt_arg)
 {
 	int		num;
 
@@ -70,10 +70,13 @@ int		star_arg(t_args *arg, char *ft, int i, int *nxt_arg)
 		while (ft[i] >= '0' && ft[i] <= '9')
 			i++;
 		if (ft[i] == '$')
-			insert_arg(arg, new_arg(num, 'i'));
+			*arg = insert_arg(*arg, new_arg(num, 'i'));
 	}
 	else if (ft[i] != '$')
-        insert_arg(arg, new_arg((*next_arg)++, 'i'));
+	{
+        *arg = insert_arg(*arg, new_arg(*nxt_arg, 'i'));
+		(*nxt_arg)++;
+	}
 	i += (ft[i] != '$') ? 0 : 1;
 	return (i);
 }
@@ -86,7 +89,7 @@ int		star_arg(t_args *arg, char *ft, int i, int *nxt_arg)
 ** (Due to norm) Returns the increment in index to the next char to look at
 */
 
-int		num_arg(t_args *arg, char *ft, int *n_l, int *nxt_arg)
+int		num_arg(t_args **arg, char *ft, int *n_l, int *nxt_arg)
 {
 	int		num;
 	int		j;
@@ -116,7 +119,7 @@ int		num_arg(t_args *arg, char *ft, int *n_l, int *nxt_arg)
 ** Returns the next index to look at past this set of format.
 */
 
-int		add_arg_info(char *ft, int i, t_args *arg, int *nxt_arg)
+int		add_arg_info(char *ft, int i, t_args **arg, int *nxt_arg)
 {
     int n_l[3];
 
@@ -124,22 +127,26 @@ int		add_arg_info(char *ft, int i, t_args *arg, int *nxt_arg)
 	while (ft[i] && ft_strchr(",;:_vaACSnjz0123456789hlL*.'#-+ ", ft[i]))
 	{
 		if (ft[i] >= '1' && ft[i] <= '9')
+		{
 			i += num_arg(arg, ft + i, n_l, nxt_arg);
-		if (ft_strchr("dDioOuUxXbBfFeEgGcsprk%", ft[i - 1]))
-			return (i);
+			if (ft_strchr("dDioOuUxXbBfFeEgGcsprk%", ft[i - 1]))
+				return (i);
+		}
 		else if (ft[i] == '*')
 			i = star_arg(arg, ft, i + 1, nxt_arg);
-        else if (ft[i] == 'l' || ft[i] == 'h')
+        else if (ft_strchr("lhjzL", ft[i]))
         {
-//            (ft[i] == 'l') ? n_l[1] = 0 : n_l[0] = 0;
 			if (ft[i] == 'l')
 				n_l[0] = (n_l[0] == 1) ? 2 : 1;
-			else
+			else if (ft[i] == 'h')
 				n_l[1] = (n_l[1] == 1) ? 2 : 1;
+			else if (ft[i] == 'j' || ft[i] == 'z')
+				n_l[0] = 2;
+			else if (ft[i] == 'L')
+            	n_l[2] = 1;
+			i++;
         }
-        else if (ft[i] == 'L')
-            n_l[2] = 1;
-        else
+		else
 			i++;
 	}
 	if (spec_arg(arg, ft[i], n_l, nxt_arg))

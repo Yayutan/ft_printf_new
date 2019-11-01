@@ -58,39 +58,40 @@ union		u_ldouble
 
 union		argument
 {
-	unsigned char	c;
+	unsigned char	uc;
 	char			*str;
 	// time
 	double			d;
 	long double 	ld;
 	short			sh;
-	int				i;
+	int			i;
 	long int		li;
 	long long int	lli;
 };
 
 int				ft_printf(const char *format, ...);
-
+t_args			*set_args_lst(char *format);
+void			process_output(char *format, t_buf *buf, t_args *arg_l, va_list ap_orig);
+int				add_arg_info(char *ft, int i, t_args **arg, int *nxt_arg);
 void			clear_param(t_spec *sp);
-t_args			*set_args_lst(const char *format);
-void			process_output(char *format, t_buf *buf, t_args *arg_info, va_list ap_orig);
-
-int				num_param(t_spec *sp, char *ft, int i);
+int				star_param(int *set, char *ft, t_spec *sp, t_args *arg_l, va_list orig);
+int				dot_param(int *prec, char *ft, t_spec *sp, t_args *arg_info, va_list orig);
 int				not_num_param(t_spec *sp, char *ft, int i);
-int				dot_param(t_spec *sp, char *ft, int i, va_list orig);
-int				star_param(t_spec *sp, char *ft, int i, va_list orig);
-int				parse_format(char *ft, t_spec *sp, int i, va_list orig);
+int				num_param(t_spec *sp, char *ft, int j);
 int				change_color(char *ft, int i, t_buf *buf);
-int				n_th_int(va_list orig, int i);
-char			*d_p_f(t_spec *sp, va_list orig);
-char			*initial_s(t_spec *sp, va_list orig);
-char			*initial_c(t_spec *sp, va_list org);
-char			*initial_diouxb(t_spec *sp, va_list orig);
-char			*initial_p(t_spec *sp, va_list orig);
-char			*initial_feg(t_spec *sp, va_list orig);
-char			*initial_f(t_spec *sp, va_list orig);
-char			*initial_e(t_spec *sp, va_list orig);
-char			*initial_g(t_spec *sp, va_list orig);
+char	*invalid_format(t_spec *sp, char *format, int *i);
+char			*d_p_f(t_buf *buf, t_spec *sp, t_args *arg_lst, va_list orig);
+union argument 	next_arg(t_args *arg, va_list param);
+union argument 	nth_arg_orig(t_args *arg, int n, va_list orig);
+union argument 	nth_arg_sp(t_args *arg, int n, va_list sp);
+char			*initial_s(t_spec *sp, union argument u_arg);
+char			*initial_c(t_spec *sp, t_buf *buf, union argument u_arg);
+char			*initial_diouxb(t_spec *sp, union argument u_arg);
+char			*initial_p(t_spec *sp, union argument u_arg);
+char			*initial_feg(t_spec *sp, union argument u_arg);
+char			*initial_f(t_spec *sp, union argument u_arg);
+char			*initial_e(t_spec *sp, union argument u_arg);
+char			*initial_g(t_spec *sp, union argument u_arg);
 int				get_d_exp(union u_double u_d);
 int				get_d_mantissa(union u_double u_d, char *m);
 int				get_ld_exp(union u_ldouble u_ld);

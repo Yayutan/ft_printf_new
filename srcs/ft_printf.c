@@ -43,8 +43,9 @@ int		parse_format(char *ft, t_spec *sp, t_args *arg_l, va_list orig)
 	}
 	else
 		sp->valid = -1;
-	return (i);
+	return (i + 1);
 }
+
 
 /*
 ** Iterates through the format string, sets up format and form output
@@ -57,7 +58,7 @@ void		process_output(char *format, t_buf *buf, t_args *arg_l, va_list ap_orig)
 	t_spec	*sp;
 	char	*res;
 
-	if(!(sp = (t_spec*)ft_memalloc(sizeof(t_spec*))))
+	if(!(sp = (t_spec*)ft_memalloc(sizeof(t_spec))))
 		ft_err_exit("Failed to allocate specifications");
 	i = 0;
 	sp->arg = arg_l;
@@ -66,17 +67,22 @@ void		process_output(char *format, t_buf *buf, t_args *arg_l, va_list ap_orig)
 	{
 		if (format[i] == '{')
 			i = change_color(format, i, buf);
-		else if (format[i] != '%')
+		if (format[i] != '%')
 			buf_store_chr(buf, format[i++]);
 		else
 		{
 			clear_param(sp);
 			i += parse_format(format + i + 1, sp, arg_l, ap_orig);
-			res = d_p_f(sp, arg_l, ap_orig);
+			if (sp->valid > 0)
+				res = d_p_f(buf, sp, arg_l, ap_orig);
+			else
+				res = invalid_format(sp, format, &i);
 			buf_store_str(buf, res);
 			free(res);
 		}
 	}
+	va_end(sp->param_lst);
+	free(sp);
 }
 
 /*
@@ -86,7 +92,7 @@ void		process_output(char *format, t_buf *buf, t_args *arg_l, va_list ap_orig)
 ** Returns the list of arguments with their types.
 */
 
-t_args	*set_args_lst(const char *format) // closed for now, not tested
+t_args	*set_args_lst(char *format) // closed for now, not tested
 {
 	t_args	*arg;
 	int		i;
@@ -94,11 +100,11 @@ t_args	*set_args_lst(const char *format) // closed for now, not tested
 
 	arg = NULL;
 	i = 0;
-	arg_c = 0;
+	arg_c = 1;
 	while (format[i])
 	{
 		if (format[i] == '%')
-			i = add_arg_info(format, i, arg, &arg_c);
+			i = add_arg_info(format, i + 1, &arg, &arg_c);
 		else
 			i++;
 	}
@@ -122,56 +128,10 @@ int		ft_printf(const char *format, ...)
 	if (!(buf = buf_init()))
 		return (-42);
 	va_start(ap_orig, format);
-	arg_info = set_args_lst(format);
-	process_output(format, buf, arg_info, ap_orig);
+	arg_info = set_args_lst((char*)format);
+	process_output((char*)format, buf, arg_info, ap_orig);
 	va_end(ap_orig);
+	arg_lst_del(arg_info);
 	buf_output_clear(buf);
 	return (buf_del(buf));
 }
-	
-	
-//	int		i;
-//	int 	j;
-//	char	*s;
-//	char	*tmp;
-//	t_spec	*spec;
-//  t_buf   *buf;
-//	va_list	ap_orig;
-//
-//	i = 0;
-//	if (!(spec = (t_spec*)ft_memalloc(sizeof(t_spec))))
-//		return (-1);
-//	spec->buf = buf_init();
-//	va_start(ap_orig, format);
-//    // arg info
-//	va_end(ap_orig);
-//	while (format[i])
-//	{
-//		if (format[i] == '{')
-//			i = change_color((char*)format, i, spec);
-//		if (format[i] != '%')
-//			buf_store_chr(spec->buf, format[i++]);
-//		else
-//		{
-//			i = parse_format((char*)format, spec, i + 1, ap_orig);
-//			if (spec->valid > 0)
-//			{
-//				s = d_p_f(spec, ap_orig);
-//				buf_store_str(spec->buf, s);
-//				free(s);
-//			}
-//			else
-//			{
-//				j = i;
-//				while (format[i] && format[i] != '%')
-//					i++;
-//				s = ft_strsub(format, j, i - j);
-//				tmp = finalize(spec, s);
-//				buf_store_str(spec->buf, tmp);
-//				free(tmp);
-//			}
-//		}
-//	}
-//	buf_output_clear(spec->buf);
-//	free(spec);
-//	return (buf_del(buf));

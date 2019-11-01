@@ -12,59 +12,6 @@
 
 #include "ft_printf.h"
 
-
-//union u_double		get_d_param(t_spec *sp, va_list orig)
-//{
-//	union u_double	u_d;
-//	va_list	cp;
-//	int		j;
-//
-//	if(sp->param != 0)
-//	{
-//		va_copy(cp, orig);
-//		j = 1;
-//		while (j < sp->param)
-//		{
-////			va_arg(cp, int);
-//			va_arg(cp, void*);
-//			j++;
-//		}
-//		u_d.dbl = va_arg(cp, double);
-//		va_end(sp->param_lst);
-//		va_copy(sp->param_lst, cp);
-//		va_end(cp);
-//	}
-//	else
-//		u_d.dbl = va_arg(sp->param_lst, double);
-//	return (u_d);
-//}
-//
-//union u_ldouble		get_ld_param(t_spec *sp, va_list orig)
-//{
-//	union u_ldouble	u_ld;
-//	va_list		cp;
-//	int			j;
-//
-//	if(sp->param != 0)
-//	{
-//		va_copy(cp, orig);
-//		j = 1;
-//		while (j < sp->param)
-//		{
-////			va_arg(cp, int);
-//			va_arg(cp, void*);
-//			j++;
-//		}
-//		u_ld.ldbl = va_arg(cp, long double);
-//		va_end(sp->param_lst);
-//		va_copy(sp->param_lst, cp);
-//		va_end(cp);
-//	}
-//	else
-//		u_ld.ldbl = va_arg(sp->param_lst, long double);
-//	return (u_ld);
-//}
-
 int		setup_basic(t_spec *sp, union argument u_arg, char *basic)
 {
 	union u_double	u_d;
@@ -73,7 +20,7 @@ int		setup_basic(t_spec *sp, union argument u_arg, char *basic)
 	
 	if (sp->len == 16)
 	{
-		u_ld = u_arg.ld;
+		u_ld.ldbl = u_arg.ld;
 		if ((u_ld.data[9] >> 7) & 1)
 			sp->sign[0] = '-';
 		else if (sp->flags[1] || sp->flags[2])
@@ -82,7 +29,7 @@ int		setup_basic(t_spec *sp, union argument u_arg, char *basic)
 	}
 	else
 	{
-		u_d = u_arg.d;
+		u_d.dbl = u_arg.d;
 		if ((u_d.data[7] >> 7) & 1)
 			sp->sign[0] = '-';
 		else if (sp->flags[1] || sp->flags[2])

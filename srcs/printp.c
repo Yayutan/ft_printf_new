@@ -16,7 +16,6 @@ char	*initial_p(t_spec *sp, union argument u_arg)
 {
 	char			*str;
 	char			*address;
-	int				i;
 	long long int	arg;
 	
 	arg = u_arg.lli;

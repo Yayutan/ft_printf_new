@@ -16,7 +16,7 @@ t_args	*new_arg(int i, char s)
 {
 	t_args	*to_ret;
 
-	if(!(to_ret = (t_args*)ftmemalloc(sizeof(t_args))))
+	if(!(to_ret = (t_args*)ft_memalloc(sizeof(t_args))))
 		ft_err_exit("Failed to allocate param list");
 	to_ret->index = i;
 	to_ret->size = s;
@@ -55,7 +55,11 @@ t_args	*insert_arg(t_args *lst, t_args *t)
 	while (cur && cur->index <= t->index)
 	{
 		if (t->index == cur->index)
+		{
 			cur->size = t->size;
+			free(t);
+			return (lst);
+		}
 		else if (t->index < cur->index && t->index > pre->index)
 			pre = put_between(pre, cur, t);
 		pre = cur;
@@ -66,7 +70,7 @@ t_args	*insert_arg(t_args *lst, t_args *t)
 	return (lst);
 }
 
-t_args	*arg_lst_at(t_args *lst, int i)
+t_args	*arg_lst_at(t_args *lst, int pos)
 {
 	t_args	*cur;
 

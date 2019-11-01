@@ -24,9 +24,8 @@
 int		star_param(int *set, char *ft, t_spec *sp, t_args *arg_l, va_list orig)
 {
 	int		num;
-	int		width;
 	int		i;
-	union arguemnt arg;
+	union argument arg;
 
 	i = 0;
 	if (ft[i] >= '0' && ft[i] <= '9')
@@ -57,7 +56,7 @@ int		star_param(int *set, char *ft, t_spec *sp, t_args *arg_l, va_list orig)
 		sp->flags[0] = 1;
 		sp->width *= -1;
 	}
-	return (i);
+	return (i + 1);
 }
 
 /*
@@ -70,7 +69,7 @@ int		star_param(int *set, char *ft, t_spec *sp, t_args *arg_l, va_list orig)
 ** Returns the beginning index of the next part of format.
 */
 
-int		dot_param(int *prec, char *ft, t_spec *sp, t_args *arg_info, va_list orig)
+int		dot_param(int *prec, char *ft, t_spec *sp, t_args *arg_l, va_list orig)
 {
 	int		num;
 	int		i;
@@ -84,10 +83,10 @@ int		dot_param(int *prec, char *ft, t_spec *sp, t_args *arg_info, va_list orig)
 		*prec = num;
 	}
 	else if (ft[i] == '*')
-		return (star_param(prec, ft, i + 1, orig));
+		return (1 + star_param(prec, ft + i + 1, sp, arg_l, orig));
 	else
 		*prec = 0;
-	return (i);
+	return (i + 1);
 }
 
 /*
@@ -116,14 +115,21 @@ int		not_num_param(t_spec *sp, char *ft, int i)
 	else if (ft[i] == '\'')
 		sp->flags[5] = 1;
 	else if (ft[i] == 'h')
+	{
 		len = (ft[i + 1] == 'h') ? 1 : 2;
+		i += (ft[i + 1] && ft[i + 1] == 'h') ? 1 : 0;
+	}
+	else if (ft[i] == 'l')
+	{
+		len = 8;
+		i += (ft[i + 1] && ft[i + 1] == 'l') ? 1 : 0;
+	}	
 	else if (ft[i] == 'L')
 		len = 16;
-	else if (ft_strchr("ljz", ft[i]))
+	else if (ft_strchr("jz", ft[i]))
 		len = 8;
 	sp->len = (sp->len > len) ? sp->len : len;
-	i += (ft[i + 1] && (ft[i + 1] == 'h' || ft[i + 1] == 'l')) ? 2 : 1;
-	return (i);
+	return (i + 1);
 }
 
 /*
@@ -172,7 +178,10 @@ int		change_color(char *ft, int i, t_buf *buf)
 	else if (!ft_strncmp(ft + i, "{CLEAR}", ft_strlen("{CLEAR}")))
 		buf_store_str(buf, CLEAR);
 	else
-		return (i);
+	{
+		buf_store_chr(buf, ft[i]);
+		return (i + 1);
+	}
 	while (ft[i] && ft[i - 1] != '}')
 		i++;
 	return (i);
@@ -195,6 +204,5 @@ void	clear_param(t_spec *sp)
 	sp->valid = 0;
 	ft_bzero(sp->sign, sizeof(char) * 2);
 	ft_bzero(sp->pref, sizeof(char) * 3);
-	ap->arg = NULL;
 }
 
