@@ -71,6 +71,11 @@ int		star_arg(t_args **arg, char *ft, int i, int *nxt_arg)
 			i++;
 		if (ft[i] == '$')
 			*arg = insert_arg(*arg, new_arg(num, 'i'));
+		else
+		{
+			*arg = insert_arg(*arg, new_arg(*nxt_arg, 'i'));
+			(*nxt_arg)++;
+		}
 	}
 	else if (ft[i] != '$')
 	{

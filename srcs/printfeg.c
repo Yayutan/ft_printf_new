@@ -112,13 +112,6 @@ char	*form_g(char *basic, int dec, int exp, int p, int hash)
 		free(dec_pos);
 		return (tmp);
 	}
-	// remove all trailing 0s
-	
-//	The double argument is converted in style f or e (or F or E for G conversions). The precision specifies the number of significant digits.
-//	If the precision is missing, 6 digits are given; if the precision is zero, it is treated as 1.
-//	Style e is used if the exponent from its conversion is less than -4 or greater than or equal to the precision.
-//	Trailing zeros are removed from the fractional part of the result; 
-//	 a decimal point appears only if it is followed by at least one digit.
 }
 
 char	*initial_feg(t_spec *sp, union argument u_arg)
@@ -130,7 +123,7 @@ char	*initial_feg(t_spec *sp, union argument u_arg)
 
 	basic = ft_strnew(LEN);
 	dec = setup_basic(sp, u_arg, basic);
-	if (dec == -4242) // special cases
+	if (dec == -4242)
 	{
 		sp->flags[4] = 0;
 		if (!ft_strcmp(basic, "nan"))
@@ -139,13 +132,13 @@ char	*initial_feg(t_spec *sp, union argument u_arg)
 	}
 	exp = calc_exp(basic, dec);
 	if (sp->specifier == 'f' || sp->specifier == 'F')
-		to_ret = form_f(basic, dec, sp->precision, sp->flags[3]); // f function
+	{
+		to_ret = form_f(basic, dec, sp->precision, sp->flags[3]);
+	}
 	else if (sp->specifier == 'g' || sp->specifier == 'G')
-		to_ret = form_g(basic, dec, exp, sp->precision, sp->flags[3]); // g function, takes exp and decides call e or f
+		to_ret = form_g(basic, dec, exp, sp->precision, sp->flags[3]);
 	else
-		to_ret = form_e(basic, exp, sp->precision, sp->flags[3]); // e function
+		to_ret = form_e(basic, exp, sp->precision, sp->flags[3]);
 	free(basic);
 	return (to_ret);
 }
-
-
