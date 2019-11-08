@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   arb_add_sub.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mchuang <mchuang@student.42.us.org>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/11/08 01:48:17 by mchuang           #+#    #+#             */
+/*   Updated: 2019/11/08 01:48:18 by mchuang          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "arb_pre.h"
 
 void	increment(char *n1, int index)
@@ -17,7 +29,7 @@ void	add(char *n1, const char *n2)
 	int	i;
 	int	j;
 	int	p;
-	
+
 	i = ft_strlen(n1) - 1;
 	j = ft_strlen(n2) - 1;
 	p = 0;
@@ -36,7 +48,7 @@ void	sub(char *n1, const char *n2)
 	int	i;
 	int	j;
 	int	p;
-	
+
 	i = ft_strlen(n1) - 1;
 	j = ft_strlen(n2) - 1;
 	p = 10;
@@ -53,7 +65,7 @@ void	sub(char *n1, const char *n2)
 void	clear_str(char *n, int length)
 {
 	int	i;
-	
+
 	i = 0;
 	while (i < length)
 		n[i++] = '0';

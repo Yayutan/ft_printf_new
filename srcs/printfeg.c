@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-int		setup_basic(t_spec *sp, union argument u_arg, char *basic)
+int		setup_basic(t_spec *sp, union u_argument u_arg, char *basic)
 {
 	union u_double	u_d;
 	union u_ldouble	u_ld;
@@ -114,7 +114,7 @@ char	*form_g(char *basic, int dec, int exp, int p, int hash)
 	}
 }
 
-char	*initial_feg(t_spec *sp, union argument u_arg)
+char	*initial_feg(t_spec *sp, union u_argument u_arg)
 {
 	char	*basic;
 	char	*to_ret;
@@ -132,9 +132,7 @@ char	*initial_feg(t_spec *sp, union argument u_arg)
 	}
 	exp = calc_exp(basic, dec);
 	if (sp->specifier == 'f' || sp->specifier == 'F')
-	{
 		to_ret = form_f(basic, dec, sp->precision, sp->flags[3]);
-	}
 	else if (sp->specifier == 'g' || sp->specifier == 'G')
 		to_ret = form_g(basic, dec, exp, sp->precision, sp->flags[3]);
 	else

@@ -6,9 +6,9 @@
 ** provided in argument node arg.
 */
 
-union argument next_arg(t_args *arg, va_list param)
+union u_argument next_arg(t_args *arg, va_list param)
 {
-	union argument next;
+	union u_argument next;
 
 	next.lli = 0;
 	if (!arg)
@@ -29,6 +29,8 @@ union argument next_arg(t_args *arg, va_list param)
 		next.li = va_arg(param, long int);
 	else if (arg->size == 'L' || arg->size == 'p')
 		next.lli = va_arg(param, long long int);
+	else if (arg->size == 'k')
+		next.ts = va_arg(param, struct tm*);
 	return (next);
 }
 
@@ -37,12 +39,12 @@ union argument next_arg(t_args *arg, va_list param)
 ** Copies from the original va_list
 */
 
-union argument nth_arg_orig(t_args *arg, int n, va_list orig)
+union u_argument nth_arg_orig(t_args *arg, int n, va_list orig)
 {
 	int i;
 	t_args *cur;
 	va_list	cp;
-	union argument next;
+	union u_argument next;
 
 	next.str = "";
 	i = 1;
@@ -63,11 +65,11 @@ union argument nth_arg_orig(t_args *arg, int n, va_list orig)
 ** Changes the provided va_list
 */
 
-union argument nth_arg_sp(t_args *arg, int n, va_list sp)
+union u_argument nth_arg_sp(t_args *arg, int n, va_list sp)
 {
 	int i;
 	t_args *cur;
-	union argument next;
+	union u_argument next;
 
 	next.str = "";
 	i = 1;

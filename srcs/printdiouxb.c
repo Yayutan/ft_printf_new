@@ -38,7 +38,7 @@ char	*add_apos(char *s)
 	return (to_ret);
 }
 
-int		check_zero(int len, union argument u_arg)
+int		check_zero(int len, union u_argument u_arg)
 {
 	if (len == 4 && u_arg.i == 0)
 		return (1);
@@ -51,7 +51,7 @@ int		check_zero(int len, union argument u_arg)
 	return (0);
 }
 
-char	*do_di(t_spec *sp, union argument u_arg)
+char	*do_di(t_spec *sp, union u_argument u_arg)
 {
 	char	*str;
 	char	*tmp;
@@ -86,7 +86,7 @@ char	*do_di(t_spec *sp, union argument u_arg)
 	return (str);
 }
 
-char	*do_ouxXb(t_spec *sp, union argument u_arg)
+char	*do_ouxXb(t_spec *sp, union u_argument u_arg)
 {
 	char	*str;
 	int		base;
@@ -113,7 +113,7 @@ char	*do_ouxXb(t_spec *sp, union argument u_arg)
 	return (str);
 }
 
-char	*initial_diouxb(t_spec *sp, union argument u_arg)
+char	*initial_diouxb(t_spec *sp, union u_argument u_arg)
 {
 	char	*str;
 	char	*tmp;

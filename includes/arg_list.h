@@ -16,16 +16,16 @@
 # include <stdlib.h>
 # include "libft.h"
 
-typedef struct  s_args
+typedef struct			s_args
 {
-	int			index;
-   	char		size;
-    struct s_args		*next;
-}				t_args;
+	int					index;
+	char				size;
+	struct s_args		*next;
+}						t_args;
 
-t_args	*new_arg(int i, char s);
-t_args	*insert_arg(t_args *lst, t_args *t);
-t_args	*arg_lst_at(t_args *lst, int i);
-void	arg_lst_del(t_args *lst);
+t_args					*new_arg(int i, char s);
+t_args					*insert_arg(t_args *lst, t_args *t);
+t_args					*arg_lst_at(t_args *lst, int i);
+void					arg_lst_del(t_args *lst);
 
 #endif

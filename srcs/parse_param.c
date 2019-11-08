@@ -25,7 +25,7 @@ int		star_param(int *set, char *ft, t_spec *sp, t_args *arg_l, va_list orig)
 {
 	int		num;
 	int		i;
-	union argument arg;
+	union u_argument arg;
 
 	i = 0;
 	if (ft[i] >= '0' && ft[i] <= '9')

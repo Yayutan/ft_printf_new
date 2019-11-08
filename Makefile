@@ -17,7 +17,6 @@ SRC_NAME = ft_buf.c\
 		printfeg.c\
 		printk.c\
 		printp.c\
-		printr.c\
 		printf_f.c\
 		printf_helper.c\
 		printe.c\
@@ -96,9 +95,6 @@ LFT_SRC_NAME = ft_atoi.c\
 		ft_lltoa_base.c\
 		ft_strup.c\
         ft_stradd.c\
-		ft_ftoa.c\
-		ft_dtoa.c\
-		ft_ldtoa.c\
 		ft_strtrimc.c
 LFT_OBJ_NAME = $(LFT_SRC_NAME:.c=.o)
 LFT_SRC = $(addprefix $(LFT_PATH), $(LFT_SRC_NAME))

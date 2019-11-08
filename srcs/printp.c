@@ -12,7 +12,7 @@
 
 # include "ft_printf.h"
 
-char	*initial_p(t_spec *sp, union argument u_arg)
+char	*initial_p(t_spec *sp, union u_argument u_arg)
 {
 	char			*str;
 	char			*address;

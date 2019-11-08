@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   arb_pre.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mchuang <mchuang@student.42.us.org>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/11/08 01:47:16 by mchuang           #+#    #+#             */
+/*   Updated: 2019/11/08 01:47:19 by mchuang          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef ARB_PRE_H
 # define ARB_PRE_H
 # include "libft.h"
@@ -14,4 +26,4 @@ void	clear_str(char *n, int length);
 int		basic_divi(char *n1, char *n2, int leng);
 void	increment(char *n1, int index);
 int		cmp_size(char *n1, char *n2, int leng);
-# endif
+#endif

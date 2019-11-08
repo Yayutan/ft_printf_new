@@ -12,7 +12,7 @@
 
 # include "ft_printf.h"
 
-char	*initial_c(t_spec *sp, t_buf *buf, union argument u_arg)
+char	*initial_c(t_spec *sp, t_buf *buf, union u_argument u_arg)
 {
 	char	*str;
 	unsigned char	n_c;
@@ -36,7 +36,7 @@ char	*initial_c(t_spec *sp, t_buf *buf, union argument u_arg)
 	return (ft_strnew(0));
 }
 
-char	*initial_s(t_spec *sp, union argument u_arg)
+char	*initial_s(t_spec *sp, union u_argument u_arg)
 {
 	char	*str;
 	char	*n_s;

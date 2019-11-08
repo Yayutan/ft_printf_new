@@ -5,6 +5,7 @@
 # include<float.h>
 # include <limits.h>
 # include <stdarg.h>
+#include <time.h>
 
 void test_binary()
 {
@@ -144,9 +145,21 @@ void	pft_failed()
 //    Timed out
 }
 
-int	main()
+void	test_time()
 {
-	ft_printf("{%*3d}\n", 5, 0);
+	time_t now;
+	struct tm *ts;
+	now = time(NULL);
+	ts = localtime(&now);
+	ft_printf("%k\n", ts);
+	
+	char       buf[80];
+	strftime(buf, sizeof(buf), "%a %Y-%m-%d %H:%M:%S %Z", ts);
+    puts(buf);
 }
 
 
+int	main()
+{
+	ft_printf("%f\n", 42.00000);
+}

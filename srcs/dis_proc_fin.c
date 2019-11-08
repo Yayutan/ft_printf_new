@@ -48,7 +48,7 @@ char	*finalize(t_spec *sp, char *str) // process width, etc.
 char	*d_p_f(t_buf *buf, t_spec *sp, t_args *arg_lst, va_list orig)
 {
 	char	*to_ret;
-	union argument u_arg;
+	union u_argument u_arg;
 
 	if (sp->specifier != '%' && sp->param == 0)
 	{
@@ -70,8 +70,8 @@ char	*d_p_f(t_buf *buf, t_spec *sp, t_args *arg_lst, va_list orig)
 		to_ret = initial_diouxb(sp, u_arg);
 	else if (ft_strchr("fFeEgG", sp->specifier))
 		to_ret = initial_feg(sp, u_arg);
-//	else if (sp->specifier == 'k')
-//		to_ret = ;
+	else if (sp->specifier == 'k')
+		return (initial_k(buf, u_arg));
 	else if (sp->specifier == 'p')
 		to_ret = initial_p(sp, u_arg);
 //	else if (sp->specifier == 'r')
