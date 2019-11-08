@@ -18,7 +18,7 @@
 ** Returns the index of the beginning of the part after this one.
 */
 
-int		parse_format(char *ft, t_spec *sp, t_args *arg_l, va_list orig)
+int		parse_format(char *ft, t_spec *sp, t_args *arg_l)
 {
 	int 	i;
 	
@@ -28,9 +28,9 @@ int		parse_format(char *ft, t_spec *sp, t_args *arg_l, va_list orig)
 		if (ft[i] >= '1' && ft[i] <= '9')
 			 i = num_param(sp, ft, i);
 		else if (ft[i] == '*')
-			i += star_param(&(sp->width), ft + i + 1, sp, arg_l, orig);
+			i += star_param(&(sp->width), ft + i + 1, sp, arg_l);
 		else if (ft[i] == '.')
-			i += dot_param(&(sp->precision), ft + i + 1, sp, arg_l, orig);
+			i += dot_param(&(sp->precision), ft + i + 1, sp, arg_l);
 		else
 			i = not_num_param(sp, ft, i);
 	}
@@ -63,6 +63,7 @@ void		process_output(char *format, t_buf *buf, t_args *arg_l, va_list ap_orig)
 	i = 0;
 	sp->arg = arg_l;
 	va_copy(sp->param_lst, ap_orig);
+	va_copy(sp->orig, ap_orig);
 	while (format[i])
 	{
 		if (format[i] == '{')
@@ -72,9 +73,9 @@ void		process_output(char *format, t_buf *buf, t_args *arg_l, va_list ap_orig)
 		else
 		{
 			clear_param(sp);
-			i += parse_format(format + i + 1, sp, arg_l, ap_orig);
+			i += parse_format(format + i + 1, sp, arg_l);
 			if (sp->valid > 0)
-				res = d_p_f(buf, sp, arg_l, ap_orig);
+				res = d_p_f(buf, sp, arg_l);
 			else
 				res = invalid_format(sp, format, &i);
 			buf_store_str(buf, res);
@@ -82,6 +83,7 @@ void		process_output(char *format, t_buf *buf, t_args *arg_l, va_list ap_orig)
 		}
 	}
 	va_end(sp->param_lst);
+	va_end(sp->orig);
 	free(sp);
 }
 

@@ -12,9 +12,9 @@
 
 # include "ft_printf.h"
 
-char	*finalize(t_spec *sp, char *str) // process width, etc.
+char	*finalize(t_spec *sp, char *str)
 {
-	char	*tmp; // sign pref precision str // sign pref width(0) str // width( ) sign pref precision str
+	char	*tmp;
 	int	to_pad;
 	
 	to_pad = sp->width - (int)ft_strlen(str) - (int)ft_strlen(sp->pref) - (int)ft_strlen(sp->sign);
@@ -38,14 +38,14 @@ char	*finalize(t_spec *sp, char *str) // process width, etc.
 }
 
 /*
-** Function that forms the 
+** Function that forms the output to put in the buffer
 ** First finds the next parameter, then distributes initial string processing
 ** functions according to the sp, then adds padding, signs, etc. to form the
 ** final string.
 ** Returns the final result of the output for the sp given.
 */
 
-char	*d_p_f(t_buf *buf, t_spec *sp, t_args *arg_lst, va_list orig)
+char	*d_p_f(t_buf *buf, t_spec *sp, t_args *arg_lst)
 {
 	char	*to_ret;
 	union u_argument u_arg;
@@ -58,7 +58,7 @@ char	*d_p_f(t_buf *buf, t_spec *sp, t_args *arg_lst, va_list orig)
 	else if (sp->specifier != '%')
 	{
 		va_end(sp->param_lst);
-		va_copy(sp->param_lst, orig);
+		va_copy(sp->param_lst, sp->orig);
 		u_arg = nth_arg_sp(arg_lst, sp->param, sp->param_lst);
 		sp->arg = arg_lst_at(arg_lst, sp->param);
 	}
@@ -74,8 +74,6 @@ char	*d_p_f(t_buf *buf, t_spec *sp, t_args *arg_lst, va_list orig)
 		return (initial_k(buf, u_arg));
 	else if (sp->specifier == 'p')
 		to_ret = initial_p(sp, u_arg);
-//	else if (sp->specifier == 'r')
-//		to_ret = ;
 	else if (sp->specifier == '%')
 		to_ret = ft_strdup("%");
 	else

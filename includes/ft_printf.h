@@ -81,7 +81,7 @@ int					not_num_param(t_spec *sp, char *ft, int i);
 int					num_param(t_spec *sp, char *ft, int j);
 int					change_color(char *ft, int i, t_buf *buf);
 char				*invalid_format(t_spec *sp, char *format, int *i);
-char				*d_p_f(t_buf *b, t_spec *sp, t_args *al, va_list orig);
+char				*d_p_f(t_buf *b, t_spec *sp, t_args *al);
 union u_argument	next_arg(t_args *arg, va_list param);
 union u_argument	nth_arg_orig(t_args *arg, int n, va_list orig);
 union u_argument	nth_arg_sp(t_args *arg, int n, va_list sp);

@@ -21,7 +21,7 @@
 ** Returns the beginning index of the next part of format.
 */
 
-int		star_param(int *set, char *ft, t_spec *sp, t_args *arg_l, va_list orig)
+int		star_param(int *set, char *ft, t_spec *sp, t_args *arg_l)
 {
 	int		num;
 	int		i;
@@ -41,7 +41,7 @@ int		star_param(int *set, char *ft, t_spec *sp, t_args *arg_l, va_list orig)
 		}
 		else
 		{
-			arg = nth_arg_orig(arg_l, num, orig);
+			arg = nth_arg_orig(arg_l, num, sp->orig);
 			*set = arg.i;
 		}
 	}	
@@ -69,7 +69,7 @@ int		star_param(int *set, char *ft, t_spec *sp, t_args *arg_l, va_list orig)
 ** Returns the beginning index of the next part of format.
 */
 
-int		dot_param(int *prec, char *ft, t_spec *sp, t_args *arg_l, va_list orig)
+int		dot_param(int *prec, char *ft, t_spec *sp, t_args *arg_l)
 {
 	int		num;
 	int		i;
@@ -83,7 +83,7 @@ int		dot_param(int *prec, char *ft, t_spec *sp, t_args *arg_l, va_list orig)
 		*prec = num;
 	}
 	else if (ft[i] == '*')
-		return (1 + star_param(prec, ft + i + 1, sp, arg_l, orig));
+		return (1 + star_param(prec, ft + i + 1, sp, arg_l));
 	else
 		*prec = 0;
 	return (i + 1);
