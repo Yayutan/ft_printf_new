@@ -45,28 +45,23 @@ t_args	*insert_arg(t_args *lst, t_args *t)
 	t_args	*pre;
 
 	if (!lst || t->index < lst->index)
-	{
-		t->next = lst;
-		lst = t;
-		return (lst);
-	}
+		return (put_between(NULL, lst, t));
 	pre = NULL;
 	cur = lst;
-	while (cur && cur->index <= t->index)
+	while (cur && cur->index < t->index)
 	{
-		if (t->index == cur->index)
-		{
-			cur->size = t->size;
-			free(t);
-			return (lst);
-		}
-		else if (t->index < cur->index && t->index > pre->index)
-			pre = put_between(pre, cur, t);
 		pre = cur;
 		cur = cur->next;
 	}
 	if (!cur)
 		pre->next = t;
+	else if (t->index == cur->index)
+	{
+		cur->size = t->size;
+		free(t);
+	}
+	else if (t->index < cur->index && t->index > pre->index)
+		pre = put_between(pre, cur, t);
 	return (lst);
 }
 

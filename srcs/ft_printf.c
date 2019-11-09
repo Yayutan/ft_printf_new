@@ -94,7 +94,7 @@ void		process_output(char *format, t_buf *buf, t_args *arg_l, va_list ap_orig)
 ** Returns the list of arguments with their types.
 */
 
-t_args	*set_args_lst(char *format) // closed for now, not tested
+t_args	*set_args_lst(char *format)
 {
 	t_args	*arg;
 	int		i;
