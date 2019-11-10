@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "ft_printf.h"
+#include "ft_printf.h"
 
 /*
 ** From the given index of the format string, set up the format spec of the
@@ -20,13 +20,13 @@
 
 int		parse_format(char *ft, t_spec *sp, t_args *arg_l)
 {
-	int 	i;
-	
+	int i;
+
 	i = 0;
 	while (ft[i] && ft_strchr(",;:_vaACSnjz0123456789hlL*.'#-+ ", ft[i]))
 	{
 		if (ft[i] >= '1' && ft[i] <= '9')
-			 i = num_param(sp, ft, i);
+			i = num_param(sp, ft, i);
 		else if (ft[i] == '*')
 			i += star_param(&(sp->width), ft + i + 1, sp, arg_l);
 		else if (ft[i] == '.')
@@ -46,24 +46,23 @@ int		parse_format(char *ft, t_spec *sp, t_args *arg_l)
 	return (i + 1);
 }
 
-
 /*
 ** Iterates through the format string, sets up format and form output
 ** accordingly to put in the buffer.
 */
 
-void		process_output(char *format, t_buf *buf, t_args *arg_l, va_list ap_orig)
+void	process_output(char *format, t_buf *buf, t_args *arg_l, va_list ap_orig)
 {
 	int		i;
 	t_spec	*sp;
 	char	*res;
 
-	if(!(sp = (t_spec*)ft_memalloc(sizeof(t_spec))))
+	if (!(sp = (t_spec*)ft_memalloc(sizeof(t_spec))))
 		ft_err_exit("Failed to allocate specifications");
-	i = 0;
 	sp->arg = arg_l;
 	va_copy(sp->param_lst, ap_orig);
 	va_copy(sp->orig, ap_orig);
+	i = 0;
 	while (format[i])
 	{
 		if (format[i] == '{')
@@ -74,22 +73,18 @@ void		process_output(char *format, t_buf *buf, t_args *arg_l, va_list ap_orig)
 		{
 			clear_param(sp);
 			i += parse_format(format + i + 1, sp, arg_l);
-			if (sp->valid > 0)
-				res = d_p_f(buf, sp, arg_l);
-			else
-				res = invalid_format(sp, format, &i);
+			res = (sp->valid > 0) ? d_p_f(buf, sp, arg_l) :
+			invalid_format(sp, format, &i);
 			buf_store_str(buf, res);
 			free(res);
 		}
 	}
-	va_end(sp->param_lst);
-	va_end(sp->orig);
-	free(sp);
+	del_spec(sp);
 }
 
 /*
 ** Iterates the format string to set up all arguments used.
-** Whenever we find the '%', we start looking into that "set" of format and 
+** Whenever we find the '%', we start looking into that "set" of format and
 ** add nodes to the argument list if needed.
 ** Returns the list of arguments with their types.
 */
@@ -123,7 +118,7 @@ t_args	*set_args_lst(char *format)
 
 int		ft_printf(const char *format, ...)
 {
-	t_buf   *buf;
+	t_buf	*buf;
 	va_list	ap_orig;
 	t_args	*arg_info;
 

@@ -10,11 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "ft_printf.h"
+#include "ft_printf.h"
 
 /*
-** Setting up a new argument node depending on whether we encounter a  
-** specifier character. 
+** Setting up a new argument node depending on whether we encounter a
+** specifier character.
 ** NOTE: The length char l preceeds the char h
 ** Returns 0 if no valid spec char is found
 ** Adds new node to arg list and returns 1 if valid spec is found
@@ -25,17 +25,17 @@ int		spec_arg(t_args **arg, char sp, int *n_l, int *nxt_arg)
 	if (ft_strchr("dDioOuUxXbBfFeEgGcsprk%", sp))
 	{
 		if (ft_strchr("csprk", sp))
-            *arg = insert_arg(*arg, new_arg(*nxt_arg, sp));
+			*arg = insert_arg(*arg, new_arg(*nxt_arg, sp));
 		else if (ft_strchr("fFeEgG", sp))
 		{
 			*arg = insert_arg(*arg, new_arg(*nxt_arg, 'f'));
 			if (n_l[2] == 1)
-				*arg = insert_arg(*arg, new_arg(*nxt_arg, 'F'));				
+				*arg = insert_arg(*arg, new_arg(*nxt_arg, 'F'));
 		}
-		else if (ft_strchr("diouxXbB", sp))
+		else if (ft_strchr("dDioOUuxXbB", sp))
 		{
 			*arg = insert_arg(*arg, new_arg(*nxt_arg, 'i'));
-			if (n_l[0] == 1)
+			if (n_l[0] == 1 || ft_strchr("DOU", sp))
 				*arg = insert_arg(*arg, new_arg(*nxt_arg, 'l'));
 			else if (n_l[0] == 2)
 				*arg = insert_arg(*arg, new_arg(*nxt_arg, 'L'));
@@ -44,8 +44,6 @@ int		spec_arg(t_args **arg, char sp, int *n_l, int *nxt_arg)
 			else if (n_l[1] == 2)
 				*arg = insert_arg(*arg, new_arg(*nxt_arg, 'H'));
 		}
-		else if (ft_strchr("DOU", sp))
-			*arg = insert_arg(*arg, new_arg(*nxt_arg, 'l'));
 		return (1);
 	}
 	return (0);
@@ -79,7 +77,7 @@ int		star_arg(t_args **arg, char *ft, int i, int *nxt_arg)
 	}
 	else if (ft[i] != '$')
 	{
-        *arg = insert_arg(*arg, new_arg(*nxt_arg, 'i'));
+		*arg = insert_arg(*arg, new_arg(*nxt_arg, 'i'));
 		(*nxt_arg)++;
 	}
 	i += (ft[i] != '$') ? 0 : 1;
@@ -98,7 +96,7 @@ int		num_arg(t_args **arg, char *ft, int *n_l, int *nxt_arg)
 {
 	int		num;
 	int		j;
-	
+
 	num = ft_atoi(ft);
 	j = 0;
 	while (ft[j] && ft[j] >= '0' && ft[j] <= '9')
@@ -116,9 +114,25 @@ int		num_arg(t_args **arg, char *ft, int *n_l, int *nxt_arg)
 }
 
 /*
+** Sets up the length array depending on the character read.
+*/
+
+void	len_format(char ft, int *n_l)
+{
+	if (ft == 'l')
+		n_l[0] += (n_l[0] == 2) ? 0 : 1;
+	else if (ft == 'h')
+		n_l[1] = (n_l[1] == 1) ? 2 : 1;
+	else if (ft == 'j' || ft == 'z')
+		n_l[0] = 2;
+	else if (ft == 'L')
+		n_l[2] = 1;
+}
+
+/*
 ** Looks through a "set" of format and set up new arguments
 ** If we find numbers, '*', specifiers, we need to check and set up nodes.
-** We also need to keep track of length charactes(l,h,L), since they affect 
+** We also need to keep track of length charactes(l,h,L), since they affect
 ** the final type of the argument as well.
 ** n_l[i]-> 0:l, 1:h, 2:L
 ** Returns the next index to look at past this set of format.
@@ -126,9 +140,9 @@ int		num_arg(t_args **arg, char *ft, int *n_l, int *nxt_arg)
 
 int		add_arg_info(char *ft, int i, t_args **arg, int *nxt_arg)
 {
-    int n_l[3];
+	int n_l[3];
 
-    ft_bzero(n_l, sizeof(int) * 3);
+	ft_bzero(n_l, sizeof(n_l));
 	while (ft[i] && ft_strchr(",;:_vaACSnjz0123456789hlL*.'#-+ ", ft[i]))
 	{
 		if (ft[i] >= '1' && ft[i] <= '9')
@@ -139,20 +153,8 @@ int		add_arg_info(char *ft, int i, t_args **arg, int *nxt_arg)
 		}
 		else if (ft[i] == '*')
 			i = star_arg(arg, ft, i + 1, nxt_arg);
-        else if (ft_strchr("lhjzL", ft[i]))
-        {
-			if (ft[i] == 'l')
-				n_l[0] = (n_l[0] == 1) ? 2 : 1;
-			else if (ft[i] == 'h')
-				n_l[1] = (n_l[1] == 1) ? 2 : 1;
-			else if (ft[i] == 'j' || ft[i] == 'z')
-				n_l[0] = 2;
-			else if (ft[i] == 'L')
-            	n_l[2] = 1;
-			i++;
-        }
 		else
-			i++;
+			len_format(ft[i++], n_l);
 	}
 	if (spec_arg(arg, ft[i], n_l, nxt_arg))
 	{

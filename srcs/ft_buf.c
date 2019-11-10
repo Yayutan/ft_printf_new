@@ -10,13 +10,13 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "ft_buf.h"
+#include "ft_buf.h"
 
 t_buf	*buf_init(void)
 {
 	t_buf	*to_ret;
 	int		i;
-	
+
 	if (!(to_ret = (t_buf*)ft_memalloc(sizeof(t_buf))))
 		return (NULL);
 	i = 0;
@@ -27,40 +27,25 @@ t_buf	*buf_init(void)
 	return (to_ret);
 }
 
-int			till_full(t_buf *buf)
+void	buf_store_str(t_buf *buf, char *to_add)
 {
-	return (BUFF_SIZE - buf->len);
-}
-
-void		buf_store_str(t_buf *buf, char *to_add)
-{
-	int		i;
 	int		s_len;
-	
+	char	*cur;
+
 	s_len = (int)ft_strlen(to_add);
-	if (till_full(buf) <= s_len)
-	{
+	buf->total += s_len;
+	if (s_len >= (BUFF_SIZE - buf->len))
 		buf_output_clear(buf);
-		if (s_len < BUFF_SIZE)
-			buf_store_str(buf, to_add);
-		else	
-		{
-			i = 0;
-			while (i < BUFF_SIZE)
-				(buf->buf)[i++] = *(to_add++);
-			buf->len = BUFF_SIZE;
-			buf->total += BUFF_SIZE;
-			buf_store_str(buf, to_add);
-		}
-	}
-	else
+	cur = to_add;
+	while (s_len >= BUFF_SIZE)
 	{
-		i = buf->len;
-		while (*to_add)
-			(buf->buf)[i++] = *(to_add++);
-		buf->len += s_len;
-		buf->total += s_len;
+		ft_strncpy(buf->buf + buf->len, cur, BUFF_SIZE);
+		buf_output_clear(buf);
+		cur += BUFF_SIZE;
+		s_len -= BUFF_SIZE;
 	}
+	ft_strncpy(buf->buf + buf->len, cur, s_len);
+	buf->len += s_len;
 }
 
 void	buf_store_chr(t_buf *buf, unsigned char to_add)
@@ -74,19 +59,15 @@ void	buf_store_chr(t_buf *buf, unsigned char to_add)
 
 void	buf_output_clear(t_buf *buf)
 {
-	int i;
-
 	write(1, buf->buf, buf->len);
-	i = 0;
-	while (i <= BUFF_SIZE)
-		(buf->buf)[i++] = '\0';
+	ft_bzero(buf->buf, buf->len);
 	buf->len = 0;
 }
 
 int		buf_del(t_buf *buf)
 {
 	int		to_ret;
-	
+
 	to_ret = buf->total;
 	free(buf);
 	return (to_ret);

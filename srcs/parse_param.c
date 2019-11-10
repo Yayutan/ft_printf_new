@@ -186,23 +186,3 @@ int		change_color(char *ft, int i, t_buf *buf)
 		i++;
 	return (i);
 }
-
-/*
-** Clears all elements of the spec to default.
-** Since there will only be 1 specification struct, we need to clear it each
-** time we are processing a new format.
-*/
-
-void	clear_param(t_spec *sp)
-{
-	sp->param = 0;
-	ft_bzero(sp->flags, sizeof(int) * 6);
-	sp->width = 0;
-	sp->precision = -1;
-	sp->len = -1;
-	sp->specifier = '\0';
-	sp->valid = 0;
-	ft_bzero(sp->sign, sizeof(char) * 2);
-	ft_bzero(sp->pref, sizeof(char) * 3);
-}
-

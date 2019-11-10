@@ -10,13 +10,13 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "arg_list.h"
+#include "arg_list.h"
 
 t_args	*new_arg(int i, char s)
 {
 	t_args	*to_ret;
 
-	if(!(to_ret = (t_args*)ft_memalloc(sizeof(t_args))))
+	if (!(to_ret = (t_args*)ft_memalloc(sizeof(t_args))))
 		ft_err_exit("Failed to allocate param list");
 	to_ret->index = i;
 	to_ret->size = s;

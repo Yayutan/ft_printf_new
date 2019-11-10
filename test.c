@@ -161,5 +161,5 @@ void	test_time()
 
 int	main()
 {
-	ft_printf("%f\n", 42.00000);
+	ft_printf("%d\n", 30);
 }
