@@ -24,8 +24,7 @@ SRC_NAME = ft_buf.c\
 		spec_util.c\
 		get_param.c\
         arb_add_sub.c\
-        arb_mult_div.c\
-		printdiouxb_util.c
+        arb_mult_div.c
 OBJ_NAME = $(SRC_NAME:.c=.o)
 SRC = $(addprefix $(SRC_PATH), $(SRC_NAME))
 OBJ = $(addprefix $(OBJ_PATH), $(OBJ_NAME))

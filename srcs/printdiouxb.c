@@ -12,6 +12,46 @@
 
 #include "ft_printf.h"
 
+char			*add_apos(char *s)
+{
+	char	*to_ret;
+	int		i;
+	int		j;
+
+	i = 0;
+	to_ret = ft_strnew(ft_strlen(s) + (ft_strlen(s) - 1 - i) / 3);
+	i = ft_strlen(s) + (ft_strlen(s) - 1 - i) / 3 - 1;
+	j = 0;
+	to_ret[0] = s[0];
+	while (i > 0)
+	{
+		if (j % 3 == 0 && j != 0)
+		{
+			to_ret[i--] = ',';
+			to_ret[i] = s[ft_strlen(s) - 1 - j];
+		}
+		else
+			to_ret[i] = s[ft_strlen(s) - 1 - j];
+		j++;
+		i--;
+	}
+	free(s);
+	return (to_ret);
+}
+
+int				check_zero(int len, union u_argument u_arg)
+{
+	if (len == 4 && u_arg.i == 0)
+		return (1);
+	else if (len == 1 && u_arg.uc == 0)
+		return (1);
+	else if (len == 2 && u_arg.sh == 0)
+		return (1);
+	else if (len == 8 && u_arg.lli == 0)
+		return (1);
+	return (0);
+}
+
 char	*do_di(t_spec *sp, union u_argument u_arg)
 {
 	char			*str;
@@ -21,13 +61,13 @@ char	*do_di(t_spec *sp, union u_argument u_arg)
 	if (sp->precision == 0 && check_zero(sp->len, u_arg))
 		str = ft_strnew(0);
 	else if (sp->len == 4)
-		str = ft_lltoa_base((int)bit_abs(u_arg.lli, 4), 10);
+		str = ft_lltoa_base((int)u_arg.lli, 10);
 	else if (sp->len == 1)
-		str = ft_lltoa_base((char)bit_abs(u_arg.lli, 1), 10);
+		str = ft_lltoa_base((char)u_arg.lli, 10);
 	else if (sp->len == 2)
-		str = ft_lltoa_base((short)bit_abs(u_arg.lli, 2), 10);
+		str = ft_lltoa_base((short)u_arg.lli, 10);
 	else if (sp->len == 8)
-		str = ft_lltoa_base(bit_abs(u_arg.lli, 8), 10);
+		str = ft_lltoa_base(u_arg.lli, 10);
 	if ((u_arg.lli >> (8 * sp->len - 1)) & 1)
 		sp->sign[0] = '-';
 	else if (sp->flags[1] || sp->flags[2])
