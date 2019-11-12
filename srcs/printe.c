@@ -12,6 +12,11 @@
 
 #include "ft_printf.h"
 
+/*
+** Function that calculates the exponent(base 10) using the given base string.
+** The number of digits from the first digit to the decimal point.
+*/
+
 int		calc_exp(char *dec, int p)
 {
 	int		i;
@@ -21,6 +26,10 @@ int		calc_exp(char *dec, int p)
 		i++;
 	return (p - i);
 }
+
+/*
+** Funciton that appends the exponent part of the scientific notation.
+*/
 
 char	*append_exp(char *dec, int exp)
 {
