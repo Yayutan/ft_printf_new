@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "ft_printf.h"
-# include "pow_of_two.h"
+#include "ft_printf.h"
+#include "pow_of_two.h"
 
 int		get_d_exp(union u_double u_d)
 {
@@ -29,7 +29,7 @@ int		get_d_exp(union u_double u_d)
 	{
 		exp += (((u_d.data[7] >> (i - 4)) & 1) << i);
 		i++;
-	}	
+	}
 	return (exp - 1023);
 }
 
@@ -53,7 +53,7 @@ int		get_d_mantissa(union u_double u_d, char *m)
 			{
 				add(m, g_neg_pow_two[p]);
 				zero = 1;
-			}				
+			}
 			p++;
 			sh--;
 		}
@@ -79,7 +79,7 @@ int		get_ld_exp(union u_ldouble u_ld)
 	{
 		exp += (((u_ld.data[9] >> (i - 8)) & 1) << i);
 		i++;
-	}	
+	}
 	return (exp - 16383);
 }
 
@@ -115,38 +115,38 @@ int		get_ld_mantissa(union u_ldouble u_ld, char *m)
 int		shift_mantissa(char *res, int e)
 {
 	int		sh;
-    int     p;
+	int     p;
 	char	*neg;
 
 	sh = 0;
 	p = 0;
 	while (e != 0)
 	{
-        if (e >= 4096)
-            p = 4096;
+		if (e >= 4096)
+			p = 4096;
 		else if (e >= 2048)
 			p = 2048;
-        else if (e >= 1024)
-            p = 1024;
+		else if (e >= 1024)
+			p = 1024;
 		else if (e >= 512)
 			p = 512;
 		else if (e >= 256)
 			p = 256;
-        else if (e >= 64)
+		else if (e >= 64)
 			p = 64;
 		else if (e >= -64)
 			p = e;
-        else if (e <= -4096)
+		else if (e <= -4096)
 			p = -4096;
 		else if (e <= -2048)
 			p = -2048;
-        else if (e <= -1024)
+		else if (e <= -1024)
 			p = -1024;
 		else if (e <= -512)
 			p = -512;
-        else if (e <= -256)
+		else if (e <= -256)
 			p = -256;
-        else if (e <= -64)
+		else if (e <= -64)
 			p = -64;
 		if (e > 0)
 		{
@@ -179,7 +179,7 @@ int		shift_mantissa(char *res, int e)
 				neg = ft_strtrimc(g_neg_pow_two[-1 * p], '0');
 			mult(res, neg);
 			free(neg);
-			 sh += -1 * p;
+			sh += -1 * p;
 		}
 		e -= p;
 	}

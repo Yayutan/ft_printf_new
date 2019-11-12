@@ -10,63 +10,24 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../includes/ft_printf.h"
-
-char	*add_apos(char *s)
-{
-	char	*to_ret;
-	int		i;
-	int		j;
-
-	i = (ft_strchr(" -+", s[0])) ? 1 : 0 ;
-	to_ret = ft_strnew(ft_strlen(s) + (ft_strlen(s) - 1 - i) / 3);
-    i = ft_strlen(s) + (ft_strlen(s) - 1 - i) / 3 - 1;
-	j = 0;
-	to_ret[0] = s[0];
-	while (i > 0)
-	{
-		if (j % 3 == 0 && j != 0)
-		{
-			to_ret[i--] = ','; // ? localconv?
-			to_ret[i] = s[ft_strlen(s) - 1 - j];
-		}
-		else
-			to_ret[i] = s[ft_strlen(s) - 1 - j];
-		j++;
-		i--;		
-	}
-	return (to_ret);
-}
-
-int		check_zero(int len, union u_argument u_arg)
-{
-	if (len == 4 && u_arg.i == 0)
-		return (1);
-	else if (len == 1 && u_arg.uc == 0)
-		return (1);
-	else if (len == 2 && u_arg.sh == 0)
-		return (1);
-	else if (len == 8 && u_arg.lli == 0)
-		return (1);
-	return (0);
-}
+#include "ft_printf.h"
 
 char	*do_di(t_spec *sp, union u_argument u_arg)
 {
-	char	*str;
-	char	*tmp;
+	char			*str;
+	char			*tmp;
 
 	str = NULL;
 	if (sp->precision == 0 && check_zero(sp->len, u_arg))
 		str = ft_strnew(0);
 	else if (sp->len == 4)
-		str = ft_lltoa_base((u_arg.i > 0) ? u_arg.i : (int)u_arg.i * -1, 10);
+		str = ft_lltoa_base((int)bit_abs(u_arg.lli, 4), 10);
 	else if (sp->len == 1)
-		str = ft_lltoa_base(((char)u_arg.uc > 0) ? u_arg.uc : (char)u_arg.uc * -1, 10);
+		str = ft_lltoa_base((char)bit_abs(u_arg.lli, 1), 10);
 	else if (sp->len == 2)
-		str = ft_lltoa_base((u_arg.sh > 0) ? u_arg.sh : u_arg.sh * -1, 10);
+		str = ft_lltoa_base((short)bit_abs(u_arg.lli, 2), 10);
 	else if (sp->len == 8)
-		str = ft_lltoa_base((u_arg.lli > 0) ? u_arg.lli : u_arg.lli * -1, 10);
+		str = ft_lltoa_base(bit_abs(u_arg.lli, 8), 10);
 	if ((u_arg.lli >> (8 * sp->len - 1)) & 1)
 		sp->sign[0] = '-';
 	else if (sp->flags[1] || sp->flags[2])
@@ -77,16 +38,10 @@ char	*do_di(t_spec *sp, union u_argument u_arg)
 		free(str);
 		str = tmp;
 	}
-	if (sp->flags[5])
-	{
-		tmp = add_apos(str);
-		free(str);
-		str = tmp;	
-	}
-	return (str);
+	return ((sp->flags[5]) ? add_apos(str) : str);
 }
 
-char	*do_ouxXb(t_spec *sp, union u_argument u_arg)
+char	*do_ouxb(t_spec *sp, union u_argument u_arg)
 {
 	char	*str;
 	int		base;
@@ -125,7 +80,7 @@ char	*initial_diouxb(t_spec *sp, union u_argument u_arg)
 	if (ft_strchr("di", sp->specifier))
 		str = do_di(sp, u_arg);
 	else
-		str = do_ouxXb(sp, u_arg);
+		str = do_ouxb(sp, u_arg);
 	tmp = ft_stradd(str, '0', -1, sp->precision - (int)ft_strlen(str));
 	free(str);
 	str = tmp;
@@ -134,7 +89,7 @@ char	*initial_diouxb(t_spec *sp, union u_argument u_arg)
 		sp->pref[0] = (sp->specifier == 'b') ? 'b' : '0';
 		sp->pref[1] = (ft_strchr("xX", sp->specifier)) ? 'x' : '\0';
 	}
-    else if (sp->specifier == 'o' && sp->flags[3] && str[0] != '0')
+	else if (sp->specifier == 'o' && sp->flags[3] && str[0] != '0')
 		sp->pref[0] = '0';
 	return (str);
 }

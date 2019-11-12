@@ -40,6 +40,7 @@ void	buf_store_str(t_buf *buf, char *to_add)
 	while (s_len >= BUFF_SIZE)
 	{
 		ft_strncpy(buf->buf + buf->len, cur, BUFF_SIZE);
+		buf->len = BUFF_SIZE;
 		buf_output_clear(buf);
 		cur += BUFF_SIZE;
 		s_len -= BUFF_SIZE;
@@ -60,7 +61,7 @@ void	buf_store_chr(t_buf *buf, unsigned char to_add)
 void	buf_output_clear(t_buf *buf)
 {
 	write(1, buf->buf, buf->len);
-	ft_bzero(buf->buf, buf->len);
+	ft_bzero(buf->buf, BUFF_SIZE);
 	buf->len = 0;
 }
 

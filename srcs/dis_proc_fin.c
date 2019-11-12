@@ -92,7 +92,7 @@ char				*d_p_f(t_buf *buf, t_spec *sp, t_args *arg_lst)
 	return (finalize(sp, to_ret));
 }
 
-char				*invalid_format(t_spec *sp, char *format, int *i)
+char				*i_f(t_spec *sp, char *format, int *i)
 {
 	char	*to_ret;
 	int		j;

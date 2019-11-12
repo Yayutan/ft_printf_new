@@ -3,7 +3,6 @@ SRC_PATH = ./srcs/
 OBJ_PATH = ./objs/
 LFT_PATH = ./libft/
 INC_PATH = ./includes/
-APA_PATH = ./arb_pre/
 FLAGS = -Wall -Werror -Wextra -g
 
 INC = $(addprefix -I, $(INC_PATH))
@@ -23,7 +22,10 @@ SRC_NAME = ft_buf.c\
 		arg_list.c\
 		arg_lst_util.c\
 		spec_util.c\
-		get_param.c
+		get_param.c\
+        arb_add_sub.c\
+        arb_mult_div.c\
+		printdiouxb_util.c
 OBJ_NAME = $(SRC_NAME:.c=.o)
 SRC = $(addprefix $(SRC_PATH), $(SRC_NAME))
 OBJ = $(addprefix $(OBJ_PATH), $(OBJ_NAME))
@@ -101,13 +103,6 @@ LFT_OBJ_NAME = $(LFT_SRC_NAME:.c=.o)
 LFT_SRC = $(addprefix $(LFT_PATH), $(LFT_SRC_NAME))
 LFT_OBJ = $(addprefix $(LFT_PATH), $(LFT_OBJ_NAME))
 
-APA_SRC_NAME = arb_add_sub.c\
-			arb_mult_div.c
-APA_OBJ_NAME = $(APA_SRC_NAME:.c=.o)
-APA_SRC = $(addprefix $(APA_PATH), $(APA_SRC_NAME))
-APA_OBJ = $(addprefix $(APA_PATH), $(APA_OBJ_NAME))
-
-
 .PHONY = all clean fclean re
 
 all: $(NAME)
@@ -118,27 +113,22 @@ test: re
 
 $(NAME):
 	@make $(LFT_OBJ)
-	@make $(APA_OBJ)
 	@echo "libft files compiled"
 	@make $(OBJ)
 	@echo "ft_printf files compiled"
-	@ar rc $(NAME) $(OBJ) $(LFT_OBJ) $(APA_OBJ)
+	@ar rc $(NAME) $(OBJ) $(LFT_OBJ)
 	@ranlib $(NAME)
 	@echo "library established"
 
 $(LFT_OBJ_PATH)%.o: $(LFT_SRC_PATH)%.c
 	@gcc $(FLAGS) -o $@ -c $<
 
-$(APA_OBJ_PATH)%.o: $(APA_SRC_PATH)%.c
-	@gcc $(FLAGS) $(INC) -o $@ -c $<
-	
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c
 	@mkdir -p $(OBJ_PATH)
 	@gcc $(FLAGS) $(INC) -o $@ -c $<
 
 clean:
 	@/bin/rm -f $(LFT_OBJ)
-	@/bin/rm -f $(APA_OBJ)
 	@/bin/rm -rf $(OBJ_PATH)
 	@echo "cleaned all object files"
 
