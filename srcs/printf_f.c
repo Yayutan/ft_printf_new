@@ -77,7 +77,7 @@ char	*form_final(char *man, int dec, int pre, int hash)
 ** <For norm> m_sh: 0->mantissa != 0, 1->shift
 */
 
-int		uldtoa_basic(union u_ldouble u_ld, char *str)
+int		uldtoa_basic(union u_ldouble u_ld, char **str)
 {
 	int				exp;
 	char			man[DEC + 1];
@@ -90,19 +90,19 @@ int		uldtoa_basic(union u_ldouble u_ld, char *str)
 	clear_str(res, LEN);
 	if (exp == -16383 && !m_sh[0])
 	{
-		ft_strcpy(str, res);
+		*str = ft_strdup(res);
 		return (WH + 1);
 	}
 	else if (exp == -16383 && m_sh[0])
 		divi(man, "2");
 	else if (exp == 16384)
 	{
-		(m_sh[0]) ? ft_strcpy(str, "nan") : ft_strcpy(str, "inf");
+		*str = (m_sh[0]) ? ft_strdup("nan") : ft_strdup("inf");
 		return (-4242);
 	}
 	ft_strcpy(res + WH + 1, man);
 	m_sh[1] = shift_mantissa(res, exp);
-	ft_strcpy(str, res);
+	*str = ft_strdup(res);
 	return (WH + 1 - m_sh[1]);
 }
 
@@ -116,7 +116,7 @@ int		uldtoa_basic(union u_ldouble u_ld, char *str)
 ** <For norm> m_sh: 0->mantissa != 0, 1->shift
 */
 
-int		udtoa_basic(union u_double u_d, char *str)
+int		udtoa_basic(union u_double u_d, char **str)
 {
 	int				exp;
 	char			man[DEC + 1];
@@ -129,18 +129,18 @@ int		udtoa_basic(union u_double u_d, char *str)
 	clear_str(res, LEN);
 	if (exp == -1023 && !m_sh[0])
 	{
-		ft_strcpy(str, res);
+		*str = ft_strdup(res);
 		return (WH + 1);
 	}
 	else if (exp == -1023 && m_sh[0])
 		divi(man, "2");
 	else if (exp == 1024)
 	{
-		(m_sh[0]) ? ft_strcpy(str, "nan") : ft_strcpy(str, "inf");
+		*str = (m_sh[0]) ? ft_strdup("nan") : ft_strdup("inf");
 		return (-4242);
 	}
 	ft_strcpy(res + WH + 1, man);
 	m_sh[1] = shift_mantissa(res, exp);
-	ft_strcpy(str, res);
+	*str = ft_strdup(res);
 	return (WH + 1 - m_sh[1]);
 }

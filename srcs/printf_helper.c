@@ -137,6 +137,34 @@ int		get_ld_mantissa(union u_ldouble u_ld, char *m)
 	return (zero);
 }
 
+/*
+** Function that decides the next pow of 2 to multiply on mantissa
+*/
+
+int		next_exp(int e)
+{
+	if (e >= 4096)
+		return(4096);
+	else if (e >= 2048)
+		return(2048);
+	else if (e >= 1024)
+		return(1024);
+	else if (e >= 512)
+		return(512);
+	else if (e >= 256)
+		return(256);
+	else if (e >= 64)
+		return(64);
+	else
+		return(e);
+}
+
+/*
+** Function that calculates the correct form of the mantissa after adding
+** up the digits from the mantissa bits.
+** Resulting string is res*2^e
+*/
+
 int		shift_mantissa(char *res, int e)
 {
 	int		sh;
@@ -148,20 +176,7 @@ int		shift_mantissa(char *res, int e)
 	sh = (neg) ? e : 0;
 	while (e != 0)
  	{
-		if (e >= 4096)
-			p = 4096;
-		else if (e >= 2048)
-			p = 2048;
-		else if (e >= 1024)
-			p = 1024;
-		else if (e >= 512)
-			p = 512;
-		else if (e >= 256)
-			p = 256;
-		else if (e >= 64)
-			p = 64;
-		else
-			p = e;
+		p = next_exp(e);
 		if (p == 4096)
 			mult(res, ft_strtrimc(g_pow_two[neg][69], '0'));
 		else if (p == 2048)
@@ -174,7 +189,6 @@ int		shift_mantissa(char *res, int e)
 			mult(res, ft_strtrimc(g_pow_two[neg][65], '0'));
 		else
 			mult(res, ft_strtrimc(g_pow_two[neg][p], '0'));
-//		sh += (neg * p);
 		e -= p;
 	}
 	return (sh);

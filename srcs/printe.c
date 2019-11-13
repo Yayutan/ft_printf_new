@@ -22,8 +22,10 @@ int		calc_exp(char *dec, int p)
 	int		i;
 
 	i = 0;
-	while (dec[i] && dec[i] == '0' && i < p)
+	while (dec[i] && dec[i] == '0')
 		i++;
+	if (!dec[i])
+		return (0);
 	return (p - i);
 }
 
