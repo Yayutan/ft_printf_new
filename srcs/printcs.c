@@ -10,11 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "ft_printf.h"
+#include "ft_printf.h"
 
 char	*initial_c(t_spec *sp, t_buf *buf, union u_argument u_arg)
 {
-	char	*str;
+	char			*str;
 	unsigned char	n_c;
 
 	n_c = u_arg.uc;
@@ -41,7 +41,7 @@ char	*initial_s(t_spec *sp, union u_argument u_arg)
 	char	*str;
 	char	*n_s;
 	int		nd_free;
-	
+
 	n_s = u_arg.str;
 	if (!n_s)
 	{
@@ -52,7 +52,7 @@ char	*initial_s(t_spec *sp, union u_argument u_arg)
 		nd_free = 0;
 	if (sp->precision < 0)
 		str = ft_strdup(n_s);
-	else	
+	else
 		str = ft_strsub(n_s, 0, sp->precision);
 	if (nd_free)
 		free(n_s);

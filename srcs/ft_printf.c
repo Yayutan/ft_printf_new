@@ -22,6 +22,7 @@ int		parse_format(char *ft, t_spec *sp, t_args *arg_l)
 {
 	int i;
 
+	clear_param(sp);
 	i = 0;
 	while (ft[i] && ft_strchr(",;:_vaACSnjz0123456789hlL*.'#-+ ", ft[i]))
 	{
@@ -34,6 +35,8 @@ int		parse_format(char *ft, t_spec *sp, t_args *arg_l)
 		else
 			i = not_num_param(sp, ft, i);
 	}
+	sp->flags[0] = (sp->width < 0) ? 1 : sp->flags[0];
+	sp->width = (sp->width < 0) ? sp->width * -1 : sp->width;
 	if (ft[i] && ft_strchr("dDioOuUxXbBfFeEgGcsprk%", ft[i]))
 	{
 		sp->valid = 1;
@@ -41,8 +44,6 @@ int		parse_format(char *ft, t_spec *sp, t_args *arg_l)
 		sp->len = (ft_strchr("DOUB", ft[i])) ? 8 : sp->len;
 		i++;
 	}
-	else
-		sp->valid = -1;
 	return (i + 1);
 }
 
@@ -55,7 +56,7 @@ void	process_output(char *format, t_buf *buf, t_args *arg_l, va_list ap_orig)
 {
 	int		i;
 	t_spec	*sp;
-	char	*res;
+	char	*r;
 
 	if (!(sp = (t_spec*)ft_memalloc(sizeof(t_spec))))
 		ft_err_exit("Failed to allocate specifications");
@@ -67,16 +68,14 @@ void	process_output(char *format, t_buf *buf, t_args *arg_l, va_list ap_orig)
 	{
 		if (format[i] == '{')
 			i = change_color(format, i, buf);
-		if (format[i] != '%')
+		else if (format[i] != '%')
 			buf_store_chr(buf, format[i++]);
 		else
 		{
-			clear_param(sp);
 			i += parse_format(format + i + 1, sp, arg_l);
-			res = (sp->valid > 0) ? d_p_f(buf, sp, arg_l) :
-			invalid_format(sp, format, &i);
-			buf_store_str(buf, res);
-			free(res);
+			r = (sp->valid > 0) ? d_p_f(buf, sp, arg_l) : i_f(sp, format, &i);
+			buf_store_str(buf, r);
+			free(r);
 		}
 	}
 	del_spec(sp);

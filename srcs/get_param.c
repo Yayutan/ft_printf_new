@@ -1,17 +1,41 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_param.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mchuang <mchuang@student.42.us.org>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/11/11 15:22:17 by mchuang           #+#    #+#             */
+/*   Updated: 2019/11/14 23:58:15 by mchuang          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-# include "ft_printf.h"
+#include "ft_printf.h"
+
+int					check_ptr_type(va_list param)
+{
+	va_list	test;
+	int		tst;
+
+	va_copy(test, param);
+	tst = (va_arg(test, char*) != NULL);
+	if (!tst)
+		va_arg(param, char*);
+	va_end(test);
+	return (tst);
+}
 
 /*
 ** Function that sets the argument union from the information
 ** provided in argument node arg.
 */
 
-union u_argument next_arg(t_args *arg, va_list param)
+union u_argument	next_arg(t_args *arg, va_list param)
 {
-	union u_argument next;
+	union u_argument	next;
 
 	next.lli = 0;
-	if (!arg)
+	if (!arg || (ft_strchr("fFks", arg->size) && !check_ptr_type(param)))
 		return (next);
 	if (ft_strchr("crH", arg->size))
 		next.uc = (unsigned char)va_arg(param, int);
@@ -39,18 +63,18 @@ union u_argument next_arg(t_args *arg, va_list param)
 ** Copies from the original va_list
 */
 
-union u_argument nth_arg_orig(t_args *arg, int n, va_list orig)
+union u_argument	nth_arg_orig(t_args *arg, int n, va_list orig)
 {
-	int i;
-	t_args *cur;
-	va_list	cp;
-	union u_argument next;
+	int					i;
+	t_args				*cur;
+	va_list				cp;
+	union u_argument	next;
 
 	next.str = "";
 	i = 1;
 	cur = arg;
 	va_copy(cp, orig);
-	while (i <= n)
+	while (cur && i <= n)
 	{
 		next = next_arg(cur, cp);
 		i++;
@@ -65,16 +89,16 @@ union u_argument nth_arg_orig(t_args *arg, int n, va_list orig)
 ** Changes the provided va_list
 */
 
-union u_argument nth_arg_sp(t_args *arg, int n, va_list sp)
+union u_argument	nth_arg_sp(t_args *arg, int n, va_list sp)
 {
-	int i;
-	t_args *cur;
-	union u_argument next;
+	int					i;
+	t_args				*cur;
+	union u_argument	next;
 
 	next.str = "";
 	i = 1;
 	cur = arg;
-	while (i <= n)
+	while (cur && i <= n)
 	{
 		next = next_arg(cur, sp);
 		i++;

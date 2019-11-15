@@ -10,14 +10,14 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "ft_printf.h"
+#include "ft_printf.h"
 
 char	*initial_p(t_spec *sp, union u_argument u_arg)
 {
 	char			*str;
 	char			*address;
 	long long int	arg;
-	
+
 	arg = u_arg.lli;
 	if (arg == 0 && sp->precision == 0)
 		address = ft_strnew(0);

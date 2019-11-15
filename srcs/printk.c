@@ -12,20 +12,20 @@
 
 #include "ft_printf.h"
 
-static char *w_day[7] = {"SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"};
+static char		*g_w_day[7] = {"SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"};
 
-static void put_time(t_buf *buf, int num)
+static void		put_time(t_buf *buf, int num)
 {
 	char	*str;
 
 	str = ft_itoa(num);
 	if (ft_strlen(str) < 2)
-		buf_store_chr(buf, '0');	
+		buf_store_chr(buf, '0');
 	buf_store_str(buf, str);
 	free(str);
 }
 
-char	*initial_k(t_buf *buf, union u_argument u_arg)
+char			*initial_k(t_buf *buf, union u_argument u_arg)
 {
 	struct tm	*arg;
 
@@ -38,7 +38,7 @@ char	*initial_k(t_buf *buf, union u_argument u_arg)
 		buf_store_chr(buf, '/');
 		put_time(buf, arg->tm_mday);
 		buf_store_chr(buf, ' ');
-		buf_store_str(buf, w_day[arg->tm_wday]);
+		buf_store_str(buf, g_w_day[arg->tm_wday]);
 		buf_store_chr(buf, ' ');
 		put_time(buf, arg->tm_hour);
 		buf_store_chr(buf, ':');

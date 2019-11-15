@@ -10,59 +10,48 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "ft_printf.h"
+#include "ft_printf.h"
 
 /*
 ** When we encounter '.', we need to set the precision
-** There are 3 cases:
+** There are 2 cases:
 ** *: next parameter
-** *n: uses up next argument, but sets to n 
 ** *n$: sets to the nth argument(does not affect the cur_arg)
-** Returns the beginning index of the next part of format.
+** Returns increment to the beginning index of the next part of format.
 */
 
 int		star_param(int *set, char *ft, t_spec *sp, t_args *arg_l)
 {
-	int		num;
-	int		i;
-	union u_argument arg;
+	int					i;
+	int					j;
+	union u_argument	arg;
 
 	i = 0;
 	if (ft[i] >= '0' && ft[i] <= '9')
 	{
-		num = ft_atoi(ft + i);
-		while (ft[i] >= '0' && ft[i] <= '9')
-			i++;
-		if (ft[i] != '$')
+		j = i;
+		while (ft[j] >= '0' && ft[j] <= '9')
+			j++;
+		if (ft[j] != '$')
 		{
-			*set = num;
 			va_arg(sp->param_lst, int);
 			sp->arg = (sp->arg)->next;
+			return (i + 1);
 		}
-		else
-		{
-			arg = nth_arg_orig(arg_l, num, sp->orig);
-			*set = arg.i;
-		}
-	}	
-	else if (ft[i] != '$')
-	{
-		*set = va_arg(sp->param_lst, int);
-		sp->arg = (sp->arg)->next;
+		arg = nth_arg_orig(arg_l, ft_atoi(ft + i), sp->orig);
+		*set = arg.i;
+		i = j;
 	}
-	i += (ft[i] != '$') ? 0: 1;
-	if (sp->width < 0)
-	{
-		sp->flags[0] = 1;
-		sp->width *= -1;
-	}
+	i = (ft[i] != '$') ? i : i + 1;
+	*set = (ft[i] != '$') ? va_arg(sp->param_lst, int) : *set;
+	sp->arg = (ft[i] != '$') ? (sp->arg)->next : sp->arg;
 	return (i + 1);
 }
 
 /*
 ** When we encounter '.', we need to set the precision
 ** There are 3 cases:
-** .n: set 
+** .n: set
 ** .*: handled in star_param
 ** .*n: handled in star_param
 ** .*n$: handled in star_param
@@ -100,7 +89,7 @@ int		dot_param(int *prec, char *ft, t_spec *sp, t_args *arg_l)
 int		not_num_param(t_spec *sp, char *ft, int i)
 {
 	int	len;
-	
+
 	len = sp->len;
 	if (ft[i] == '-')
 		sp->flags[0] = 1;
@@ -115,20 +104,14 @@ int		not_num_param(t_spec *sp, char *ft, int i)
 	else if (ft[i] == '\'')
 		sp->flags[5] = 1;
 	else if (ft[i] == 'h')
-	{
 		len = (ft[i + 1] == 'h') ? 1 : 2;
-		i += (ft[i + 1] && ft[i + 1] == 'h') ? 1 : 0;
-	}
-	else if (ft[i] == 'l')
-	{
+	else if (ft_strchr("ljz", ft[i]))
 		len = 8;
-		i += (ft[i + 1] && ft[i + 1] == 'l') ? 1 : 0;
-	}	
 	else if (ft[i] == 'L')
 		len = 16;
-	else if (ft_strchr("jz", ft[i]))
-		len = 8;
 	sp->len = (sp->len > len) ? sp->len : len;
+	i += (ft[i] == 'l' && ft[i + 1] == 'l') ||
+		(ft[i] == 'h' && ft[i + 1] == 'h');
 	return (i + 1);
 }
 
@@ -138,10 +121,10 @@ int		not_num_param(t_spec *sp, char *ft, int i)
 ** Returns the beginning index of the next part of format.
 */
 
-int		num_param(t_spec *sp, char *ft, int j) // assumes that always spec char follows?s
+int		num_param(t_spec *sp, char *ft, int j)
 {
 	int		num;
-	
+
 	num = ft_atoi(ft + j);
 	while (ft[j] && ft[j] >= '0' && ft[j] <= '9')
 		j++;
@@ -182,6 +165,7 @@ int		change_color(char *ft, int i, t_buf *buf)
 		buf_store_chr(buf, ft[i]);
 		return (i + 1);
 	}
+	i++;
 	while (ft[i] && ft[i - 1] != '}')
 		i++;
 	return (i);
